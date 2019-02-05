@@ -22,6 +22,7 @@ urlpatterns = [
     path('status/', include('status.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('csadmin/', include('csadmin.urls')),
+    path('',include('landingPage.urls')),
     #path('',Home.as_view()),
 
 ]
