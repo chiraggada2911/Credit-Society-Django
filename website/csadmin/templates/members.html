@@ -1,0 +1,31 @@
+{%extends 'base.html'%}
+
+{%block title%}Members{%endblock%}
+{%block content%}
+<h1 class="h2">List Of Current Members</h1>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Monthly Deduction</th>
+        <th>Department</th>
+        <th>Corpus</th>
+
+      </tr>
+    </thead>
+    <tbody>
+{%for i in accounts%}
+  <tr>
+    <td>{{i.accountholder.username}}</td>
+    <td>{{i.corpus}}</td>
+    <td>{{i.department}}</td>
+    <td>{{i.monthlyDeduction}}</td>
+
+  </tr>
+{%endfor%}
+</tr>
+</tbody>
+</table>
+</div>
+{%endblock%}

@@ -1,0 +1,59 @@
+{%extends 'details.html'%}
+
+
+{%block content%}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+  <div class="card">
+    <div class="card-body">
+
+      {{if}}
+      {{endif}}
+
+      <h1>{{user.get_username}} </h1>
+      <h4>SAP Id{{Accountholder.SAPid}}</h4>
+      <h4>DoJ{{Accountholder.dateofjoining}}</h4>
+      <h4>Monthly Deductions:{{Accountholder.monthlyDeduction}}
+        <a href="#" style="font-size:0.8rem;"> change</a>
+      </h4>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h2>Fixed Deposits </h2>
+            <h4>Amount:{{ fixedDeposits.fdCapital }}</h4>
+            <h4>Date of Maturity:{{fixedDeposits.maturityDate}}</h4>
+            <h4>Interest:{{fixedDeposits.rateOfInterest}} </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+              <h2>Shares</h2>
+            <h4>Shares alloted from:{{shares.sharesStartingNumber}} to {{shares.sharesEndingNumber}}</h4>
+            <h4>Share Value:{{shares.valueoftheshares}}</h4>
+            <h4>null</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Loan</h2>
+      <h4>to be shown if loan is taken</h4>
+      <h4>Request Loan
+        <a href="#" style="font-size:0.8rem;"> Loan </a>
+      </h4>
+    </div>
+  </div>
+
+
+</main>
+{%endblock%}
