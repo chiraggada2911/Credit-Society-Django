@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 
 
@@ -24,6 +25,15 @@ class Account(models.Model):
 
     def __str__(self):
         return self.accountholder.username
+
+    def corpusCalc(self):
+        today = datetime.date.today()
+        doj =datetime.date(2008, 12, 25)
+        diff = today-doj
+        print (diff.days)
+        total = 3*4
+        return total
+
 
 class Shares(models.Model):
     '''this is the schema for the shares assigned to every member'''
