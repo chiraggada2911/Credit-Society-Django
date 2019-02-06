@@ -49,6 +49,7 @@ def details(request):
     'shares':shares,
     'totalInvestment':totalInvestment,
     'date':date,
+    'dashboard':"active",
     }
 
     return render(request,'dashboard.html',context=context)
@@ -63,6 +64,7 @@ def shares(request):
 
     context={
         'shares':shares,
+        'share':"active",
 
     }
 
@@ -76,7 +78,7 @@ def fixedDeposits(request):
 
     context={
         'fixedDeposits':fixedDeposits,
-
+        'fixed':"active",
     }
     return render (request,'fixedDeposits.html',context=context)
 
@@ -88,6 +90,7 @@ def loanuser(request):
 
     context={
         'loanuser':loanuser,
+        'loan':"active",
     }
     return render (request,'Loansuser.html',context=context)
 
@@ -100,7 +103,9 @@ def MonthlyDeduction(request):
 
     context={
         'MonthlyDeduction':MonthlyDeduction,
-        'current_user_name':current_user_name
+        'current_user_name':current_user_name,
+        'Deduction':"active",
+
     }
     return render (request,'MonthlyDeduction.html',context=context)
 
@@ -116,5 +121,6 @@ def Investment(request):
     totalInvestment = nod * (Accountholder.corpus)
     context={
     'totalInvestment':totalInvestment,
+    'investment':"active",
     }
     return render (request,'investment.html',context=context)
