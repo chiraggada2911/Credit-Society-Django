@@ -3,6 +3,7 @@ from status.models import Account,Loan,FixedDeposits,Shares,User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
+import datetime
 
 def custlogin(request):
     if request.user.is_staff:
@@ -35,12 +36,18 @@ def details(request):
     loanuser = Loan.objects.filter(loanGivenTo__username__icontains=current_user_id).get()
     Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
 
+    date = Accountholder.dateofjoining
+    datetoday=datetime.date.today()
+    days=datetoday-date
+    nod=(days).days
     context={
     'name':name,
     'fixedDeposits':fixedDeposits,
     'Accountholder':Accountholder,
     'loanuser':loanuser,
     'shares':shares,
+    'nod':nod,
+    'date':date,
     }
 
     return render(request,'dashboard.html',context=context)
@@ -94,7 +101,7 @@ def MonthlyDeduction(request):
         'MonthlyDeduction':MonthlyDeduction,
         'current_user_name':current_user_name
     }
-    return render (request,'MonthlyDeduction.html',)
+    return render (request,'MonthlyDeduction.html',context=context)
 
 @login_required
 def Investment(request):

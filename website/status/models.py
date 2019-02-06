@@ -3,9 +3,7 @@ from django.contrib.auth.models import User
 import datetime
 
 
-
 # Create your models here.
-
 
 
 class Department(models.Model):
@@ -24,15 +22,7 @@ class Account(models.Model):
     department=models.ForeignKey(Department,on_delete=models.SET_NULL,null=True,blank=False,related_name='department')
 
     def __str__(self):
-        return self.accountholder.username
-
-    def corpusCalc(self):
-        today = datetime.date.today()
-        doj =datetime.date(2008, 12, 25)
-        diff = today-doj
-        print (diff.days)
-        total = 3*4
-        return total
+        return self.accountholder
 
 
 class Shares(models.Model):
@@ -66,7 +56,7 @@ class FixedDeposits(models.Model):
     fdholdersName=models.OneToOneField(User,on_delete=models.SET_NULL,null=True,blank=True)
 
     def __str__(self):
-        return self.fdholdersName.username
+        return self.fdholdersName
 
 class Month(models.Model):
     monthfield=models.CharField(max_length=50,default='january')
