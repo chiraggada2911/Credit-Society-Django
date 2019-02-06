@@ -40,13 +40,14 @@ def details(request):
     datetoday=datetime.date.today()
     days=datetoday-date
     nod=(days).days
+    totalInvestment = nod * (Accountholder.corpus)
     context={
     'name':name,
     'fixedDeposits':fixedDeposits,
     'Accountholder':Accountholder,
     'loanuser':loanuser,
     'shares':shares,
-    'nod':nod,
+    'totalInvestment':totalInvestment,
     'date':date,
     }
 
@@ -105,5 +106,15 @@ def MonthlyDeduction(request):
 
 @login_required
 def Investment(request):
+    current_user_id=request.user.username
+    Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
 
-    return render (request,'investment.html')
+    date = Accountholder.dateofjoining
+    datetoday=datetime.date.today()
+    days=datetoday-date
+    nod=(days).days
+    totalInvestment = nod * (Accountholder.corpus)
+    context={
+    'totalInvestment':totalInvestment,
+    }
+    return render (request,'investment.html',context=context)
