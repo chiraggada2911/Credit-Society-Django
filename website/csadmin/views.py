@@ -22,7 +22,7 @@ def members(request):
     accounts=Account.objects.all
     context={
         'users':users,
-        'accounts':accounts
+        'accounts':accounts,
     }
     return render (request,'members.html',context=context)
 
@@ -46,5 +46,15 @@ class UserCreate(CreateView):
 
 class AccountCreate(CreateView):
         model=Account
+        fields='__all__'
+        success_url=reverse_lazy('csadmin:members')
+
+class Fdadd(CreateView):
+        model=FixedDeposits
+        fields='__all__'
+        success_url=reverse_lazy('csadmin:members')
+
+class Loanadd(CreateView):
+        model=Loan
         fields='__all__'
         success_url=reverse_lazy('csadmin:members')
