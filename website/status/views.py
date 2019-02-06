@@ -125,7 +125,7 @@ def Investment(request):
     'totalInvestment':totalInvestment,
     'investment':"active",
     }
-    return render (request,'investment.html',context=context)
+    return render (request,'Investment.html',context=context)
 
 def email(request):
 
