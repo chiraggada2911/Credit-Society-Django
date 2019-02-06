@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 import datetime
+from django.core.mail import send_mail
+from django.conf import settings
 
 def custlogin(request):
     if request.user.is_staff:
@@ -124,3 +126,13 @@ def Investment(request):
     'investment':"active",
     }
     return render (request,'investment.html',context=context)
+
+def email(request):
+
+    subject = 'Thank you for registering to our site'
+    message = ' it  means a world to us '
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ['aashulikabra@gmail.com',]
+    send_mail( subject, message, email_from, recipient_list )
+
+    return redirect(request,'investment.html')
