@@ -11,7 +11,9 @@ urlpatterns = [
     path('fixedDeposits',views.fixedDeposits,name="fixedDeposits"),
     path('Loanuser',views.loanuser,name="loanuser"),
     path('MonthlyDeduction',views.MonthlyDeduction,name="MonthlyDeduction"),
-    path('Investment',views.Investment,name="Investment")
+    path('Investment',views.Investment,name="Investment"),
+    path('Email',views.email,name="email")
+
 
 
 
