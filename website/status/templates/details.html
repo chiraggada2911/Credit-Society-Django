@@ -34,25 +34,25 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="{%url 'status:details'%}">
+                <a class="nav-link {{dashboard}}" href="{%url 'status:details'%}">
                   <span data-feather="home"></span>
                   Dashboard <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{%url 'status:shares' %}">
+                <a class="nav-link {{share}}" href="{%url 'status:shares' %}">
                   <span data-feather="file"></span>
                   Shares
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{%url 'status:fixedDeposits' %}">
+                <a class="nav-link  {{fixed}}" href="{%url 'status:fixedDeposits' %}">
                   <span data-feather="shopping-cart"></span>
                   Fixed Deposits
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{%url 'status:loanuser' %}">
+                <a class="nav-link {{loan}}" href="{%url 'status:loanuser' %}">
                   <span data-feather="users"></span>
                   Loans
                 </a>
@@ -61,20 +61,20 @@
             </ul>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>My Settings</span>
+              <span>My page</span>
               <a class="d-flex align-items-center text-muted" href="#">
                 <span data-feather="plus-circle"></span>
               </a>
             </h6>
             <ul class="nav flex-column mb-2">
               <li class="nav-item">
-                <a class="nav-link" href="{%url 'status:MonthlyDeduction'%}">
+                <a class="nav-link {{Deduction}}" href="{%url 'status:MonthlyDeduction'%}">
                   <span data-feather="file-text"></span>
                   Monthly Deduction
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{%url 'status:Investment'%}">
+                <a class="nav-link {{investment}}" href="{%url 'status:Investment'%}">
                   <span data-feather="file-text"></span>
                   Change Investment
                 </a>
