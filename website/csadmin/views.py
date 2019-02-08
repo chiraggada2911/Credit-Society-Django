@@ -41,7 +41,7 @@ def totalmoney(request):
 #class adduseraccountform(ModelForm):
 class UserCreate(CreateView):
         model=User
-        fields=['first_name','last_name','username','password']
+        fields=['first_name','last_name','username','email','password']
         success_url=reverse_lazy('csadmin:account_create')
 
 class AccountCreate(CreateView):
@@ -56,5 +56,10 @@ class Fdadd(CreateView):
 
 class Loanadd(CreateView):
         model=Loan
+        fields='__all__'
+        success_url=reverse_lazy('csadmin:members')
+
+class Sharesadd(CreateView):
+        model=Shares
         fields='__all__'
         success_url=reverse_lazy('csadmin:members')
