@@ -22,7 +22,7 @@ class Account(models.Model):
     department=models.ForeignKey(Department,on_delete=models.SET_NULL,null=True,blank=False,related_name='department')
 
     def __str__(self):
-        return self.accountholder
+        return str(self.accountholder)
 
 
 class Shares(models.Model):
@@ -56,7 +56,7 @@ class FixedDeposits(models.Model):
     fdholdersName=models.OneToOneField(User,on_delete=models.SET_NULL,null=True,blank=True)
 
     def __str__(self):
-        return self.fdholdersName
+        return str(self.fdholdersName)
 
 class Month(models.Model):
     monthfield=models.CharField(max_length=50,default='january')
