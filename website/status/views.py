@@ -125,14 +125,16 @@ def Investment(request):
     'totalInvestment':totalInvestment,
     'investment':"active",
     }
-    return render (request,'investment.html',context=context)
+    return render (request,'Investment.html',context=context)
 
+#use http response here it'll work
+# for pdf stuff Using WeasyPrint
 def email(request):
+     if(request.GET.get('mybtn')):
 
-    subject = 'Thank you for registering to our site'
-    message = ' it  means a world to us '
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = ['aashulikabra@gmail.com',]
-    send_mail( subject, message, email_from, recipient_list )
-
-    return redirect(request,'investment.html')
+        subject = 'Thank you for registering to our site'
+        message = ' it  means a world to us '
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['aashulikabra@gmail.com',]
+        send_mail( subject, message, email_from, recipient_list )
+        return redirect(request,'investment.html')
