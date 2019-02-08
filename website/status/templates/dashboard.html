@@ -13,8 +13,8 @@
       <h4>SAP Id{{Accountholder.SAPid}}</h4>
       <h4>DoJ:  {{date}}</h4>
       <h4>Monthly Deductions:{{Accountholder.monthlyDeduction}}
-    <!--  <a href="../status/MonthlyDeduction" style="font-size:0.8rem;"> change</a> -->
-      <a href="{%url 'status:email' %}" style="font-size:0.8rem;"> change</a>
+        <!--<a href="../status/MonthlyDeduction" style="font-size:0.8rem;"> change</a>-->
+        <button class="btn btn-default pull-right" name="mail" type="submit"></button>
       </h4>
     </div>
   </div>
