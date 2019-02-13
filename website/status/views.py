@@ -6,6 +6,10 @@ from django.shortcuts import get_object_or_404
 import datetime
 from django.core.mail import send_mail
 from django.conf import settings
+from django.http import HttpResponse
+from django.views.generic import View
+
+from status.utils import render_to_pdf #created in step 4
 
 def custlogin(request):
     if request.user.is_staff:
@@ -138,3 +142,17 @@ def email(request):
         recipient_list = ['aashulikabra@gmail.com',]
         send_mail( subject, message, email_from, recipient_list )
         return redirect(request,'investment.html')
+
+class GeneratePdf(View):
+    def get(self, request, *args, **kwargs):
+        template = get_template('pdf.html')
+
+        context = {
+            'today': datetime.date.today(),
+            'amount': 39.99,
+            'customer_name': 'Cooper Mann',
+            'order_id': 1233434,
+        }
+        html = template.render(context)
+        pdf = render_to_pdf('pdf.html', context)
+        return HttpResponse(pdf, content_type='application/pdf')
