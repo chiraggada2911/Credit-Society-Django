@@ -23,20 +23,32 @@ def members(request):
     context={
         'users':users,
         'accounts':accounts,
+        'member':"active"
     }
     return render (request,'members.html',context=context)
 
 @login_required
 def bank(request):
-    return render (request,'bank.html')
+
+    context={
+        'Bank':"active",
+    }
+    return render (request,'bank.html' , context=context)
 
 @login_required
 def loansadmin(request):
-    return render (request,'loansadmin.html')
+
+    context={
+        'loan':"active",
+    }
+    return render (request,'loansadmin.html' ,context=context)
 
 @login_required
 def totalmoney(request):
-    return render (request,'totalmoney.html')
+    context={
+        'money':"active",
+    }
+    return render (request,'totalmoney.html' ,context=context)
 
 #class adduseraccountform(ModelForm):
 class UserCreate(CreateView):
