@@ -29,10 +29,10 @@ def members(request):
 
 @login_required
 def bank(request):
-<<<<<<< HEAD
     fixedDeposits=FixedDeposits.objects.all
     context={
         'fixedDeposits':fixedDeposits,
+        'Bank':"active"
     }
     return render (request,'bank.html',context=context)
 
@@ -41,30 +41,16 @@ def loansadmin(request):
     loans=Loan.objects.all
     context={
         'loans':loans,
+        'loan':"active"
     }
-    return render (request,'loansadmin.html')
-=======
-
-    context={
-        'Bank':"active",
-    }
-    return render (request,'bank.html' , context=context)
-
-@login_required
-def loansadmin(request):
-
-    context={
-        'loan':"active",
-    }
-    return render (request,'loansadmin.html' ,context=context)
->>>>>>> master
+    return render (request,'loansadmin.html',context=context)
 
 @login_required
 def totalmoney(request):
     context={
-        'money':"active",
+        'money':"active"
     }
-    return render (request,'totalmoney.html' ,context=context)
+    return render (request,'totalmoney.html',context=context)
 
 #class adduseraccountform(ModelForm):
 class UserCreate(CreateView):
