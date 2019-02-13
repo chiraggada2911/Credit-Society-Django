@@ -125,7 +125,9 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/status/custlogin'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@khophi.co'
+SERVER_MAIL = 'noreply@khophi.co'
+EMAIL_BACKEND= 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
