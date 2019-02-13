@@ -28,10 +28,18 @@ def members(request):
 
 @login_required
 def bank(request):
-    return render (request,'bank.html')
+    fixedDeposits=FixedDeposits.objects.all
+    context={
+        'fixedDeposits':fixedDeposits,
+    }
+    return render (request,'bank.html',context=context)
 
 @login_required
 def loansadmin(request):
+    loans=Loan.objects.all
+    context={
+        'loans':loans,
+    }
     return render (request,'loansadmin.html')
 
 @login_required
