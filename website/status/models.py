@@ -16,8 +16,8 @@ class Department(models.Model):
 class Account(models.Model):
     """This is the schema for the account of every staff member"""
     monthlyDeduction=models.IntegerField()
-    corpus=models.IntegerField()
-    accountholder=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
+    corpus=models.IntegerField(null=True,blank=True)
+    accountholder=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=False)
     dateofjoining=models.DateField()
     department=models.ForeignKey(Department,on_delete=models.SET_NULL,null=True,blank=False,related_name='department')
 
@@ -30,7 +30,7 @@ class Shares(models.Model):
     sharesStartingNumber=models.IntegerField()
     sharesEndingNumber=models.IntegerField()
     valueoftheshares=models.IntegerField()
-    shareholdersName=models.OneToOneField(User,on_delete=models.SET_NULL,null=True,blank=True)
+    shareholdersName=models.OneToOneField(User,on_delete=models.SET_NULL,null=True,blank=False)
 
     def __str__(self):
         return self.shareholdersName.username
