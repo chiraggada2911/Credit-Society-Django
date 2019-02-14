@@ -125,8 +125,10 @@ def Investment(request):
     datetoday=datetime.date.today()
     days=relativedelta.relativedelta(datetoday,date)
     nod=days.months
-    print(Accountholder.corpus)
-    totalInvestment = nod * (Accountholder.corpus)
+    year = days.years
+    final = nod + 12 * year
+    print(Accountholder.monthlyDeduction)
+    totalInvestment = final * (Accountholder.monthlyDeduction)
     context={
     'totalInvestment':totalInvestment,
     'investment':"active",
