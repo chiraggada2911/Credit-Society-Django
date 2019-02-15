@@ -11,10 +11,10 @@
 
       <h1>{{user.get_username}} </h1>
       <h4>SAP Id{{Accountholder.SAPid}}</h4>
-      <h4>DoJ:  {{date}}</h4>
+      <h4>DoJ: {{date}}</h4>
       <h4>Monthly Deductions:{{Accountholder.monthlyDeduction}}
         <!--<a href="../status/MonthlyDeduction" style="font-size:0.8rem;"> change</a>-->
-        <button class="btn btn-default pull-right" name="mail" type="submit"></button>
+        <a href="../status/mail">change</a>
       </h4>
     </div>
   </div>
@@ -25,9 +25,12 @@
         <div class="card">
           <div class="card-body">
             <h2>Fixed Deposits </h2>
+            {% if fixedDeposits.fdCapital > 0 %}
             <h4>Amount:{{ fixedDeposits.fdCapital }}</h4>
             <h4>Date of Maturity:{{fixedDeposits.maturityDate}}</h4>
             <h4>Interest:{{fixedDeposits.rateOfInterest}} </h4>
+            {% else %}
+              {% endif %}
           </div>
         </div>
       </div>
@@ -35,10 +38,12 @@
       <div class="col">
         <div class="card">
           <div class="card-body">
-              <h2>Shares</h2>
+            {% if shares.valueoftheshares > 0 %}
+            <h2>Shares</h2>
             <h4>Shares alloted from:{{shares.sharesStartingNumber}} to {{shares.sharesEndingNumber}}</h4>
             <h4>Share Value:{{shares.valueoftheshares}}</h4>
-            <h4>null</h4>
+            {% else %}
+            {% endif %}
           </div>
         </div>
       </div>
@@ -48,10 +53,17 @@
   <div class="card">
     <div class="card-body">
       <h2>Loan</h2>
-      <h4>to be shown if loan is taken</h4>
-      <h4>Request Loan
-        <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
-      </h4>
+      <ul>
+        {% if loanuser.loanAmount > 0 %}
+        <h2>Your Loan Amount: {{ loanuser.loanAmount }}</h2>
+        {% else %}
+        <h1>you have no loans due</h1>
+        <h4>Request Loan
+          <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
+        </h4>
+        {% endif %}
+      </ul>
+
     </div>
   </div>
 
