@@ -3,14 +3,20 @@ from status.models import Account,Loan,FixedDeposits,Shares,User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-import datetime
-from dateutil import relativedelta
-from django.core.mail import send_mail
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
 
-from status.utils import render_to_pdf #created in step 4
+#for date and time
+import datetime
+from dateutil import relativedelta
+
+#for E-mail
+from django.core.mail import send_mail
+import smtplib
+
+#for PDF
+from status.utils import render_to_pdf
 
 def custlogin(request):
     if request.user.is_staff:
@@ -138,14 +144,13 @@ def Investment(request):
 #use http response here it'll work
 # for pdf stuff Using WeasyPrint
 def email(request):
-     if(request.GET.get('mybtn')):
-
+        print("mail sent")
         subject = 'Thank you for registering to our site'
         message = ' it  means a world to us '
         email_from = settings.EMAIL_HOST_USER
-        recipient_list = ['aashulikabra@gmail.com',]
+        recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
         send_mail( subject, message, email_from, recipient_list )
-        return redirect(request,'investment.html')
+        return render(request,'investment.html')
 
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):

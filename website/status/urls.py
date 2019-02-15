@@ -13,6 +13,7 @@ urlpatterns = [
     path('MonthlyDeduction',views.MonthlyDeduction,name="MonthlyDeduction"),
     path('Investment',views.Investment,name="Investment"),
     path('pdf',views.GeneratePdf,name="GeneratePdf"),
+    path('mail',views.email,name="mail"),
 
 
 

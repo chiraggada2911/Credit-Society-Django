@@ -14,7 +14,10 @@ def index(request):
 
 @login_required
 def commander(request):
-    return render (request,'console.html')
+    context={
+        'dashb':"active"
+    }
+    return render (request,'console.html',context=context)
 
 @login_required
 def members(request):
@@ -56,6 +59,7 @@ def totalmoney(request):
 class UserCreate(CreateView):
         model=User
         fields=['first_name','last_name','username','email','password']
+        #make_password(password)
         success_url=reverse_lazy('csadmin:account_create')
 
 class AccountCreate(CreateView):
