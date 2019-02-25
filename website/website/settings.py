@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import smtplib
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -125,11 +126,10 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/status/custlogin'
 
-DEFAULT_FROM_EMAIL = 'noreply@khophi.co'
-SERVER_MAIL = 'noreply@khophi.co'
+
 EMAIL_BACKEND= 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'chiraggada67@gmail.com'
-EMAIL_HOST_PASSWORD = 'chiru@1998'
+EMAIL_HOST_PASSWORD = 'zioiqpnanhtqdpsg'
