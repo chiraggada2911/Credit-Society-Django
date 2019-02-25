@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
+from django.template.loader import get_template
 
 #for date and time
 import datetime
@@ -144,13 +145,16 @@ def Investment(request):
 #use http response here it'll work
 # for pdf stuff Using WeasyPrint
 def email(request):
-        print("mail sent")
         subject = 'Thank you for registering to our site'
         message = ' it  means a world to us '
         email_from = settings.EMAIL_HOST_USER
         recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        send_mail( subject, message, email_from, recipient_list )
-        return render(request,'investment.html')
+        #send_mail( subject, message, email_from, recipient_list )
+        print("mail sent")
+        return render(request,'changemd.html')
+
+#       def changemd(request):
+
 
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
