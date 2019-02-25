@@ -169,3 +169,7 @@ class GeneratePdf(View):
         html = template.render(context)
         pdf = render_to_pdf('pdf.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
+
+@login_required
+def popup(request):
+    return render(request,'email_popup.html')
