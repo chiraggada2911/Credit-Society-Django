@@ -14,6 +14,8 @@ urlpatterns = [
     path('Investment',views.Investment,name="Investment"),
     path('mail',views.email,name="mail"),
     path('pdf',views.GeneratePdf.as_view(),name="GeneratePdf"),
+    path('change',views.popup,name="popup"),
+
 
 
 

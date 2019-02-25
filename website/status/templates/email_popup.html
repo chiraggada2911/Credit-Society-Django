@@ -1,0 +1,39 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>change of monthly deduction</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <link href="{% static 'status/email_popup.css'%}" rel="stylesheet">
+<script type="text/javascript">
+  var input = document.getElementById('userInput').value;
+</script>
+    <script src="{% static 'status/script.js' %}"></script>
+  </head>
+
+<body>
+    <div class="lw-widget lw-widget_fullscreen" data-lw-onload>
+        <div class="lw-overlay" data-lw-close></div>
+        <div class="lw-container lw-container_md">
+            <div class="lw-item lw-item_bg" style="--theme-color: #ff2e63">
+            	<button class="lw-close lw-close_circle" data-lw-close><i class="material-icons">close</i></button>
+                <div class="lw-wrap lw-p-lg">
+                    <div class="lw-center">
+                        <div class="lw-title">Add the new amount you want to deduct every month</div>
+                        <form class="lw-form" action="">
+                            <div class="lw-field"><input class="lw-input" type="numeric" placeholder="Enter Amount in Rs" id="userInput" required></div><button class="lw-btn">Submit to admin</button></form>
+                        <div class="lw-content lw-content_md lw-mt-md"><a href="#">No, Let it be</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
