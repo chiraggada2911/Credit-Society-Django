@@ -8,19 +8,21 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>FD Capital</th>
+        <th>Loan Amount</th>
+        <th>Emi</th>
         <th>Rate of Interest</th>
-        <th>Maturity Date</th>
+        <th>Repayment date</th>
 
       </tr>
     </thead>
     <tbody>
 {%for i in loans%}
   <tr>
-    <td>{{i.fdholdersName.username}}</td>
-    <td>{{i.fdCapital}}</td>
+    <td>{{i.loanGivenTo.username}}</td>
+    <td>{{i.loanAmount}}</td>
+    <td>{{i.emi}}</td>
     <td>{{i.rateOfInterest}}</td>
-    <td>{{i.maturityDate}}</td>
+    <td>{{i.repaymentDue}}</td>
 
   </tr>
 {%endfor%}
