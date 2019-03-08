@@ -171,4 +171,9 @@ class GeneratePdf(View):
 
 @login_required
 def popup(request):
+    if request.method == ["POST"]:
+        a = request.POST['userInput']
+        print (a)
+    #newMonthlyDeduction = request.POST['userInput']
+
     return render(request,'email_popup.html')
