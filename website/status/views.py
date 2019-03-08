@@ -108,21 +108,6 @@ def loanuser(request):
     }
     return render (request,'Loansuser.html',context=context)
 
-
-@login_required
-def MonthlyDeduction(request):
-
-    current_user_name=request.user.username
-    MonthlyDeduction=Account.objects.filter(accountholder__username__icontains=current_user_name).get()
-
-    context={
-        'MonthlyDeduction':MonthlyDeduction,
-        'current_user_name':current_user_name,
-        'Deduction':"active",
-
-    }
-    return render (request,'MonthlyDeduction.html',context=context)
-
 @login_required
 def Investment(request):
     current_user_id=request.user.username
@@ -169,12 +154,3 @@ class GeneratePdf(View):
         html = template.render(context)
         pdf = render_to_pdf('pdf.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
-
-@login_required
-def popup(request):
-    if request.method == ["POST"]:
-        a = request.POST['userInput']
-        print (a)
-    #newMonthlyDeduction = request.POST['userInput']
-
-    return render(request,'email_popup.html')
