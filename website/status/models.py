@@ -35,6 +35,8 @@ class Shares(models.Model):
     def __str__(self):
         return self.shareholdersName.username
 
+
+
 class Loan(models.Model):
     '''this is the schema for the loans given to the member only of the credit society'''
     loanAmount=models.IntegerField()

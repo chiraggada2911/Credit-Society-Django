@@ -1,16 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @page {
+      size: letter landscape;
+      margin-top: 4cm;
+      margin-bottom: 2cm;
+      margin-left: 2cm;
+      margin-right: 2cm;
+  }
+</style>
+</head>
 
-<div style="width:800px; height:600px; padding:20px; text-align:center; border: 10px solid #787878">
-<div style="width:750px; height:550px; padding:20px; text-align:center; border: 5px solid #787878">
-       <span style="font-size:50px; font-weight:bold">Certificate of Completion</span>
+
+<div style="width:800px; height:600px; padding:40px; text-align:center; border: 60px solid #787878">
+<div style="width:750px; height:800px; padding:80px; text-align:center; border: 5px solid #787878">
+       <span style="font-size:50px; font-weight:bold">Share Certificate</span>
        <br><br>
-       <span style="font-size:25px"><i>This is to certify that</i></span>
+       <span style="font-size:25px"><i>This is to certify that Mr./Mrs {{shares.shareholdersName}}  </i></span>
+       <span style="font-size:25px"><i>is/are the  </i></span>
+       <span style="font-size:25px"><i>registered holder of {{shares.valueoftheshares}} of the DJS Credit Society. </i></span>
        <br><br>
-       <span style="font-size:30px"><b>$student.getFullName()</b></span><br/><br/>
-       <span style="font-size:25px"><i>has completed the course</i></span> <br/><br/>
-       <span style="font-size:30px">$course.getName()</span> <br/><br/>
-       <span style="font-size:20px">with score of <b>$grade.getPoints()%</b></span> <br/><br/><br/><br/>
-       <span style="font-size:25px"><i>dated</i></span><br>
-      #set ($dt = $DateFormatter.getFormattedDate($grade.getAwardDate(), "MMMM dd, yyyy"))
-      <span style="font-size:30px">$dt</span>
+       <span style="font-size:25px"><b>Shares Presented from : DJS Credit Society </b></span><br/><br/>
+       <span style="font-size:25px"><b>Share Holders Name:{{shares.shareholdersName}}</b></span><br/><br/>
+       <span style="font-size:25px"><i>Share Value:{{shares.valueoftheshares}}</i></span> <br/><br/>
+       <span style="font-size:25px">Shares alloted from:{{shares.sharesStartingNumber}} to {{shares.sharesEndingNumber}}</span> <br/><br/>
+       <span style="font-size:25px"><i>date:</i></span><br>
+
 </div>
 </div>
+</html>
