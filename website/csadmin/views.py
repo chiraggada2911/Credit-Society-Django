@@ -10,6 +10,9 @@ from django.views import generic
 import datetime
 from dateutil import relativedelta
 
+
+
+
 # Create your views here.
 def index(request):
     return render (request,'index.html')
@@ -26,21 +29,23 @@ def commander(request):
 def members(request):
     users=User.objects.all
     accounts=Account.objects.all
-    current_user_id=request.user.username
-    Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
-    date = Accountholder.dateofjoining
-    datetoday=datetime.date.today()
-    days=relativedelta.relativedelta(datetoday,date)
-    nod=days.months
-    year = days.years
-    final = nod + 12 * year
-    print(Accountholder.monthlyDeduction)
-    totalInvestment = final * (Accountholder.monthlyDeduction)
-    print(totalInvestment)
+    name=str(Account.accountholder)
+    Accountholder=Account.objects.all
+    date = accounts.dateofjoining
+    print("chirag")
+    print(date)
+
+
+    # datetoday=datetime.date.today()
+    # days=relativedelta.relativedelta(datetoday,date)
+    # nod=days.months
+    # year = days.years
+    # final = nod + 12 * year
+    # totalInvestment = final * (Account.monthlyDeduction)
+    # print(totalInvestment)
     context={
         'users':users,
         'accounts':accounts,
-        'totalInvestment':totalInvestment,
         'member':"active"
     }
     return render (request,'members.html',context=context)
