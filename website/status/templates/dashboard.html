@@ -2,70 +2,90 @@
 
 
 {%block content%}
+
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-  <div class="card">
-    <div class="card-body">
+  <div>
 
-      {{if}}
-      {{endif}}
 
-      <h1>{{user.get_username}} </h1>
-      <h4>SAP Id{{Accountholder.SAPid}}</h4>
-      <h4>DoJ: {{date}}</h4>
-      <h4>Monthly Deductions:{{Accountholder.monthlyDeduction}}
-        <!--<a href="../status/MonthlyDeduction" style="font-size:0.8rem;"> change</a>-->
-        <a href="../status/change">change</a>
-      </h4>
-    </div>
-  </div>
+    <div class="card">
+      <div class="card-body">
 
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <h2>Fixed Deposits </h2>
-            {% if fixedDeposits.fdCapital > 0 %}
-            <h4>Amount:{{ fixedDeposits.fdCapital }}</h4>
-            <h4>Date of Maturity:{{fixedDeposits.maturityDate}}</h4>
-            <h4>Interest:{{fixedDeposits.rateOfInterest}} </h4>
-            {% else %}
-              {% endif %}
-          </div>
-        </div>
-      </div>
+        {{if}}
+        {{endif}}
 
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            {% if shares.valueoftheshares > 0 %}
-            <h2>Shares</h2>
-            <h4>Shares alloted from:{{shares.sharesStartingNumber}} to {{shares.sharesEndingNumber}}</h4>
-            <h4>Share Value:{{shares.valueoftheshares}}</h4>
-            {% else %}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <h1>{{user.get_username}} </h1>
+        <h4>SAP Id{{Accountholder.SAPid}}</h4>
+        <h4>DoJ: {{date}}</h4>
+        <h4>Monthly Deductions:{{Accountholder.monthlyDeduction}}
+          <!--<a href="../status/MonthlyDeduction" style="font-size:0.8rem;"> change</a>-->
+          <a href="#modal">change</a>
 
-  <div class="card">
-    <div class="card-body">
-      <h2>Loan</h2>
-      <ul>
-        {% if loanuser.loanAmount > 0 %}
-        <h2>Your Loan Amount: {{ loanuser.loanAmount }}</h2>
-        {% else %}
-        <h1>you have no loans due</h1>
-        <h4>Request Loan
-          <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
         </h4>
-        {% endif %}
-      </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h2>Fixed Deposits </h2>
+              {% if fixedDeposits.fdCapital > 0 %}
+              <h4>Amount:{{ fixedDeposits.fdCapital }}</h4>
+              <h4>Date of Maturity:{{fixedDeposits.maturityDate}}</h4>
+              <h4>Interest:{{fixedDeposits.rateOfInterest}} </h4>
+              {% else %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              {% if shares.valueoftheshares > 0 %}
+              <h2>Shares</h2>
+              <h4>Shares alloted from:{{shares.sharesStartingNumber}} to {{shares.sharesEndingNumber}}</h4>
+              <h4>Share Value:{{shares.valueoftheshares}}</h4>
+              {% else %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2>Loan</h2>
+        <ul>
+          {% if loanuser.loanAmount > 0 %}
+          <h2>Your Loan Amount: {{ loanuser.loanAmount }}</h2>
+          {% else %}
+          <h1>you have no loans due</h1>
+          <h4>Request Loan
+            <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
+          </h4>
+          {% endif %}
+        </ul>
+      </div>
+
 
     </div>
-  </div>
+    <div id="modal" class="overlay">
+           <div class="popup">
+             <h2>Change your Monthly Deduction</h2>
+              <a class="close" href="">×</a>
+                 <div class="content">
+                   <form class="lw-form" >
+                       <div class="lw-field">
+                         <input class="lw-input" method="post" type="numeric" placeholder="Enter Amount in Rs" required>
+                       </div>
+                       <button class="lw-btn">Submit to admin</button>
+                     </form>
+                </div>
+             </div>
+         </div>
 
 
 </main>
