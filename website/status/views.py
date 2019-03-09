@@ -144,12 +144,11 @@ def email(request):
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
         template = get_template('pdf.html')
+        current_user_id=request.user.username
+        GeneratePdf=Shares.objects.filter(shareholdersName__username__icontains=current_user_id).get()
 
         context = {
-            'today': datetime.date.today(),
-            'amount': 39.99,
-            'customer_name': 'Cooper Mann',
-            'order_id': 1233434,
+            'shares':GeneratePdf,
         }
         html = template.render(context)
         pdf = render_to_pdf('pdf.html', context)
