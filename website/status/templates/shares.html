@@ -13,11 +13,11 @@
       <div class="card w-75 h-75">
           <div class="card-body">
             <h2 class="card-title">Share Certificate</h2>
-            <h3>ShareHolder Name:{{shares.shareholdersName}}</h3>
+            <h3>ShareHolder Name:{{Accountholder.name}}</h3>
             <p class="card-text">These are your alloted share details with the credit society.</p>
 
 
-            <a href="{% url 'status:GeneratePdf'%}" class="btn btn-primary">Save</a>
+            <a href="{% url 'status:GeneratePdf'%}" class="btn btn-primary" target="_blank ">Save</a>
           </div>
         </div>
       </div>
