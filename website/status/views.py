@@ -75,8 +75,9 @@ def shares(request):
 
     current_user_id=request.user.username
     shares=Shares.objects.filter(shareholdersName__username__icontains=current_user_id).get()
-
+    Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
     context={
+        'Accountholder':Accountholder,
         'shares':shares,
         'share':"active",
 
@@ -89,8 +90,9 @@ def fixedDeposits(request):
 
     current_user_id=request.user.username
     fixedDeposits=FixedDeposits.objects.filter(fdholdersName__username__icontains=current_user_id).get()
-
+    Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
     context={
+        'Accountholder':Accountholder,
         'fixedDeposits':fixedDeposits,
         'fixed':"active",
     }
@@ -101,8 +103,9 @@ def loanuser(request):
 
     current_user_id = request.user.username
     loanuser = Loan.objects.filter(loanGivenTo__username__icontains=current_user_id).get()
-
+    Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
     context={
+        'Accountholder':Accountholder,
         'loanuser':loanuser,
         'loan':"active",
     }
@@ -122,6 +125,7 @@ def Investment(request):
     print(Accountholder.monthlyDeduction)
     totalInvestment = final * (Accountholder.monthlyDeduction)
     context={
+    'Accountholder':Accountholder,
     'totalInvestment':totalInvestment,
     'investment':"active",
     }
@@ -146,8 +150,9 @@ class GeneratePdf(View):
         template = get_template('pdf.html')
         current_user_id=request.user.username
         GeneratePdf=Shares.objects.filter(shareholdersName__username__icontains=current_user_id).get()
-
-        context = {
+        Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+        context ={
+            'Accountholder':Accountholder,
             'shares':GeneratePdf,
         }
         html = template.render(context)
