@@ -58,14 +58,16 @@ def details(request):
     Final_new_change =0
     if request.method=="POST":
         New_money_change = change_MoneyForm(request.POST)
-        
+
         if New_money_change.is_valid():
             Final_new_change = New_money_change.cleaned_data['new_amount']
+
             subject = 'This guy wants to change his monthly deduction'
-            message = str(Final_new_change)
-            print(type(Final_new_change))
+            message = Accountholder.name +" : "+str(Final_new_change)
             email_from = settings.EMAIL_HOST_USER
+
             recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+
             send_mail( subject, message, email_from, recipient_list )
             print("mail sent")
 
@@ -73,13 +75,12 @@ def details(request):
         New_money_change=change_MoneyForm()
     print(Final_new_change)
 
-
-
     date = Accountholder.dateofjoining
     datetoday=datetime.date.today()
     days=datetoday-date
     nod=(days).days
     totalInvestment = nod * (Accountholder.corpus)
+
     context={
     'name':name,
     'fixedDeposits':fixedDeposits,
@@ -124,6 +125,26 @@ def fixedDeposits(request):
     current_user_id=request.user.username
     fixedDeposits=FixedDeposits.objects.filter(fdholdersName__username__icontains=current_user_id).get()
     Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+
+    dateMaturity = fixedDeposits.maturityDate
+    datetoday=datetime.date.today()
+
+    date_diff_fd = (relativedelta.relativedelta(dateMaturity,datetoday))
+
+    print(dateMaturity)
+    print(datetoday)
+    print((date_diff_fd).months)
+    print((date_diff_fd).days)
+    print(date_diff_fd)
+
+    if ((date_diff_fd).months==1 & (date_diff_fd).days==0):
+        subject = 'FD is getting matured soon'
+        message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + fixedDeposits.maturityDate + "what wolud you like to do? reply on this email or contact Admin"
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+        send_mail( subject, message, email_from, recipient_list )
+        print("mail sent")
+
     context={
         'Accountholder':Accountholder,
         'fixedDeposits':fixedDeposits,
