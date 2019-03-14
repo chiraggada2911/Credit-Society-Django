@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load humanize %}
 <html>
 <head>
 <style>
@@ -19,11 +20,11 @@
        <br><br>
        <span style="font-size:25px"><i>This is to certify that Mr./Mrs {{Accountholder.name}}  </i></span>
        <span style="font-size:25px"><i>is/are the  </i></span>
-       <span style="font-size:25px"><i>registered holder of Rs.{{shares.valueoftheshares}} of the DJS Credit Society. </i></span>
+       <span style="font-size:25px"><i>registered holder of Rs.{{shares.valueoftheshares|intcomma }} of the DJS Credit Society. </i></span>
        <br><br>
        <span style="font-size:25px"><b>Shares Presented from : DJS Credit Society </b></span><br/><br/>
        <span style="font-size:25px"><b>Share Holders Name:{{Accountholder.name}}</b></span><br/><br/>
-       <span style="font-size:25px"><i>Share Value: &#x20B9; {{shares.valueoftheshares}}</i></span> <br/><br/>
+       <span style="font-size:25px"><i>Share Value: &#x20B9; {{shares.valueoftheshares|intcomma }}</i></span> <br/><br/>
        <span style="font-size:25px">Shares alloted from:{{shares.sharesStartingNumber}} to {{shares.sharesEndingNumber}}</span> <br/><br/>
        <span style="font-size:25px"><i>date:</i></span><br>
 
