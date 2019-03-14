@@ -31,9 +31,9 @@ def members(request):
     accounts=Account.objects.all
     name=str(Account.accountholder)
     Accountholder=Account.objects.all
-    date = accounts.dateofjoining
-    print("chirag")
-    print(date)
+    #date = accounts.dateofjoining
+    #print("chirag")
+    #print(date)
 
 
     # datetoday=datetime.date.today()
@@ -62,8 +62,10 @@ def bank(request):
 @login_required
 def loansadmin(request):
     loans=Loan.objects.all
+    accounts=Accounts.objects.all
     context={
         'loans':loans,
+        'accounts':accounts,
         'loan':"active"
     }
     return render (request,'loansadmin.html',context=context)
