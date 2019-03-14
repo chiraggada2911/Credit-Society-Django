@@ -94,7 +94,7 @@ def email(request):
         recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
         send_mail( subject, message, email_from, recipient_list )
         print("mail sent")
-        return render(request,'details.html')
+        return render(request,'dashboard.html')
 
 
 @login_required
