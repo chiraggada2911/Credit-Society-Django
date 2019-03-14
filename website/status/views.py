@@ -95,13 +95,7 @@ def details(request):
     return render(request,'dashboard.html',context=context)
 
 def email(request):
-        subject = 'This guy wants to change his monthly deduction'
-        message = 'details.Final_new_change'
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        send_mail( subject, message, email_from, recipient_list )
-        print("mail sent")
-        return render(request,'dashboard.html')
+        return render(request,'graph_test.html')
 
 
 @login_required
