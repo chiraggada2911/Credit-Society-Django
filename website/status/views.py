@@ -58,13 +58,22 @@ def details(request):
     Final_new_change =0
     if request.method=="POST":
         New_money_change = change_MoneyForm(request.POST)
-        print("1")
+        
         if New_money_change.is_valid():
             Final_new_change = New_money_change.cleaned_data['new_amount']
-        print("2")
+            subject = 'This guy wants to change his monthly deduction'
+            message = str(Final_new_change)
+            print(type(Final_new_change))
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+            send_mail( subject, message, email_from, recipient_list )
+            print("mail sent")
+
     else:
         New_money_change=change_MoneyForm()
     print(Final_new_change)
+
+
 
     date = Accountholder.dateofjoining
     datetoday=datetime.date.today()
@@ -87,14 +96,11 @@ def details(request):
 def email(request):
         subject = 'This guy wants to change his monthly deduction'
         message = 'details.Final_new_change'
-        #print(details.Final_new_change)
-        #msg = details.Final_new_change
-        #print(msg)
         email_from = settings.EMAIL_HOST_USER
         recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
         send_mail( subject, message, email_from, recipient_list )
         print("mail sent")
-        return render(request,'details.html')
+        return render(request,'dashboard.html')
 
 
 @login_required
