@@ -67,17 +67,19 @@ def details(request):
     print(Final_new_change)
 
     date = Accountholder.dateofjoining
-    datetoday=datetime.date.today()
-    days=datetoday-date
-    nod=(days).days
-    totalInvestment = nod * (Accountholder.corpus)
+    # datetoday=datetime.date.today()
+    # days=datetoday-date
+    # nod=(days).days
+    # totalInvestment = nod * (Accountholder.corpus)
+    # print(Accountholder.corpus)
+    # print(totalInvestment)
     context={
     'name':name,
     'fixedDeposits':fixedDeposits,
     'Accountholder':Accountholder,
     'loanuser':loanuser,
     'shares':shares,
-    'totalInvestment':totalInvestment,
+    #'totalInvestment':totalInvestment,
     'date':date,
     'dashboard':"active",
     }
