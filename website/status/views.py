@@ -23,6 +23,8 @@ import smtplib
 #for PDF
 from status.utils import render_to_pdf
 
+
+
 def custlogin(request):
     if request.user.is_staff:
         return redirect('/csadmin/')
@@ -53,7 +55,7 @@ def details(request):
     fixedDeposits=FixedDeposits.objects.filter(fdholdersName__username__icontains=current_user_id).get()
     loanuser = Loan.objects.filter(loanGivenTo__username__icontains=current_user_id).get()
     Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
-    Final_new_change = 0
+    Final_new_change =0
     if request.method=="POST":
         New_money_change = change_MoneyForm(request.POST)
         print("1")
@@ -82,6 +84,17 @@ def details(request):
 
     return render(request,'dashboard.html',context=context)
 
+def email(request):
+        subject = 'This guy wants to change his monthly deduction'
+        message = 'details.Final_new_change'
+        #print(details.Final_new_change)
+        #msg = details.Final_new_change
+        #print(msg)
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+        send_mail( subject, message, email_from, recipient_list )
+        print("mail sent")
+        return render(request,'details.html')
 
 
 @login_required
@@ -147,16 +160,7 @@ def Investment(request):
 
 #use http response here it'll work
 # for pdf stuff Using WeasyPrint
-def email(request):
-        subject = 'Thank you for registering to our site'
-        message = ' it  means a world to us '
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        #send_mail( subject, message, email_from, recipient_list )
-        print("mail sent")
-        return render(request,'changemd.html')
 
-#       def changemd(request):
 
 
 class GeneratePdf(View):
