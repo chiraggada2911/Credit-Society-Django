@@ -6,3 +6,6 @@ class UserForm(forms.ModelForm):
     class Meta:
         model=User
         fields=['username','email','password']
+
+class change_MoneyForm(forms.Form):
+    new_amount = forms.IntegerField()

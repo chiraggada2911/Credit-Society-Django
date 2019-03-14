@@ -1,4 +1,5 @@
 from django.shortcuts import render
+#models
 from status.models import Account,Loan,FixedDeposits,Shares,User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
@@ -7,6 +8,9 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
 from django.template.loader import get_template
+
+#forms
+from status.forms import change_MoneyForm
 
 #for date and time
 import datetime
@@ -49,6 +53,16 @@ def details(request):
     fixedDeposits=FixedDeposits.objects.filter(fdholdersName__username__icontains=current_user_id).get()
     loanuser = Loan.objects.filter(loanGivenTo__username__icontains=current_user_id).get()
     Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+    Final_new_change = 0
+    if request.method=="POST":
+        New_money_change = change_MoneyForm(request.POST)
+        print("1")
+        if New_money_change.is_valid():
+            Final_new_change = New_money_change.cleaned_data['new_amount']
+        print("2")
+    else:
+        New_money_change=change_MoneyForm()
+    print(Final_new_change)
 
     date = Accountholder.dateofjoining
     datetoday=datetime.date.today()
