@@ -13,7 +13,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		text: "Total Income"
 	},
 	axisY:{
-		title: "Amount In Rupees"
+		title: "{{Accountholder.name}}"
 	},
 	toolTip: {
 		shared: true
@@ -27,7 +27,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		name: "Month",
 		showInLegend: false,
 		dataPoints: [
-			{ label: "Atlanta 1996" , y: 44 },
+			{ label: "{{Accountholder.name}}" , y: 44 },
 			{ label:"Sydney 2000", y: 37 },
 			{ label: "Athens 2004", y: 36 },
 			{ label: "Beijing 2008", y: 36 },
@@ -54,6 +54,7 @@ function toggleDataSeries(e) {
 </head>
 <body>
 <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<h1>{{Accountholder.name}}</h1>
 <script src="{% static 'status/js/graph_test.js' %}"></script>
 </body>
 </html>

@@ -94,8 +94,15 @@ def details(request):
 
     return render(request,'dashboard.html',context=context)
 
-def email(request):
-        return render(request,'graph_test.html')
+
+@login_required
+def graph(request):
+        current_user_id=request.user.username
+        Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+        context={
+            'Accountholder':Accountholder,
+        }
+        return render(request,'graph_test.html',context=context)
 
 
 @login_required
