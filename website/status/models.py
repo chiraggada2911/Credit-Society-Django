@@ -16,8 +16,9 @@ class Department(models.Model):
 class Account(models.Model):
     """This is the schema for the account of every staff member"""
     monthlyDeduction=models.IntegerField()
-    corpus=models.IntegerField(default=0)
+    corpus=models.IntegerField(default=0,blank=True)
     sapid=models.IntegerField(default=0)
+    dividend=models.FloatField(null=True,blank=True)
     name=models.CharField(max_length=50,null=False,default='')
     accountholder=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=False)
     dateofjoining=models.DateField()
