@@ -15,14 +15,16 @@
       </tr>
     </thead>
     <tbody>
-{%for i in fixedDeposits%}
+
+{%for i in fixedDeposits %}
   <tr>
-    <td>{{i.Accountholder.name}}</td>
+    <td>{%for j in accounts %}{%ifequal j i%}{{i.name}}{%endifequal%}{%endfor%}</td>
     <td>{{i.fdCapital}}</td>
     <td>{{i.rateOfInterest}}</td>
     <td>{{i.maturityDate}}</td>
 
   </tr>
+
 {%endfor%}
 
 </tbody>

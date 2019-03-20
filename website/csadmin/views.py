@@ -30,7 +30,7 @@ def members(request):
     users=User.objects.all
     accounts=Account.objects.all
     name=str(Account.accountholder)
-    Accountholder=Account.objects.all
+    #Accountholder=Account.objects.all
     #date = accounts.dateofjoining
     #print("chirag")
     #print(date)
@@ -46,6 +46,7 @@ def members(request):
     context={
         'users':users,
         'accounts':accounts,
+        'name':name,
         'member':"active"
     }
     return render (request,'members.html',context=context)
@@ -53,8 +54,14 @@ def members(request):
 @login_required
 def bank(request):
     fixedDeposits=FixedDeposits.objects.all
+    accounts=Account.objects.all
+    users=User.objects.all
+    name=str(Account.accountholder)
     context={
         'fixedDeposits':fixedDeposits,
+        'accounts':accounts,
+        'name':name,
+        'users':users,
         'Bank':"active"
     }
     return render (request,'bank.html',context=context)
@@ -62,7 +69,7 @@ def bank(request):
 @login_required
 def loansadmin(request):
     loans=Loan.objects.all
-    accounts=Accounts.objects.all
+    accounts=Account.objects.all
     context={
         'loans':loans,
         'accounts':accounts,
