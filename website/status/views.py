@@ -23,7 +23,7 @@ import smtplib
 #for PDF
 from status.utils import render_to_pdf
 
-
+from csadmin import views
 
 def custlogin(request):
     if request.user.is_staff:
@@ -80,7 +80,8 @@ def details(request):
     days=datetoday-date
     nod=(days).days
     totalInvestment = nod * (Accountholder.corpus)
-
+    print("chiru")
+    #print(totalmoney.final_dividend)
     context={
     'name':name,
     'fixedDeposits':fixedDeposits,
