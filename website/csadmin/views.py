@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from status.models import Account,Loan,FixedDeposits,Shares,User,Department
-from django.forms import ModelForm
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -10,8 +9,9 @@ from django.views import generic
 import datetime
 from dateutil import relativedelta
 
-
-
+#forms
+from django.forms import ModelForm
+from csadmin.forms import change_ROI_dividend
 
 # Create your views here.
 def index(request):
@@ -30,7 +30,7 @@ def members(request):
     users=User.objects.all
     accounts=Account.objects.all
     name=str(Account.accountholder)
-    Accountholder=Account.objects.all
+    #Accountholder=Account.objects.all
     #date = accounts.dateofjoining
     #print("chirag")
     #print(date)
@@ -46,6 +46,7 @@ def members(request):
     context={
         'users':users,
         'accounts':accounts,
+        'name':name,
         'member':"active"
     }
     return render (request,'members.html',context=context)
@@ -53,8 +54,14 @@ def members(request):
 @login_required
 def bank(request):
     fixedDeposits=FixedDeposits.objects.all
+    accounts=Account.objects.all
+    users=User.objects.all
+    name=str(Account.accountholder)
     context={
         'fixedDeposits':fixedDeposits,
+        'accounts':accounts,
+        'name':name,
+        'users':users,
         'Bank':"active"
     }
     return render (request,'bank.html',context=context)
@@ -62,7 +69,7 @@ def bank(request):
 @login_required
 def loansadmin(request):
     loans=Loan.objects.all
-    accounts=Accounts.objects.all
+    accounts=Account.objects.all
     context={
         'loans':loans,
         'accounts':accounts,
@@ -72,6 +79,16 @@ def loansadmin(request):
 
 @login_required
 def totalmoney(request):
+    final_dividend=0
+    if request.method=="POST":
+        dividend=change_ROI_dividend(request.POST)
+
+        if dividend.is_valid():
+            final_dividend = dividend.cleaned_data['new_ROI_dividend']
+        else:
+            dividend=change_ROI_dividend()
+    print(final_dividend)
+
     context={
         'money':"active"
     }
