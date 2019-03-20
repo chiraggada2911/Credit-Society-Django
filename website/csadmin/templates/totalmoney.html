@@ -2,4 +2,11 @@
 
 {%block title%}TotalMoney{%endblock%}
 {%block content%}
+<form class="lw-form" method="post">
+  <div class="lw-field">
+    <input type="numeric" name="new_ROI_dividend" id="new_dividend" placeholder="Enter the new Rate of Interest of Dividend">
+  </div>
+  <button class="lw-btn" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+  {%csrf_token%}
+</form>
 {%endblock%}
