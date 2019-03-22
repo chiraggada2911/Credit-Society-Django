@@ -68,6 +68,7 @@ class Month(models.Model):
     def __str__(self):
         return self.monthfield
 
+
 class Record(models.Model):
     '''this is the schema for individual records of transactions '''
     monthName=models.ForeignKey(Month,on_delete=models.SET_NULL,null=True,blank=True)

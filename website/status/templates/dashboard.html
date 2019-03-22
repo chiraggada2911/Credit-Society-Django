@@ -31,7 +31,7 @@
             <div class="card-body">
               <h2>Fixed Deposits </h2>
               {% if fixedDeposits.fdCapital > 0 %}
-              <h4>Amount: &#x20b9; {{ fixedDeposits.fdCapital }}</h4>
+              <h4>Amount: &#x20b9; {{ fixedDeposits.fdCapital|intcomma }}</h4>
               <h4>Date of Maturity:{{fixedDeposits.maturityDate}}</h4>
               <h4>Interest:{{fixedDeposits.rateOfInterest}} </h4>
               {% else %}

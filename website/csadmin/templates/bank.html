@@ -18,7 +18,7 @@
 
 {%for i in fixedDeposits %}
   <tr>
-    <td>{%for j in accounts %}{%ifequal j i%}{{i.name}}{%endifequal%}{%endfor%}</td>
+    <td>{{i.name}}</td>
     <td>{{i.fdCapital}}</td>
     <td>{{i.rateOfInterest}}</td>
     <td>{{i.maturityDate}}</td>

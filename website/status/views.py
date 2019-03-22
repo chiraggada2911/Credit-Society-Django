@@ -80,8 +80,7 @@ def details(request):
     days=datetoday-date
     nod=(days).days
     totalInvestment = nod * (Accountholder.corpus)
-    print("chiru")
-    #print(totalmoney.final_dividend)
+    print("chiruuu")
     context={
     'name':name,
     'fixedDeposits':fixedDeposits,
