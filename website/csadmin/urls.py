@@ -13,6 +13,7 @@ urlpatterns = [
     path('account/create/', views.AccountCreate.as_view(), name='account_create'),
     path('fd/add/', views.Fdadd.as_view(), name='fd_add'),
     path('loan/add/', views.Loanadd.as_view(), name='loan_add'),
-    path('shares/add/', views.Sharesadd.as_view(), name='shares_add')
+    path('shares/add/', views.Sharesadd.as_view(), name='shares_add'),
+    path('tableview',views.GeneratePdf.as_view(),name="GeneratePdf"),
 
 ]
