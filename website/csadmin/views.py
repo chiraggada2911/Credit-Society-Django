@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from status.models import Account,Loan,FixedDeposits,Shares,User
+from status.models import Account,Login
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -96,27 +96,27 @@ def totalmoney(request):
 
 #class adduseraccountform(ModelForm):
 class UserCreate(CreateView):
-        model=User
+        #model=User
         fields=['first_name','last_name','username','email','password']
         #make_password(password)
         success_url=reverse_lazy('csadmin:account_create')
 
 class AccountCreate(CreateView):
-        model=Account
+        #model=Account
         fields='__all__'
         success_url=reverse_lazy('csadmin:members')
 
 class Fdadd(CreateView):
-        model=FixedDeposits
+        #model=FixedDeposits
         fields='__all__'
         success_url=reverse_lazy('csadmin:members')
 
 class Loanadd(CreateView):
-        model=Loan
+        #model=Loan
         fields='__all__'
         success_url=reverse_lazy('csadmin:members')
 
 class Sharesadd(CreateView):
-        model=Shares
+        #model=Shares
         fields='__all__'
         success_url=reverse_lazy('csadmin:members')
