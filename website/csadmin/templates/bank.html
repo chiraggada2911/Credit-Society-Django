@@ -7,7 +7,7 @@
   <table class="table table-striped table-sm">
     <thead>
       <tr>
-        <th>Name</th>
+        <th>Username</th>
         <th>FD Capital</th>
         <th>Rate of Interest</th>
         <th>Maturity Date</th>
@@ -18,7 +18,7 @@
 
 {%for i in fixedDeposits %}
   <tr>
-    <td>{%for j in accounts %}{%ifequal j i%}{{i.name}}{%endifequal%}{%endfor%}</td>
+    <td>{{i.fdholdersName}}</td>
     <td>{{i.fdCapital}}</td>
     <td>{{i.rateOfInterest}}</td>
     <td>{{i.maturityDate}}</td>

@@ -6,13 +6,6 @@ import datetime
 # Create your models here.
 
 
-class Department(models.Model):
-    '''this is the schema for the department of the user entered'''
-    deaprtmentname=models.CharField(max_length=100,blank=False,null=False)
-
-    def __str__(self):
-        return self.deaprtmentname
-
 class Account(models.Model):
     """This is the schema for the account of every staff member"""
     monthlyDeduction=models.IntegerField()
@@ -22,7 +15,6 @@ class Account(models.Model):
     name=models.CharField(max_length=50,null=False,default='')
     accountholder=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=False)
     dateofjoining=models.DateField()
-    department=models.ForeignKey(Department,on_delete=models.SET_NULL,null=True,blank=False,related_name='department')
 
     def __str__(self):
         return str(self.accountholder)

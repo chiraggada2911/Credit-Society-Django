@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from status.models import Account,Loan,FixedDeposits,Shares,User,Department
+from status.models import Account,Loan,FixedDeposits,Shares,User
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
