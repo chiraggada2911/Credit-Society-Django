@@ -10,7 +10,7 @@ from django.views.generic import View
 from django.template.loader import get_template
 
 #forms
-from status.forms import change_MoneyForm
+from status.forms import change_MoneyForm,LoanReqForm
 
 #for date and time
 import datetime
@@ -155,6 +155,23 @@ def fixedDeposits(request):
 
 @login_required
 def loanuser(request):
+
+    if request.method=="POST":
+        print("kyu")
+        loanreq = LoanReqForm(request.POST)
+
+        if loanreq.is_valid():
+            print("kya bantai")
+
+            subject = 'This guy wants a loan'
+            message = Accountholder.name +" : "
+            email_from = settings.EMAIL_HOST_USER
+
+            recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+
+            send_mail( subject, message, email_from, recipient_list )
+            print("mail sent")
+
 
     current_user_id = request.user.username
     loanuser = Loan.objects.filter(loanGivenTo__username__icontains=current_user_id).get()

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from status.models import Account,Loan,FixedDeposits,Shares,User,Department
+from status.models import Account,Loan,FixedDeposits,Shares,User
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -11,6 +11,7 @@ from dateutil import relativedelta
 
 #forms
 from django.forms import ModelForm
+from csadmin.forms import change_ROI_dividend
 
 # Create your views here.
 def index(request):
@@ -81,7 +82,6 @@ def totalmoney(request):
     final_dividend=0
     if request.method=="POST":
         dividend=change_ROI_dividend(request.POST)
-
         if dividend.is_valid():
             final_dividend = dividend.cleaned_data['new_ROI_dividend']
 

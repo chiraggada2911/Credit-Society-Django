@@ -59,34 +59,34 @@
       <div class="card-body">
         <h2>Loan</h2>
         <ul>
-          {% if loanuser.loanAmount > 0 %}
+          {% ifequal loanuser.isLoanTaken True %}
           <h2>Your Loan Amount: &#x20b9; {{ loanuser.loanAmount|intcomma  }}</h2>
           {% else %}
           <h1>you have no loans due</h1>
           <h4>Request Loan
             <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
           </h4>
-          {% endif %}
+          {% endifequal %}
         </ul>
       </div>
 
 
     </div>
     <div id="modal" class="overlay">
-           <div class="popup">
-             <h2>Change your Monthly Deduction</h2>
-              <a class="close" href="{%url 'status:details'%}">×</a>
-                 <div class="content">
-                   <form class="lw-form" method="POST" >
-                       <div class="lw-field">
-                         <input class="lw-input" name="new_amount" id="new_amnt"  type="numeric" placeholder="Enter Amount in Rs" required>
-                       </div>
-                       <button class="lw-btn" href="{%url 'status:details'%}" >Submit to admin</button>
-                       {% csrf_token %}
-                     </form>
-                </div>
-             </div>
-         </div>
+      <div class="popup">
+        <h2>Change your Monthly Deduction</h2>
+        <a class="close" href="{%url 'status:details'%}">×</a>
+        <div class="content">
+          <form class="lw-form" method="POST">
+            <div class="lw-field">
+              <input class="lw-input" name="new_amount" id="new_amnt" type="numeric" placeholder="Enter Amount in Rs" required>
+            </div>
+            <button class="lw-btn" href="{%url 'status:details'%}">Submit to admin</button>
+            {% csrf_token %}
+          </form>
+        </div>
+      </div>
+    </div>
 
 
 </main>

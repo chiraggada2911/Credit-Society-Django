@@ -9,6 +9,6 @@ class AccountForm(forms.ModelForm):
         model=Account
         fields='__all__'
 
-class change_ROI_dividend(forms.ModelForm):
-    class Meta:
-        new_ROI_dividend=forms.FloatField()
+class change_ROI_dividend(forms.Form):
+    
+    new_ROI_dividend = forms.FloatField()
