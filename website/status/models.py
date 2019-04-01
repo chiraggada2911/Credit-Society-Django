@@ -1,18 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 import datetime
 
 
 # Create your models here.
-class Login(models.Model):
-    username=models.CharField(max_length=50,null=False)
-    password=models.CharField(max_length=20,null=False)
-    def __str__(self):
-        return str(self.username)
-
 class Account(models.Model):
     #schema for data to show
     accountnumber=models.IntegerField(null=False)
-    username=models.ForeignKey(Login,on_delete=models.SET_NULL,null=True)
+    username=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     name=models.CharField(max_length=50,null=False)
     sapid=models.IntegerField(null=False)
     dateofjoining=models.DateField(null=False)
