@@ -82,9 +82,9 @@ def totalmoney(request):
     final_dividend=0
     if request.method=="POST":
         dividend=change_ROI_dividend(request.POST)
-
         if dividend.is_valid():
             final_dividend = dividend.cleaned_data['new_ROI_dividend']
+
         else:
             dividend=change_ROI_dividend()
     print(final_dividend)
