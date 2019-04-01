@@ -1,10 +1,6 @@
 from django.contrib import admin
-from .models import Account,Loan,Shares,FixedDeposits,Record,Month
+from .models import Account,Login
 # Register your models here.
 
 admin.site.register(Account)
-admin.site.register(Loan)
-admin.site.register(Shares)
-admin.site.register(FixedDeposits)
-admin.site.register(Record)
-admin.site.register(Month)
+admin.site.register(Login)
