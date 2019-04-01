@@ -5,17 +5,6 @@ import datetime
 
 # Create your models here.
 
-
-<<<<<<< HEAD
-=======
-# class Department(models.Model):
-#     '''this is the schema for the department of the user entered'''
-#     deaprtmentname=models.CharField(max_length=100,blank=False,null=False)
-#
-#     def __str__(self):
-#         return self.deaprtmentname
-
->>>>>>> master
 class Account(models.Model):
     """This is the schema for the account of every staff member"""
     monthlyDeduction=models.IntegerField()
