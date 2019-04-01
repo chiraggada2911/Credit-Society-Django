@@ -1,67 +1,40 @@
 from django.db import models
-from django.contrib.auth.models import User
 import datetime
 
 
 # Create your models here.
+class Login(models.Model):
+    username=models.CharField(max_length=50,null=False)
+    password=models.CharField(max_length=20,null=False)
+    def __str__(self):
+        return str(self.username)
 
 class Account(models.Model):
-    """This is the schema for the account of every staff member"""
-    monthlyDeduction=models.IntegerField()
-    corpus=models.IntegerField(default=0,blank=True)
-    sapid=models.IntegerField(default=0)
-    AccountNumber=models.IntegerField(default=0,primary_key=True)
-    dividend=models.FloatField(null=True,blank=True)
-    name=models.CharField(max_length=50,null=False,default='')
-    accountholder=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=False)
-    dateofjoining=models.DateField()
+    #schema for data to show
+    accountnumber=models.IntegerField(null=False)
+    username=models.ForeignKey(Login,on_delete=models.SET_NULL,null=True)
+    name=models.CharField(max_length=50,null=False)
+    sapid=models.IntegerField(null=False)
+    dateofjoining=models.DateField(null=False)
+    shareamount=models.IntegerField(default=0,null=False)
+    sharebalance=models.IntegerField(default=0)
+    cdamount=models.IntegerField(default=0)
+    dividend=models.FloatField(null=True)
+    cdbalance=models.IntegerField(default=0)
+    totalamount=models.IntegerField(default=0)
+    #schema for shares
+    sharesstartingnumber=models.IntegerField(null=True)
+    sharesendingnumber=models.IntegerField(null=True)
+    #schema for Loans
+    isloantaken=models.BooleanField(default=False)
+    longloanprinciple=models.IntegerField(blank=True,null=True)
+    longloaninterest=models.IntegerField(blank=True,null=True)
+    longloanbalance=models.IntegerField(blank=True,null=True)
+    longloanemi=models.IntegerField(blank=True,null=True)
+    emerloanprinciple=models.IntegerField(blank=True,null=True)
+    emerloaninterest=models.IntegerField(blank=True,null=True)
+    emerloanbalance=models.IntegerField(blank=True,null=True)
+    emerloanemi=models.IntegerField(blank=True,null=True)
 
     def __str__(self):
-        return str(self.accountholder)
-
-
-class Shares(models.Model):
-    '''this is the schema for the shares assigned to every member'''
-    sharesStartingNumber=models.IntegerField()
-    sharesEndingNumber=models.IntegerField()
-    valueoftheshares=models.IntegerField()
-    shareholdersName=models.OneToOneField(User,on_delete=models.SET_NULL,null=True,blank=False)
-
-    def __str__(self):
-        return self.shareholdersName.username
-
-
-
-class Loan(models.Model):
-    '''this is the schema for the loans given to the member only of the credit society'''
-    loanAmount=models.IntegerField()
-    emi=models.IntegerField()
-    repaymentDue=models.DateField()
-    rateOfInterest=models.FloatField()
-    isLoanTaken=models.BooleanField(default=False)
-    loanGivenTo=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
-
-    def __str__(self):
-        return self.loanGivenTo.username
-
-
-class FixedDeposits(models.Model):
-    '''this is the schema for the details of the FDS that the credit society invests in
-    and also their return details '''
-    fdCapital=models.IntegerField()
-    rateOfInterest=models.FloatField()
-    maturityDate=models.DateField()
-    fdholdersName=models.OneToOneField(User,on_delete=models.SET_NULL,null=True,blank=True)
-
-    def __str__(self):
-        return str(self.fdholdersName)
-
-class Month(models.Model):
-    monthfield=models.CharField(max_length=50,default='january')
-    def __str__(self):
-        return self.monthfield
-
-
-class Record(models.Model):
-    '''this is the schema for individual records of transactions '''
-    monthName=models.ForeignKey(Month,on_delete=models.SET_NULL,null=True,blank=True)
+        return str(self.username)

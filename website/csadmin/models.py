@@ -1,3 +1,3 @@
 from django.db import models
-from status.models import Account,Loan,FixedDeposits,Shares,User
+from status.models import Account,Login
 # Create your models here.
