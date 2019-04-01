@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 {% load humanize %}
 <html>
+
 <head>
-<style>
-  @page {
+  <style>
+    @page {
       size: letter landscape;
       margin-top: 4cm;
       margin-bottom: 2cm;
       margin-left: 2cm;
       margin-right: 2cm;
-  }
-</style>
+    }
+  </style>
 </head>
 
 
 <div style="width:800px; height:600px; padding:40px; text-align:center; border: 60px solid #787878">
-<div style="width:750px; height:800px; padding:80px; text-align:center; border: 5px solid #787878">
-       <span style="font-size:50px; font-weight:bold">Share Certificate</span>
-       <br><br>
-       <span style="font-size:25px"><i>This is to certify that Mr./Mrs {{Accountholder.name}}  </i></span>
-       <span style="font-size:25px"><i>is/are the  </i></span>
-       <span style="font-size:25px"><i>registered holder of Rs.{{shares.valueoftheshares|intcomma }} of the DJS Credit Society. </i></span>
-       <br><br>
-       <span style="font-size:25px"><b>Shares Presented from : DJS Credit Society </b></span><br/><br/>
-       <span style="font-size:25px"><b>Share Holders Name:{{Accountholder.name}}</b></span><br/><br/>
-       <span style="font-size:25px"><i>Share Value: Rs. {{shares.valueoftheshares|intcomma }}</i></span> <br/><br/>
-       <span style="font-size:25px">Shares alloted from:{{shares.sharesStartingNumber}} to {{shares.sharesEndingNumber}}</span> <br/><br/>
-       <span style="font-size:25px"><i>date:</i></span><br>
+  <div style="width:750px; height:800px; padding:80px; text-align:center; border: 5px solid #787878">
+    <span style="font-size:50px; font-weight:bold">Share Certificate</span>
+    <br><br>
+    <span style="font-size:25px"><i>This is to certify that Mr./Mrs {{Accountholder.name}} </i></span>
+    <span style="font-size:25px"><i>is/are the </i></span>
+    <span style="font-size:25px"><i>registered holder of Rs.{{shares.valueoftheshares|intcomma }} of the DJS Credit Society. </i></span>
+    <br><br>
+    <span style="font-size:25px"><b>Shares Presented from : DJS Credit Society </b></span><br /><br />
+    <span style="font-size:25px"><b>Share Holders Name:{{Accountholder.name}}</b></span><br /><br />
+    <span style="font-size:25px"><i>Share Value: &#x20B9; {{shares.valueoftheshares|intcomma }}</i></span> <br /><br />
+    <span style="font-size:25px">Shares alloted from:{{shares.sharesStartingNumber}} to {{shares.sharesEndingNumber}}</span> <br /><br />
+    <span style="font-size:25px"><i>date:</i></span><br>
 
+  </div>
 </div>
-</div>
+
 </html>

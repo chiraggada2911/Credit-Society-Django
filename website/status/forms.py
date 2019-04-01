@@ -9,3 +9,13 @@ class UserForm(forms.ModelForm):
 
 class change_MoneyForm(forms.Form):
     new_amount = forms.IntegerField()
+
+Loan_choice=[
+    ('normal_loan','Normal Loan'),
+    ('emergency_loan', 'Emergency Loan'),
+]
+
+class LoanReqForm(forms.Form):
+
+    loanChoice = forms.CharField(widget=forms.RadioSelect(choices=Loan_choice))
+    loanAmount = forms.IntegerField()
