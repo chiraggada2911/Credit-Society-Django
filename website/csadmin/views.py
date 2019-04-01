@@ -4,6 +4,11 @@ from status.models import Account,Loan,FixedDeposits,Shares,User,Department
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
+from csadmin.utils import render_to_pdf
+from django.conf import settings
+from django.http import HttpResponse
+from django.views.generic import View
+from django.template.loader import get_template
 
 #for date and time
 import datetime
@@ -120,3 +125,18 @@ class Sharesadd(CreateView):
         model=Shares
         fields='__all__'
         success_url=reverse_lazy('csadmin:members')
+
+class GeneratePdf(View):
+    def get(self, request, *args, **kwargs):
+        template = get_template('tableview.html')
+        users=User.objects.all
+        accounts=Account.objects.all
+        name=str(Account.accountholder)
+        context ={
+            'users':users,
+            'accounts':accounts,
+            'name':name,
+        }
+        html = template.render(context)
+        pdf = render_to_pdf('tableview.html', context)
+        return HttpResponse(pdf, content_type='application/pdf')
