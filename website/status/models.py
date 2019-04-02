@@ -33,7 +33,7 @@ class Account(models.Model):
     emerloanemi=models.IntegerField(blank=True,null=True)
     #schema for fixed Deposits
     fdcapital=models.IntegerField(default=True,null=True)
-    fdmaturitydate=models.DateField()
+    fdmaturitydate=models.DateField(null=True)
     fdinterest=models.FloatField(blank=True,null=True)
 
 
