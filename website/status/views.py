@@ -116,7 +116,7 @@ def fixedDeposits(request):
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
 
 #conditional mail for maturity of FDs
-    dateMaturity = Accountholder.maturityDate
+    dateMaturity = Accountholder.fdmaturitydate
     datetoday=datetime.date.today()
 
     date_diff_fd = (relativedelta.relativedelta(dateMaturity,datetoday))
@@ -129,7 +129,7 @@ def fixedDeposits(request):
 
     if ((date_diff_fd).months==1 & (date_diff_fd).days==0):
         subject = 'FD is getting matured soon'
-        message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + Accountholder.maturityDate + "what wolud you like to do? reply on this email or contact Admin"
+        message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + Accountholder.fdmaturitydate + "what wolud you like to do? reply on this email or contact Admin"
         email_from = settings.EMAIL_HOST_USER
         recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
         send_mail( subject, message, email_from, recipient_list )
@@ -197,11 +197,9 @@ class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
         template = get_template('pdf.html')
         current_user_id=request.user.username
-        GeneratePdf=Shares.objects.filter(shareholdersName__username__icontains=current_user_id).get()
-        Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+        Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
         context ={
             'Accountholder':Accountholder,
-            'shares':GeneratePdf,
         }
         html = template.render(context)
         pdf = render_to_pdf('pdf.html', context)

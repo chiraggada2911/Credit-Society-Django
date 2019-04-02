@@ -24,18 +24,18 @@ class Account(models.Model):
     #schema for Loans
     isloantaken=models.BooleanField(default=False)
     longloanprinciple=models.IntegerField(blank=True,null=True)
-    longloaninterest=models.IntegerField(blank=True,null=True)
+    longloaninterest=models.FloatField(blank=True,null=True)
     longloanbalance=models.IntegerField(blank=True,null=True)
     longloanemi=models.IntegerField(blank=True,null=True)
     emerloanprinciple=models.IntegerField(blank=True,null=True)
-    emerloaninterest=models.IntegerField(blank=True,null=True)
+    emerloaninterest=models.FloatField(blank=True,null=True)
     emerloanbalance=models.IntegerField(blank=True,null=True)
     emerloanemi=models.IntegerField(blank=True,null=True)
     #schema for fixed Deposits
     fdcapital=models.IntegerField(default=True,null=True)
-    fdmaturitydate=models.IntegerField(blank=True,null=True)
-    fdinterest=models.IntegerField(blank=True,null=True)
-    
+    fdmaturitydate=models.DateField()
+    fdinterest=models.FloatField(blank=True,null=True)
+
 
     def __str__(self):
         return str(self.username)
