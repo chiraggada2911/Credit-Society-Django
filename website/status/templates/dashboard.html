@@ -16,7 +16,7 @@
         <h1>{{Accountholder.name}} </h1>
         <h4>SAP Id: {{Accountholder.sapid}}</h4>
         <h4>DoJ: {{date}}</h4>
-        <h4>Monthly Deductions: &#x20b9; {{Accountholder.monthlyDeduction|intcomma }}
+        <h4>Monthly Deductions: &#x20b9; {{Accountholder.shareamount|intcomma }}
           <!--<a href="../status/MonthlyDeduction" style="font-size:0.8rem;"> change</a>-->
           <a href="#modal">change</a>
 
@@ -24,32 +24,33 @@
       </div>
     </div>
 
-    <div class="container">
+    <!-- <div class="container">
       <div class="row">
         <div class="col">
           <div class="card">
             <div class="card-body">
               <h2>Fixed Deposits </h2>
-              {% if fixedDeposits.fdCapital > 0 %}
-              <h4>Amount: &#x20b9; {{ fixedDeposits.fdCapital|intcomma }}</h4>
+              <h4>Amount: &#x20b9; {{ Accountholder.fdCapital|intcomma }}</h4>
               <h4>Date of Maturity:{{fixedDeposits.maturityDate}}</h4>
               <h4>Interest:{{fixedDeposits.rateOfInterest}} </h4>
-              {% else %}
-              {% endif %}
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="col">
           <div class="card">
             <div class="card-body">
-              {% if shares.valueoftheshares > 0 %}
               <h2>Shares</h2>
+<<<<<<< HEAD
               <h4>Shares alloted from:{{shares.sharesStartingNumber}} to {{shares.sharesEndingNumber}}</h4>
               <h4>Share Value: &#x20b9; {{shares.valueoftheshares|intcomma }}</h4>
               <h4>Date:</h4>
               {% else %}
               {% endif %}
+=======
+              <h4>Shares alloted from:{{Accountholder.sharesstartingnumber}} to {{Accountholder.sharesendingnumber}}</h4>
+              <h4>Share Value: &#x20b9; {{Accountholder.shareamount|intcomma }}</h4>
+>>>>>>> upstream/master
             </div>
           </div>
         </div>
@@ -60,8 +61,8 @@
       <div class="card-body">
         <h2>Loan</h2>
         <ul>
-          {% ifequal loanuser.isLoanTaken True %}
-          <h2>Your Loan Amount: &#x20b9; {{ loanuser.loanAmount|intcomma  }}</h2>
+          {% ifequal Accountholder.isloantaken True %}
+          <h2>Your Loan Amount: &#x20b9; {{ Accountholder.longloanprinciple|intcomma  }}</h2>
           {% else %}
           <h1>you have no loans due</h1>
           <h4>Request Loan
