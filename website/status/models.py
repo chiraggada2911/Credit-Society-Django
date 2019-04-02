@@ -16,6 +16,7 @@ class Account(models.Model):
     cdamount=models.IntegerField(default=0)
     dividend=models.FloatField(null=True)
     cdbalance=models.IntegerField(default=0)
+    cdinterest=models.IntegerField(blank=True,null=True)
     totalamount=models.IntegerField(default=0)
     #schema for shares
     sharesstartingnumber=models.IntegerField(null=True)
@@ -30,6 +31,10 @@ class Account(models.Model):
     emerloaninterest=models.IntegerField(blank=True,null=True)
     emerloanbalance=models.IntegerField(blank=True,null=True)
     emerloanemi=models.IntegerField(blank=True,null=True)
+    #schema for fixed Deposits
+    fdcapital=models.IntegerField(default=True,null=True)
+    fdmaturitydate=models.IntegerField(blank=True,null=True)
+    fdinterest=models.IntegerField(blank=True,null=True)
 
     def __str__(self):
         return str(self.username)
