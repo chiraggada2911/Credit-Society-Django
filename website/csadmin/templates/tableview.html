@@ -1,3 +1,14 @@
+<head>
+  <style>
+    @page {
+      size: letter landscape;
+      margin-top: 4cm;
+      margin-bottom: 2cm;
+      margin-left: 2cm;
+      margin-right: 2cm;
+    }
+  </style>
+</head>
 <h1 class="h2">List Of Current Members</h1>
 <div class="table-responsive">
   <table class="table table-bordered">
@@ -21,7 +32,7 @@
       </tr>
     </thead>
     <tbody>
-  {%for i in Members%}
+  {%for i in accounts%}
   <tr>
     <td>{{i.accountnumber}}</td>
     <td>{{i.sapid}}</td>
