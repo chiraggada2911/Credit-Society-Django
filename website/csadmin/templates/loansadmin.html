@@ -4,25 +4,37 @@
 {%block content%}
 <h1 class="h2">List Of Current Loan</h1>
 <div class="table-responsive">
-  <table class="table table-striped table-sm">
+  <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Username</th>
-        <th>Loan Amount</th>
-        <th>Emi</th>
-        <th>Rate of Interest</th>
-        <th>Repayment date</th>
+        <th>A/C No.</th>
+        <th>SapId</th>
+        <th>Name</th>
+        <th>Long loan Principle</th>
+        <th>Long loan Interest</th>
+        <th>Long loan Balance</th>
+        <th>Long loan Emi</th>
+        <th>Emer loan Principle</th>
+        <th>Emer loan Interest</th>
+        <th>Emer loan Balance</th>
+        <th>Emer loan Emi</th>
 
       </tr>
     </thead>
     <tbody>
-{%for i in loans%}
+{%for i in Loansadmin%}
   <tr>
-    <td>{{i.loanGivenTo}}</td>
-    <td>{{i.loanAmount}}</td>
-    <td>{{i.emi}}</td>
-    <td>{{i.rateOfInterest}}</td>
-    <td>{{i.repaymentDue}}</td>
+    <td>{{i.accountnumber}}</td>
+    <td>{{i.sapid}}</td>
+    <td>{{i.name}}</td>
+    <td>{{i.longloanprinciple}}</td>
+    <td>{{i.longloaninterest}}</td>
+    <td>{{i.longloanbalance}}</td>
+    <td>{{i.longloanemi}}</td>
+    <td>{{i.emerloanprinciple}}</td>
+    <td>{{i.emerloaninterest}}</td>
+    <td>{{i.emerloanbalance}}</td>
+    <td>{{i.emerloanemi}}</td>
 
   </tr>
 {%endfor%}
