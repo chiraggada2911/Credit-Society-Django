@@ -26,13 +26,10 @@
               <h1>you have no loans due</h1>
               {% endifequal %}
             <h2  style="padding-top:50px" >Request a loan</h2>
-              <form class="lw-form" method="POST" >
-            <div  class="radio">
-              <label><input type="radio" name="normal_loan" checked>Normal Loan</label>
-            </div>
-            <div class="radio">
-              <label><input type="radio" name="emergency_loan">Emergency Loan</label>
-            </div>
+
+            <form class="lw-form" method="POST" >
+              <input type="radio" name="loanChoice" value="normal_loan"> Normal Loan<br>
+              <input type="radio" name="loanChoice" value="emergency_loan"> Emergency Loan<br>
 
                 <div class="lw-field">
                   <input class="lw-input" name="loan_amount" id="loan_amnt"  type="numeric" placeholder="Enter Amount in Rs" required>
@@ -40,6 +37,7 @@
                 <button class="lw-btn" href="{%url 'status:details'%}" >Submit to admin</button>
                 {% csrf_token %}
               </form>
+
           </div>
         </div>
       </div>
