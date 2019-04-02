@@ -50,11 +50,10 @@ def details(request):
     '''this view return the details of the logged in user '''
 
     current_user_id=request.user.username
-    name=str(Account.accountholder)
-    shares=Shares.objects.filter(shareholdersName__username__icontains=current_user_id).get()
-    fixedDeposits=FixedDeposits.objects.filter(fdholdersName__username__icontains=current_user_id).get()
-    loanuser = Loan.objects.filter(loanGivenTo__username__icontains=current_user_id).get()
-    Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+    name=str(Account.name)
+    Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+
+#for changing the monthly monthlyDeduction which shld be in the multiple of Rs. 500
     Final_new_change =0
     if request.method=="POST":
         New_money_change = change_MoneyForm(request.POST)
@@ -75,30 +74,23 @@ def details(request):
         New_money_change=change_MoneyForm()
     print(Final_new_change)
 
+#calculating totalInvestment
     date = Accountholder.dateofjoining
-    datetoday=datetime.date.today()
-    days=datetoday-date
-    nod=(days).days
-    totalInvestment = nod * (Accountholder.corpus)
-    print("chiruuu")
+
     context={
     'name':name,
-    'fixedDeposits':fixedDeposits,
     'Accountholder':Accountholder,
-    'loanuser':loanuser,
-    'shares':shares,
-    #'totalInvestment':totalInvestment,
     'date':date,
     'dashboard':"active",
     }
 
     return render(request,'dashboard.html',context=context)
 
-
+#not using!!
 @login_required
 def graph(request):
         current_user_id=request.user.username
-        Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+        Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
         context={
             'Accountholder':Accountholder,
         }
@@ -109,13 +101,10 @@ def graph(request):
 def shares(request):
 
     current_user_id=request.user.username
-    shares=Shares.objects.filter(shareholdersName__username__icontains=current_user_id).get()
-    Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+    Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
     context={
         'Accountholder':Accountholder,
-        'shares':shares,
         'share':"active",
-
     }
 
     return render (request,'shares.html',context=context)
@@ -124,10 +113,10 @@ def shares(request):
 def fixedDeposits(request):
 
     current_user_id=request.user.username
-    fixedDeposits=FixedDeposits.objects.filter(fdholdersName__username__icontains=current_user_id).get()
-    Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+    Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
 
-    dateMaturity = fixedDeposits.maturityDate
+#conditional mail for maturity of FDs
+    dateMaturity = Accountholder.fdmaturitydate
     datetoday=datetime.date.today()
 
     date_diff_fd = (relativedelta.relativedelta(dateMaturity,datetoday))
@@ -140,15 +129,14 @@ def fixedDeposits(request):
 
     if ((date_diff_fd).months==1 & (date_diff_fd).days==0):
         subject = 'FD is getting matured soon'
-        message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + fixedDeposits.maturityDate + "what wolud you like to do? reply on this email or contact Admin"
+        message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + Accountholder.fdmaturitydate + "what wolud you like to do? reply on this email or contact Admin"
         email_from = settings.EMAIL_HOST_USER
         recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
         send_mail( subject, message, email_from, recipient_list )
-        print("mail sent")
+        print("mail sent for maturity if FD")
 
     context={
         'Accountholder':Accountholder,
-        'fixedDeposits':fixedDeposits,
         'fixed':"active",
     }
     return render (request,'fixedDeposits.html',context=context)
@@ -156,12 +144,11 @@ def fixedDeposits(request):
 @login_required
 def loanuser(request):
 
+#Email for choice on request in taking loan
     if request.method=="POST":
-        print("kyu")
         loanreq = LoanReqForm(request.POST)
 
         if loanreq.is_valid():
-            print("kya bantai")
 
             subject = 'This guy wants a loan'
             message = Accountholder.name +" : "
@@ -174,11 +161,9 @@ def loanuser(request):
 
 
     current_user_id = request.user.username
-    loanuser = Loan.objects.filter(loanGivenTo__username__icontains=current_user_id).get()
-    Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+    Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
     context={
         'Accountholder':Accountholder,
-        'loanuser':loanuser,
         'loan':"active",
     }
     return render (request,'Loansuser.html',context=context)
@@ -186,16 +171,16 @@ def loanuser(request):
 @login_required
 def Investment(request):
     current_user_id=request.user.username
-    Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
-
+    Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+#calculates totalamount collected
     date = Accountholder.dateofjoining
     datetoday=datetime.date.today()
     days=relativedelta.relativedelta(datetoday,date)
     nod=days.months
     year = days.years
     final = nod + 12 * year
-    print(Accountholder.monthlyDeduction)
-    totalInvestment = final * (Accountholder.monthlyDeduction)
+    print(Accountholder.shareamount)
+    totalInvestment = final * (Accountholder.shareamount)
     context={
     'Accountholder':Accountholder,
     'totalInvestment':totalInvestment,
@@ -212,11 +197,9 @@ class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
         template = get_template('pdf.html')
         current_user_id=request.user.username
-        GeneratePdf=Shares.objects.filter(shareholdersName__username__icontains=current_user_id).get()
-        Accountholder=Account.objects.filter(accountholder__username__icontains=current_user_id).get()
+        Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
         context ={
             'Accountholder':Accountholder,
-            'shares':GeneratePdf,
         }
         html = template.render(context)
         pdf = render_to_pdf('pdf.html', context)

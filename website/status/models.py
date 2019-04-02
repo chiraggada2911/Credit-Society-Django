@@ -16,6 +16,7 @@ class Account(models.Model):
     cdamount=models.IntegerField(default=0)
     dividend=models.FloatField(null=True)
     cdbalance=models.IntegerField(default=0)
+    cdinterest=models.IntegerField(blank=True,null=True)
     totalamount=models.IntegerField(default=0)
     #schema for shares
     sharesstartingnumber=models.IntegerField(null=True)
@@ -23,13 +24,18 @@ class Account(models.Model):
     #schema for Loans
     isloantaken=models.BooleanField(default=False)
     longloanprinciple=models.IntegerField(blank=True,null=True)
-    longloaninterest=models.IntegerField(blank=True,null=True)
+    longloaninterest=models.FloatField(blank=True,null=True)
     longloanbalance=models.IntegerField(blank=True,null=True)
     longloanemi=models.IntegerField(blank=True,null=True)
     emerloanprinciple=models.IntegerField(blank=True,null=True)
-    emerloaninterest=models.IntegerField(blank=True,null=True)
+    emerloaninterest=models.FloatField(blank=True,null=True)
     emerloanbalance=models.IntegerField(blank=True,null=True)
     emerloanemi=models.IntegerField(blank=True,null=True)
+    #schema for fixed Deposits
+    fdcapital=models.IntegerField(default=True,null=True)
+    fdmaturitydate=models.DateField()
+    fdinterest=models.FloatField(blank=True,null=True)
+
 
     def __str__(self):
         return str(self.username)
