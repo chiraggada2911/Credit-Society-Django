@@ -1,14 +1,11 @@
-{%extends 'base.html'%}
-
-{%block title%}Members{%endblock%}
-{%block content%}
 <h1 class="h2">List Of Current Members</h1>
 <div class="table-responsive">
   <table class="table table-striped table-sm">
     <thead>
       <tr>
-        <th>Username</th>
+        <th>Name</th>
         <th>Monthly Deduction</th>
+        <th>Department</th>
         <th>Corpus</th>
 
       </tr>
@@ -16,8 +13,9 @@
     <tbody>
 {%for i in accounts%}
   <tr>
-    <td>{{i.accountholder.username}}</td>
+    <td>{{i.name}}</td>
     <td>{{i.monthlyDeduction}}</td>
+    <td>{{i.department}}</td>
     <td>{{i.totalInvestment}}</td>
 
   </tr>
@@ -25,6 +23,4 @@
 
 </tbody>
 </table>
-<a href="{% url 'csadmin:GeneratePdf'%}" class="btn btn-primary" target="_blank ">Save</a>
 </div>
-{%endblock%}
