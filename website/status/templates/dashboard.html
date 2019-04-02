@@ -24,18 +24,18 @@
       </div>
     </div>
 
-    <!-- <div class="container">
+   <div class="container">
       <div class="row">
         <div class="col">
           <div class="card">
             <div class="card-body">
               <h2>Fixed Deposits </h2>
               <h4>Amount: &#x20b9; {{ Accountholder.fdCapital|intcomma }}</h4>
-              <h4>Date of Maturity:{{fixedDeposits.maturityDate}}</h4>
-              <h4>Interest:{{fixedDeposits.rateOfInterest}} </h4>
+              <h4>Date of Maturity:{{Accountholder.fdmaturityDate}}</h4>
+              <h4>Interest:{{Accountholder.rateOfInterest}} </h4>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <div class="col">
           <div class="card">
@@ -49,20 +49,37 @@
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-body">
-        <h2>Loan</h2>
-        <ul>
-          {% ifequal Accountholder.isloantaken True %}
-          <h2>Your Loan Amount: &#x20b9; {{ Accountholder.longloanprinciple|intcomma  }}</h2>
-          {% else %}
-          <h1>you have no loans due</h1>
-          <h4>Request Loan
-            <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
-          </h4>
-          {% endifequal %}
-        </ul>
-      </div>
+    <div class="container">
+       <div class="row">
+         <div class="col">
+           <div class="card">
+             <div class="card-body">
+               <h2>Cumulative Deposits </h2>
+               <h4>Balance: &#x20b9; {{ Accountholder.cdbalance|intcomma }}</h4>
+               <h4>Interest:{{Accountholder.cdinterest}} </h4>
+             </div>
+           </div>
+         </div>
+
+         <div class="col">
+           <div class="card">
+             <div class="card-body">
+               <h2>Loan</h2>
+               <ul>
+                 {% ifequal Accountholder.isloantaken True %}
+                 <h2>Your Loan Amount: &#x20b9; {{ Accountholder.longloanprinciple|intcomma  }}</h2>
+                 {% else %}
+                 <h1>you have no loans due</h1>
+                 <h4>Request Loan
+                   <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
+                 </h4>
+                 {% endifequal %}
+               </ul>
+             </div>
+           </div>
+         </div>
+
+
 
 
     </div>

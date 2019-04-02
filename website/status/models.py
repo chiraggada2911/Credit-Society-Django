@@ -35,6 +35,7 @@ class Account(models.Model):
     fdcapital=models.IntegerField(default=True,null=True)
     fdmaturitydate=models.IntegerField(blank=True,null=True)
     fdinterest=models.IntegerField(blank=True,null=True)
+    
 
     def __str__(self):
         return str(self.username)
