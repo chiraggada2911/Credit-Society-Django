@@ -32,9 +32,7 @@ def commander(request):
 
 @login_required
 def members(request):
-    users=User.objects.all
-    accounts=Account.objects.all
-    name=str(Account.accountholder)
+    Members=Account.objects.all
     #Accountholder=Account.objects.all
     #date = accounts.dateofjoining
     #print("chirag")
@@ -49,35 +47,25 @@ def members(request):
     # totalInvestment = final * (Account.monthlyDeduction)
     # print(totalInvestment)
     context={
-        'users':users,
-        'accounts':accounts,
-        'name':name,
+        'Members':Members,
         'member':"active"
     }
     return render (request,'members.html',context=context)
 
 @login_required
 def bank(request):
-    fixedDeposits=FixedDeposits.objects.all
-    accounts=Account.objects.all
-    users=User.objects.all
-    name=str(Account.accountholder)
+    Banks=Account.objects.all
     context={
-        'fixedDeposits':fixedDeposits,
-        'accounts':accounts,
-        'name':name,
-        'users':users,
+        'Banks':Banks,
         'Bank':"active"
     }
     return render (request,'bank.html',context=context)
 
 @login_required
 def loansadmin(request):
-    loans=Loan.objects.all
-    accounts=Account.objects.all
+    Loansadmin=Account.objects.all
     context={
-        'loans':loans,
-        'accounts':accounts,
+        'Loansadmin':Loansadmin,
         'loan':"active"
     }
     return render (request,'loansadmin.html',context=context)

@@ -4,10 +4,12 @@
 {%block content%}
 <h1 class="h2">List Of Current FDs</h1>
 <div class="table-responsive">
-  <table class="table table-striped table-sm">
+  <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Username</th>
+        <th>A/C No.</th>
+        <th>SapId</th>
+        <th>Name</th>
         <th>FD Capital</th>
         <th>Rate of Interest</th>
         <th>Maturity Date</th>
@@ -16,12 +18,14 @@
     </thead>
     <tbody>
 
-{%for i in fixedDeposits %}
+{%for i in Banks%}
   <tr>
-    <td>{{i.fdholdersName}}</td>
-    <td>{{i.fdCapital}}</td>
-    <td>{{i.rateOfInterest}}</td>
-    <td>{{i.maturityDate}}</td>
+    <td>{{i.accountnumber}}</td>
+    <td>{{i.sapid}}</td>
+    <td>{{i.name}}</td>
+    <td>{{i.cdamount}}</td>
+    <td>{{i.cdbalance}}</td>
+    <td>{{i.totalamount}}</td>
 
   </tr>
 
