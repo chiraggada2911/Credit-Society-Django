@@ -95,8 +95,8 @@ class UserCreate(CreateView):
         success_url=reverse_lazy('csadmin:account_create')
 
 class AccountCreate(CreateView):
-        #model=Account
-        fields='__all__'
+        model=Account
+        fields=['accountnumber','username','name','sapid','dateofjoining','shareamount','cdamount',]
         success_url=reverse_lazy('csadmin:members')
 
 class Fdadd(CreateView):
@@ -105,13 +105,13 @@ class Fdadd(CreateView):
         success_url=reverse_lazy('csadmin:members')
 
 class Loanadd(CreateView):
-        #model=Loan
-        fields='__all__'
+        model=Account
+        fields=['isloantaken','longloanamount']
         success_url=reverse_lazy('csadmin:members')
 
 class Sharesadd(CreateView):
-        #model=Shares
-        fields='__all__'
+        model=Account
+        fields=['sharesstartingnumber','sharesendingnumber']
         success_url=reverse_lazy('csadmin:members')
 
 class GeneratePdf(View):
