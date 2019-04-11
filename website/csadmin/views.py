@@ -95,7 +95,7 @@ class UserCreate(CreateView):
         success_url=reverse_lazy('csadmin:account_create')
 
 class AccountCreate(CreateView):
-        #model=Account
+        model=Account
         fields='__all__'
         success_url=reverse_lazy('csadmin:members')
 
@@ -117,13 +117,9 @@ class Sharesadd(CreateView):
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
         template = get_template('tableview.html')
-        users=User.objects.all
         accounts=Account.objects.all
-        name=str(Account.accountholder)
         context ={
-            'users':users,
             'accounts':accounts,
-            'name':name,
         }
         html = template.render(context)
         pdf = render_to_pdf('tableview.html', context)
