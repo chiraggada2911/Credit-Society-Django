@@ -95,7 +95,7 @@ class UserCreate(CreateView):
         success_url=reverse_lazy('csadmin:account_create')
 
 class AccountCreate(CreateView):
-        #model=Account
+        model=Account
         fields='__all__'
         success_url=reverse_lazy('csadmin:members')
 
