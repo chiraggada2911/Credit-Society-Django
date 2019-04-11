@@ -18,4 +18,4 @@ Loan_choice=[
 class LoanReqForm(forms.Form):
 
     loanChoice = forms.CharField(widget=forms.RadioSelect(choices=Loan_choice))
-    loanAmount = forms.IntegerField()
+    loan_amount = forms.IntegerField()
