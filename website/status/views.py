@@ -143,15 +143,19 @@ def fixedDeposits(request):
 
 @login_required
 def loanuser(request):
+    current_user_id = request.user.username
+    Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
 
 #Email for choice on request in taking loan
     if request.method=="POST":
         loanreq = LoanReqForm(request.POST)
-
         if loanreq.is_valid():
-
+            Loan_Amount=str(loanreq.cleaned_data['loan_amount'])
+            print(Loan_Amount)
+            Loan_Choice=loanreq.cleaned_data['loanChoice']
+            print(Loan_Choice)
             subject = 'This guy wants a loan'
-            message = Accountholder.name +" : "
+            message = Accountholder.name +" : "+ Loan_Choice +"  "+Loan_Amount
             email_from = settings.EMAIL_HOST_USER
 
             recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
@@ -159,9 +163,9 @@ def loanuser(request):
             send_mail( subject, message, email_from, recipient_list )
             print("mail sent")
 
+    else:
+        loanreq=LoanReqForm()
 
-    current_user_id = request.user.username
-    Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
     context={
         'Accountholder':Accountholder,
         'loan':"active",
