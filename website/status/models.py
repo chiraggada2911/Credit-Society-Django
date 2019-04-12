@@ -14,10 +14,8 @@ class Account(models.Model):
 
     shareamount=models.IntegerField(default=0,null=False)
     sharebalance=models.IntegerField(default=0)
-    sharedividend=models.FloatField(blank=True,null=True)
 
     cdamount=models.IntegerField(default=0)
-    cddividend=models.FloatField(blank=True,null=True)
     cdbalance=models.IntegerField(default=0)
     #cd + share = total amount
     totalamount=models.IntegerField(default=0)
@@ -29,7 +27,7 @@ class Account(models.Model):
 # main amount , the loan taken
     longloanamount=models.IntegerField(blank=True,null=True)
     longloanprinciple=models.IntegerField(blank=True,null=True)
-    longloaninterest=models.FloatField(blank=True,null=True)
+
     longloaninterestamount=models.IntegerField(blank=True,null=True)
     longloanbalance=models.IntegerField(blank=True,null=True)
 #emi=interest + principle
@@ -37,7 +35,6 @@ class Account(models.Model):
     #emergency loan
     emerloanamount=models.IntegerField(blank=True,null=True)
     emerloanprinciple=models.IntegerField(blank=True,null=True)
-    emerloaninterest=models.FloatField(blank=True,null=True)
     emerloaninterestamount=models.IntegerField(blank=True,null=True)
     emerloanbalance=models.IntegerField(blank=True,null=True)
 #emi=interest + principle
@@ -45,7 +42,14 @@ class Account(models.Model):
     #schema for fixed Deposits
     fdcapital=models.IntegerField(default=True,null=True)
     fdmaturitydate=models.DateField(null=True)
-    fdinterest=models.FloatField(blank=True,null=True)
+
 
     def __str__(self):
         return str(self.username)
+
+class interests(models.Model):
+    sharedividend=models.FloatField(blank=True,null=True)
+    cddividend=models.FloatField(blank=True,null=True)
+    fdinterest=models.FloatField(blank=True,null=True)
+    emerloaninterest=models.FloatField(blank=True,null=True)
+    longloaninterest=models.FloatField(blank=True,null=True)
