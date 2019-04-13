@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from status.models import Account
+from status.models import Account,interests
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -16,7 +16,7 @@ from dateutil import relativedelta
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import change_ROI_dividend
+from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm
 
 # Create your views here.
 def index(request):
@@ -72,15 +72,45 @@ def loansadmin(request):
 
 @login_required
 def totalmoney(request):
-    final_dividend=0
+    sharedividend=0
+    cddividend=0
+    longloaninterest=0
+    emergencyloaninterest=0
+    fdinterest=0
     if request.method=="POST":
-        dividend=change_ROI_dividend(request.POST)
-        if dividend.is_valid():
-            final_dividend = dividend.cleaned_data['new_ROI_dividend']
-
-        else:
-            dividend=change_ROI_dividend()
-    print(final_dividend)
+        if 'btnshare' in request.POST:
+            tsharedividend=ShareDividendForm(request.POST)
+            print("POST_1")
+            if tsharedividend.is_valid():
+                sharedividend = tsharedividend.cleaned_data['fsharedividend']
+                t=interests.objects.get(id=1)
+                t.sharedividend=sharedividend
+                t.save()
+                print("valid_share+saved")
+        elif 'btncd' in request.POST:
+            tcddividend=CDDividendForm(request.POST)
+            print("POST_2")
+            if tcddividend.is_valid():
+                cddividend = tcddividend.cleaned_data['fcddividend']
+                print("valid_cd")
+        elif 'btnlongloan' in request.POST:
+            tlongloaninterest=LongLoanForm(request.POST)
+            print("POST_3")
+            if tlongloaninterest.is_valid():
+                longloaninterest = tlongloaninterest.cleaned_data['flongloaninterest']
+                print("valid_longloan")
+        elif 'btnemerloan' in request.POST:
+            temergencyloaninterest=EmergencyLoanForm(request.POST)
+            print("POST_4")
+            if temergencyloaninterest.is_valid():
+                emergencyloaninterest = temergencyloaninterest.cleaned_data['femergencylaoninterest']
+                print("valid_emerloan")
+        elif 'btnfd' in request.POST:
+            tfdinterest=FDInterestForm(request.POST)
+            print("POST_5")
+            if tfdinterest.is_valid():
+                fdinterest = tfdinterest.cleaned_data['ffdinterest']
+                print("valid_fd")
 
     context={
         'money':"active"
@@ -95,8 +125,8 @@ class UserCreate(CreateView):
         success_url=reverse_lazy('csadmin:account_create')
 
 class AccountCreate(CreateView):
-        #model=Account
-        fields='__all__'
+        model=Account
+        fields=['accountnumber','username','name','sapid','dateofjoining','shareamount','cdamount',]
         success_url=reverse_lazy('csadmin:members')
 
 class Fdadd(CreateView):
@@ -105,13 +135,13 @@ class Fdadd(CreateView):
         success_url=reverse_lazy('csadmin:members')
 
 class Loanadd(CreateView):
-        #model=Loan
-        fields='__all__'
+        model=Account
+        fields=['isloantaken','longloanamount']
         success_url=reverse_lazy('csadmin:members')
 
 class Sharesadd(CreateView):
-        #model=Shares
-        fields='__all__'
+        model=Account
+        fields=['sharesstartingnumber','sharesendingnumber']
         success_url=reverse_lazy('csadmin:members')
 
 class GeneratePdf(View):
