@@ -174,6 +174,8 @@ def loanuser(request):
 
 @login_required
 def Investment(request):
+    sharebalance = 0
+    cdbalance = 0
     current_user_id=request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
 #calculates totalamount collected
@@ -185,6 +187,11 @@ def Investment(request):
     final = nod + 12 * year
     print(Accountholder.shareamount)
     totalInvestment = final * (Accountholder.shareamount)
+    if totalInvestment >= 50000:
+        cdbalance = totalInvestment - 50000
+        sharebalance = 50000
+    print(sharebalance)
+    print(cdbalance)
     context={
     'Accountholder':Accountholder,
     'totalInvestment':totalInvestment,
