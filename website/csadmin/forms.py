@@ -11,19 +11,19 @@ class AccountForm(forms.ModelForm):
         fields='__all__'
 
 class ShareDividendForm(forms.ModelForm):
-    fsharedividend=forms.IntegerField()
+    fsharedividend=forms.FloatField()
     class Meta:
         model=interests
         fields=('sharedividend',)
 
 class CDDividendForm(forms.Form):
-    fcddividend=forms.IntegerField()
+    fcddividend=forms.FloatField()
 
 class LongLoanForm(forms.Form):
-    flongloaninterest=forms.IntegerField()
+    flongloaninterest=forms.FloatField()
 
 class EmergencyLoanForm(forms.Form):
-    femergencylaoninterest=forms.IntegerField()
+    femergencylaoninterest=forms.FloatField()
 
 class FDInterestForm(forms.Form):
-    ffdinterest=forms.IntegerField()
+    ffdinterest=forms.FloatField()

@@ -6,12 +6,14 @@
 <div class="table-responsive">
   <table class="table table-bordered">
     <thead>
+      {%for i in Interests%}
+      <h3>FD rate of interest = {{i.fdinterest}}</h3>{%endfor%}
       <tr>
         <th>A/C No.</th>
         <th>SapId</th>
         <th>Name</th>
         <th>FD Capital</th>
-        <th>Rate of Interest</th>
+        <th>Rate of Interest</th
         <th>Maturity Date</th>
 
       </tr>

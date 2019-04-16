@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #models
-from status.models import Account
+from status.models import Account,interests
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -52,6 +52,7 @@ def details(request):
     current_user_id=request.user.username
     name=str(Account.name)
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+    Interests=interests.objects.all
 
 #for changing the monthly monthlyDeduction which shld be in the multiple of Rs. 500
     Final_new_change =0
@@ -81,6 +82,7 @@ def details(request):
     'name':name,
     'Accountholder':Accountholder,
     'date':date,
+    'Interests':Interests,
     'dashboard':"active",
     }
 
@@ -114,6 +116,7 @@ def fixedDeposits(request):
 
     current_user_id=request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+    Interests=interests.objects.all
 
 #conditional mail for maturity of FDs
     dateMaturity = Accountholder.fdmaturitydate
@@ -137,6 +140,7 @@ def fixedDeposits(request):
 
     context={
         'Accountholder':Accountholder,
+        'Interests':Interests,
         'fixed':"active",
     }
     return render (request,'fixedDeposits.html',context=context)
@@ -178,7 +182,7 @@ def Investment(request):
     cdbalance = 0
     current_user_id=request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
-#calculates totalamount collected
+    #calculates totalamount collected
     date = Accountholder.dateofjoining
     datetoday=datetime.date.today()
     days=relativedelta.relativedelta(datetoday,date)
@@ -187,9 +191,11 @@ def Investment(request):
     final = nod + 12 * year
     print(Accountholder.shareamount)
     totalInvestment = final * (Accountholder.shareamount)
-    if totalInvestment >= 50000:
-        cdbalance = totalInvestment - 50000
-        sharebalance = 50000
+    if totalInvestment >= 500:
+        cdbalance = totalInvestment - 500
+        sharebalance = 500
+    Accountholder.cdbalance=cdbalance
+    Accountholder.save()
     print(sharebalance)
     print(cdbalance)
     context={
@@ -201,8 +207,6 @@ def Investment(request):
 
 #use http response here it'll work
 # for pdf stuff Using WeasyPrint
-
-
 
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
