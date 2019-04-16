@@ -32,8 +32,28 @@ def commander(request):
 
 @login_required
 def members(request):
-    Members=Account.objects.all
+    Members=Account.objects.all()
     Interests=interests.objects.all
+    sharebalance = 0
+    cdbalance = 0
+    for i in  Members.iterator():
+        date = i.dateofjoining
+        datetoday=datetime.date.today()
+        days=relativedelta.relativedelta(datetoday,date)
+        nod=days.months
+        year = days.years
+        final = nod + 12 * year
+        print("shareamount")
+        print(i.shareamount)
+        totalInvestment = final * (i.shareamount)
+        if totalInvestment >= 500:
+            cdbalance = totalInvestment - 500
+            sharebalance = 500
+        i.cdbalance=cdbalance
+        i.save()
+        print(sharebalance)
+        print(cdbalance)
+
     context={
         'Members':Members,
         'Interests':Interests,
@@ -55,7 +75,7 @@ def bank(request):
 @login_required
 def loansadmin(request):
     Loansadmin=Account.objects.all
-    Interests=interests.objects.get(id=1)
+    Interests=interests.objects.all
     print(Interests)
     context={
         'Loansadmin':Loansadmin,
