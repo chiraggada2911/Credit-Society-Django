@@ -30,9 +30,11 @@
           <div class="card">
             <div class="card-body">
               <h2>Fixed Deposits </h2>
-              <h4>Amount: &#x20b9; {{ Accountholder.fdCapital|intcomma }}</h4>
-              <h4>Date of Maturity:{{Accountholder.fdmaturityDate}}</h4>
-              <h4>Interest:{{Accountholder.rateOfInterest}} </h4>
+              <h4>Amount: &#x20b9; {{ Accountholder.fdcapital|intcomma }}</h4>
+              <h4>Date of Maturity:{{Accountholder.fdmaturitydate}}</h4>
+              {%for i in Interests%}
+              <h4>Interest:{{i.fdinterest}} </h4>
+              {%endfor%}
             </div>
           </div>
         </div>
@@ -66,7 +68,7 @@
              <div class="card-body">
                <h2>Loan</h2>
                <ul>
-                 {% ifequal Accountholder.isloantaken True %}
+                 {% ifequal Accountholder.isLoanTaken True %}
                  <h2>Your Loan Amount: &#x20b9; {{ Accountholder.longloanprinciple|intcomma  }}</h2>
                  {% else %}
                  <h1>you have no loans due</h1>

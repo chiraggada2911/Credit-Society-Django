@@ -16,7 +16,9 @@
             <p class="card-text">These are your fixed deposit details with the credit society.</p>
             <h4>Amount:&#x20b9; {{Accountholder.fdcapital|intcomma }}</h4>
             <h4>Date of Maturity:{{Accountholder.fdmaturitydate}}</h4>
-            <h4>Interest:{{Accountholder.fdinterest}} </h4>
+            {%for i in Interests%}
+            <h4>Interest:{{i.fdinterest}} </h4>
+            {%endfor%}
           </div>
         </div>
       </div>
