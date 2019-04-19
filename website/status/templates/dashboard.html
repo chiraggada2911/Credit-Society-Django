@@ -10,9 +10,6 @@
     <div class="card">
       <div class="card-body">
 
-        {{if}}
-        {{endif}}
-
         <h1>{{Accountholder.name}} </h1>
         <h4>SAP Id: {{Accountholder.sapid}}</h4>
         <h4>DoJ: {{date}}</h4>
@@ -24,7 +21,7 @@
       </div>
     </div>
 
-   <div class="container">
+    <div class="container">
       <div class="row">
         <div class="col">
           <div class="card">
@@ -52,54 +49,52 @@
     </div>
 
     <div class="container">
-       <div class="row">
-         <div class="col">
-           <div class="card">
-             <div class="card-body">
-               <h2>Cumulative Deposits </h2>
-               <h4>Balance: &#x20b9; {{ Accountholder.cdbalance|intcomma }}</h4>
-               <h4>Interest:{{Accountholder.cdinterest}} </h4>
-             </div>
-           </div>
-         </div>
-
-         <div class="col">
-           <div class="card">
-             <div class="card-body">
-               <h2>Loan</h2>
-               <ul>
-                 {% ifequal Accountholder.isLoanTaken True %}
-                 <h2>Your Loan Amount: &#x20b9; {{ Accountholder.longloanprinciple|intcomma  }}</h2>
-                 {% else %}
-                 <h1>you have no loans due</h1>
-                 <h4>Request Loan
-                   <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
-                 </h4>
-                 {% endifequal %}
-               </ul>
-             </div>
-           </div>
-         </div>
-
-
-
-
-    </div>
-    <div id="modal" class="overlay">
-      <div class="popup">
-        <h2>Change your Monthly Deduction</h2>
-        <a class="close" href="{%url 'status:details'%}">×</a>
-        <div class="content">
-          <form class="lw-form" method="POST">
-            <div class="lw-field">
-              <input class="lw-input" name="new_amount" id="new_amnt" type="numeric" placeholder="Enter Amount in Rs" required>
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h2>Cumulative Deposits </h2>
+              <h4>Balance: &#x20b9; {{ Accountholder.cdbalance|intcomma }}</h4>
+              <h4>Interest:{{Accountholder.cdinterest}} </h4>
             </div>
-            <button class="lw-btn" href="{%url 'status:details'%}">Submit to admin</button>
-            {% csrf_token %}
-          </form>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h2>Loan</h2>
+              <ul>
+                {% ifequal Accountholder.isLoanTaken True %}
+                <h2>Your Loan Amount: &#x20b9; {{ Accountholder.longloanprinciple|intcomma  }}</h2>
+                {% else %}
+                <h1>you have no loans due</h1>
+                <h4>Request Loan
+                  <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
+                </h4>
+                {% endifequal %}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="modal" class="overlay">
+        <div class="popup">
+          <h2>Change your Monthly Deduction</h2>
+          <a class="close" href="{%url 'status:details'%}">×</a>
+          <div class="content">
+            <form class="lw-form" method="POST">
+              <div class="lw-field">
+                <input class="lw-input" name="new_amount" id="new_amnt" type="numeric" placeholder="Enter Amount in Rs" required>
+              </div>
+              <button class="lw-btn" href="{%url 'status:details'%}">Submit to admin</button>
+              {% csrf_token %}
+            </form>
+          </div>
         </div>
       </div>
-    </div>
 
 
 </main>

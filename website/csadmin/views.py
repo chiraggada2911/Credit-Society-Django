@@ -46,11 +46,12 @@ def members(request):
         print("shareamount")
         print(i.shareamount)
         totalInvestment = final * (i.shareamount)
-        if totalInvestment >= 500:
-            cdbalance = totalInvestment - 500
-            sharebalance = 500
-        i.cdbalance=cdbalance
-        i.save()
+        if totalInvestment >= 5000:
+            cdbalance = totalInvestment - 5000
+            i.sharebalance = 5000
+            i.cdbalance=cdbalance
+            i.save()
+            i.save()
         print(sharebalance)
         print(cdbalance)
 
@@ -152,22 +153,28 @@ class UserCreate(CreateView):
 
 class AccountCreate(CreateView):
         model=Account
-        fields=['accountnumber','username','name','sapid','dateofjoining','shareamount','cdamount',]
+        fields=['accountnumber','username','name','sapid','dateofjoining','shareamount','sharesstartingnumber','sharesendingnumber',]
         success_url=reverse_lazy('csadmin:members')
 
-class Fdadd(CreateView):
-        #model=FixedDeposits
-        fields='__all__'
+class FDUpdate(UpdateView):
+        model=Account
+        fields=['username','fdcapital','fdmaturitydate']
         success_url=reverse_lazy('csadmin:members')
+        # 
+        # def get_object(self):
+        #     id_=self.kwargs.get("id")
+        #     return get_object_or_404(id=id_)
+        # def form_valid(self,form):
+        #
 
 class Loanadd(CreateView):
         model=Account
-        fields=['isloantaken','longloanamount']
+        fields=['username','isloantaken','longloanamount']
         success_url=reverse_lazy('csadmin:members')
 
 class Sharesadd(CreateView):
         model=Account
-        fields=['sharesstartingnumber','sharesendingnumber']
+        fields=['user''shareamount']
         success_url=reverse_lazy('csadmin:members')
 
 class GeneratePdf(View):
