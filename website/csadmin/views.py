@@ -33,26 +33,49 @@ def commander(request):
 @login_required
 def members(request):
     Members=Account.objects.all()
-    Interests=interests.objects.all
+    Interests=interests.objects.get(id=1)
     sharebalance = 0
     cdbalance = 0
+    #loan parameters
+    Rate=Interests.longloaninterest
+    R=Rate/(12*100) #rate of interest for each month
+    print(R)
+
     for i in  Members.iterator():
+        N=i.longloanperiod
+        A=i.longloanamount
+        print(N)
+        print(A)
+
+        EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+        print(EMI)
+        interestamount=R*A
+        print(interestamount)
+        principle=EMI-interestamount
+        print(principle)
+        balance=A-principle
+        print(balance)
         date = i.dateofjoining
         datetoday=datetime.date.today()
         days=relativedelta.relativedelta(datetoday,date)
         nod=days.months
         year = days.years
         final = nod + 12 * year
-        print("shareamount")
-        print(i.shareamount)
-        totalInvestment = final * (i.shareamount)
-        if totalInvestment >= 500:
-            cdbalance = totalInvestment - 500
-            sharebalance = 500
-        i.cdbalance=cdbalance
+        totalInvestment = final * (i.sharevalue)
+        if totalInvestment >= 50000:
+            cdbalance = totalInvestment - 50000
+            sharebalance = 50000
+            i.sharebalance=sharebalance
+            i.cdbalance=cdbalance
+            i.cdamount=i.sharevalue
+            i.shareamount=0
+        else:
+            i.sharebalance=totalInvestment
+            i.cdbalance=cdbalance
+            i.shareamount=i.sharevalue
+            i.cdamount=0
+        i.totalamount=totalInvestment
         i.save()
-        print(sharebalance)
-        print(cdbalance)
 
     context={
         'Members':Members,
