@@ -25,8 +25,10 @@ def index(request):
 
 @login_required
 def commander(request):
+    Members=Account.objects.all()
     context={
-        'dashb':"active"
+        'dashb':"active",
+        'Members':Members,
     }
     return render (request,'console.html',context=context)
 
@@ -98,7 +100,7 @@ def totalmoney(request):
             print("POST_1")
             if tsharedividend.is_valid():
                 sharedividend = tsharedividend.cleaned_data['fsharedividend']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.sharedividend=sharedividend
                 t.save()
                 print("valid_share+saved")
@@ -107,7 +109,7 @@ def totalmoney(request):
             print("POST_2")
             if tcddividend.is_valid():
                 cddividend = tcddividend.cleaned_data['fcddividend']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.cddividend=cddividend
                 t.save()
                 print("valid_cd")
@@ -116,7 +118,7 @@ def totalmoney(request):
             print("POST_3")
             if tlongloaninterest.is_valid():
                 longloaninterest = tlongloaninterest.cleaned_data['flongloaninterest']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.longloaninterest=longloaninterest
                 t.save()
                 print("valid_longloan")
@@ -125,7 +127,7 @@ def totalmoney(request):
             print("POST_4")
             if temergencyloaninterest.is_valid():
                 emergencyloaninterest = temergencyloaninterest.cleaned_data['femergencylaoninterest']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.emerloaninterest=emergencyloaninterest
                 t.save()
                 print("valid_emerloan")
@@ -134,7 +136,7 @@ def totalmoney(request):
             print("POST_5")
             if tfdinterest.is_valid():
                 fdinterest = tfdinterest.cleaned_data['ffdinterest']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.fdinterest=fdinterest
                 t.save()
                 print("valid_fd")
@@ -159,20 +161,14 @@ class AccountCreate(CreateView):
 class FDUpdate(UpdateView):
         model=Account
         fields=['username','fdcapital','fdmaturitydate']
-        success_url=reverse_lazy('csadmin:members')
-        # 
-        # def get_object(self):
-        #     id_=self.kwargs.get("id")
-        #     return get_object_or_404(id=id_)
-        # def form_valid(self,form):
-        #
+        success_url=reverse_lazy('csadmin:bank')
 
-class Loanadd(CreateView):
+class LoanUpdate(UpdateView):
         model=Account
         fields=['username','isloantaken','longloanamount']
         success_url=reverse_lazy('csadmin:members')
 
-class Sharesadd(CreateView):
+class SharesUpdate(UpdateView):
         model=Account
         fields=['user''shareamount']
         success_url=reverse_lazy('csadmin:members')

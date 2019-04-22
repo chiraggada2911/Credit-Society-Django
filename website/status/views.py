@@ -77,7 +77,8 @@ def details(request):
 
 #calculating totalInvestment
     date = Accountholder.dateofjoining
-
+    print("loan")
+    print(Accountholder.isloantaken)
     context={
     'name':name,
     'Accountholder':Accountholder,
