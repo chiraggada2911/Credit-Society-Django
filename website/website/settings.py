@@ -42,9 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'landingPage',
     'django.contrib.humanize',
-
-
-]
+    'background_task',
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

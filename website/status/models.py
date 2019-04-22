@@ -18,7 +18,7 @@ class Account(models.Model):
 
     cdamount=models.IntegerField(default=0)
     cdbalance=models.IntegerField(default=0)
-    #cd + share = total amount
+    #cdbalance + sharebalance = total amount
     totalamount=models.IntegerField(default=0)
     #schema for shares
     sharesstartingnumber=models.IntegerField(null=True)
