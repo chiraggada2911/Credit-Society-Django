@@ -155,17 +155,17 @@ class AccountCreate(CreateView):
         fields=['accountnumber','username','name','sapid','dateofjoining','shareamount','cdamount',]
         success_url=reverse_lazy('csadmin:members')
 
-class Fdadd(CreateView):
+class FDUpdate(UpdateView):
         #model=FixedDeposits
         fields='__all__'
         success_url=reverse_lazy('csadmin:members')
 
-class Loanadd(CreateView):
+class LoanUpdate(UpdateView):
         model=Account
         fields=['isloantaken','longloanamount']
         success_url=reverse_lazy('csadmin:members')
 
-class Sharesadd(CreateView):
+class ShareUpdate(UpdateView):
         model=Account
         fields=['sharesstartingnumber','sharesendingnumber']
         success_url=reverse_lazy('csadmin:members')
