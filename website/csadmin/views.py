@@ -10,6 +10,9 @@ from django.http import HttpResponse
 from django.views.generic import View
 from django.template.loader import get_template
 
+#for background tasks
+from background_task import background
+
 #for date and time
 import datetime
 from dateutil import relativedelta
@@ -38,33 +41,40 @@ def members(request):
     Interests=interests.objects.get(id=1)
     sharebalance = 0
     cdbalance = 0
+    totalInvestment=0
     #loan parameters
     Rate=Interests.longloaninterest
     R=Rate/(12*100) #rate of interest for each month
-    print(R)
+
 
     for i in  Members.iterator():
-        N=i.longloanperiod
-        A=i.longloanamount
-        print(N)
-        print(A)
+        # N=i.longloanperiod
+        # A=i.longloanamount
+        # print(N)
+        # print(A)
+        # if(N!=0):
+        #     EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+        #     print(EMI)
+        #     interestamount=R*A
+        #     i.longloaninterestamount=interestamount
+        #     print(interestamount)
+        #     principle=EMI-interestamount
+        #     i.longloanprinciple=principle
+        #     print(principle)
+        #     balance=A-principle
+        #     print(balance)
+        #     i.longloanbalance=balance
 
-        EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-        print(EMI)
-        interestamount=R*A
-        print(interestamount)
-        principle=EMI-interestamount
-        print(principle)
-        balance=A-principle
-        print(balance)
         date = i.dateofjoining
         datetoday=datetime.date.today()
         days=relativedelta.relativedelta(datetoday,date)
         nod=days.months
         year = days.years
         final = nod + 12 * year
-<<<<<<< HEAD
-        totalInvestment = final * (i.sharevalue)
+        totalInvestment += totalInvestment+(i.sharevalue)
+        print(totalInvestment)
+        print("just")
+        print(totalInvestment)
         if totalInvestment >= 50000:
             cdbalance = totalInvestment - 50000
             sharebalance = 50000
@@ -79,20 +89,6 @@ def members(request):
             i.cdamount=0
         i.totalamount=totalInvestment
         i.save()
-=======
-        print("shareamount")
-        print(i.shareamount)
-        totalInvestment = final * (i.shareamount)
-        if totalInvestment >= 5000:
-            cdbalance = totalInvestment - 5000
-            i.sharebalance = 5000
-            i.cdbalance=cdbalance
-            i.save()
-            i.save()
-        print(sharebalance)
-        print(cdbalance)
->>>>>>> master
-
     context={
         'Members':Members,
         'Interests':Interests,
@@ -219,3 +215,7 @@ class GeneratePdf(View):
         html = template.render(context)
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
+
+@background(schedule=1)
+def notify_user(user_id):
+    print(user_id)
