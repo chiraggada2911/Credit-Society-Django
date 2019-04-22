@@ -12,6 +12,7 @@ class Account(models.Model):
     sapid=models.IntegerField(null=False,unique=True)
     dateofjoining=models.DateField(null=False)
 
+    sharevalue=models.IntegerField(default=0,null=False)
     shareamount=models.IntegerField(default=0,null=False)
     sharebalance=models.IntegerField(default=0)
 
@@ -27,7 +28,7 @@ class Account(models.Model):
 # main amount , the loan taken
     longloanamount=models.IntegerField(blank=True,null=True)
     longloanprinciple=models.IntegerField(blank=True,null=True)
-
+    longloanperiod=models.IntegerField(blank=True,null=True)
     longloaninterestamount=models.IntegerField(blank=True,null=True)
     longloanbalance=models.IntegerField(blank=True,null=True)
 #emi=interest + principle
@@ -35,6 +36,7 @@ class Account(models.Model):
     #emergency loan
     emerloanamount=models.IntegerField(blank=True,null=True)
     emerloanprinciple=models.IntegerField(blank=True,null=True)
+    emerloanperiod=models.IntegerField(blank=True,null=True)
     emerloaninterestamount=models.IntegerField(blank=True,null=True)
     emerloanbalance=models.IntegerField(blank=True,null=True)
 #emi=interest + principle
