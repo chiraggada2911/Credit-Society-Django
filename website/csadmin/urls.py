@@ -11,9 +11,9 @@ urlpatterns = [
     path('totalmoney', views.totalmoney,name="totalmoney"),
     path('user/create/', views.UserCreate.as_view(), name='user_create'),
     path('account/create/', views.AccountCreate.as_view(), name='account_create'),
-    path('fd/add/', views.Fdadd.as_view(), name='fd_add'),
-    path('loan/add/', views.Loanadd.as_view(), name='loan_add'),
-    path('shares/add/', views.Sharesadd.as_view(), name='shares_add'),
+    path('FDupdate/(?P<pk>)/', views.FDUpdate.as_view(), name='fd_update'),
+    path('Loanupdate/(?P<pk>)/', views.LoanUpdate.as_view(), name='loan_update'),
+    path('Sharesupdate/(?P<pk>)/', views.SharesUpdate.as_view(), name='shares _update'),
     path('tableview',views.GeneratePdf.as_view(),name="GeneratePdf"),
 
 ]

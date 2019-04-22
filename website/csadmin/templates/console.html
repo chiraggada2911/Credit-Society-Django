@@ -4,42 +4,39 @@
 {%block content%}
 <h2>Console</h2>
 
-<div class="container">
+<div class="table-responsive">
+  <table  border="1">
+    <thead>
+      <tr>
+        <th>A/C No.</th>
+        <th>Sap Id</th>
+        <th>Name</th>
+        <th>Share Amount</th>
+        <th>Share Balance</th>
+        <th>CD Amount</th>
+        <th>CD Balance</th>
+        <th>Total Amount</th>
 
+      </tr>
+    </thead>
+    <tbody>
+{%for i in Members%}
+  <tr>
+    <td>{{i.accountnumber}}</td>
+    <td>{{i.sapid}}</td>
+    <td>{{i.name}}</td>
+    <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.fdcapital}}</a></td>
+    <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">{{i.sharebalance}}</a></td>
+    <td>{{i.cdamount}}</td>
+    <td>{{i.cdbalance}}</td>
+    <td>{{i.totalamount}}</td>
 
-  <div class="container justify-content-center">
-    <div class="row justify-content-center">
-      <div class="card w-75">
-          <div class="card-body">
-            <h5 class="card-title">Manage Users</h5>
-            <p class="card-text">Click here to manage the datbase of the users.</p>
-            <a href="{%url 'csadmin:account_create'%}" class="btn btn-primary">ADD USER</a>
-            <!-- <a href="#" class="btn btn-primary">UPDATE USER</a>
-            <a href="#" class="btn btn-primary">DELETE USER</a> -->
-          </div>
-        </div>
-        <!-- <div class="card w-75">
-            <div class="card-body">
-              <h5 class="card-title">Manage FDs</h5>
-              <p class="card-text">Click here to manage the datbase of the FD.</p>
-              <a href="{%url 'csadmin:fd_add'%}" class="btn btn-primary">ADD Fd</a>
-            </div>
-          </div>
-          <div class="card w-75">
-              <div class="card-body">
-                <h5 class="card-title">Manage Shares</h5>
-                <p class="card-text">Click here to manage the datbase of the Shares.</p>
-                <a href="{%url 'csadmin:shares_add'%}" class="btn btn-primary">ADD Share</a>
-              </div>
-            </div>
-            <div class="card w-75">
-                <div class="card-body">
-                  <h5 class="card-title">Manage loans</h5>
-                  <p class="card-text">Click here to manage the datbase of the users.</p>
-                  <a href="{%url 'csadmin:loan_add'%}" class="btn btn-primary">ADD Loan</a>
-                </div>
-              </div> -->
-      </div>
-    </div>
+  </tr>
+{%endfor%}
+
+</tbody>
+</table>
+
+</div>
 </div>
 {%endblock%}

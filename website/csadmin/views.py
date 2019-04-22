@@ -25,8 +25,10 @@ def index(request):
 
 @login_required
 def commander(request):
+    Members=Account.objects.all()
     context={
-        'dashb':"active"
+        'dashb':"active",
+        'Members':Members,
     }
     return render (request,'console.html',context=context)
 
@@ -61,6 +63,7 @@ def members(request):
         nod=days.months
         year = days.years
         final = nod + 12 * year
+<<<<<<< HEAD
         totalInvestment = final * (i.sharevalue)
         if totalInvestment >= 50000:
             cdbalance = totalInvestment - 50000
@@ -76,6 +79,19 @@ def members(request):
             i.cdamount=0
         i.totalamount=totalInvestment
         i.save()
+=======
+        print("shareamount")
+        print(i.shareamount)
+        totalInvestment = final * (i.shareamount)
+        if totalInvestment >= 5000:
+            cdbalance = totalInvestment - 5000
+            i.sharebalance = 5000
+            i.cdbalance=cdbalance
+            i.save()
+            i.save()
+        print(sharebalance)
+        print(cdbalance)
+>>>>>>> master
 
     context={
         'Members':Members,
@@ -120,7 +136,7 @@ def totalmoney(request):
             print("POST_1")
             if tsharedividend.is_valid():
                 sharedividend = tsharedividend.cleaned_data['fsharedividend']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.sharedividend=sharedividend
                 t.save()
                 print("valid_share+saved")
@@ -129,7 +145,7 @@ def totalmoney(request):
             print("POST_2")
             if tcddividend.is_valid():
                 cddividend = tcddividend.cleaned_data['fcddividend']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.cddividend=cddividend
                 t.save()
                 print("valid_cd")
@@ -138,7 +154,7 @@ def totalmoney(request):
             print("POST_3")
             if tlongloaninterest.is_valid():
                 longloaninterest = tlongloaninterest.cleaned_data['flongloaninterest']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.longloaninterest=longloaninterest
                 t.save()
                 print("valid_longloan")
@@ -147,7 +163,7 @@ def totalmoney(request):
             print("POST_4")
             if temergencyloaninterest.is_valid():
                 emergencyloaninterest = temergencyloaninterest.cleaned_data['femergencylaoninterest']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.emerloaninterest=emergencyloaninterest
                 t.save()
                 print("valid_emerloan")
@@ -156,7 +172,7 @@ def totalmoney(request):
             print("POST_5")
             if tfdinterest.is_valid():
                 fdinterest = tfdinterest.cleaned_data['ffdinterest']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.fdinterest=fdinterest
                 t.save()
                 print("valid_fd")
@@ -175,22 +191,22 @@ class UserCreate(CreateView):
 
 class AccountCreate(CreateView):
         model=Account
-        fields=['accountnumber','username','name','sapid','dateofjoining','shareamount','cdamount',]
+        fields=['accountnumber','username','name','sapid','dateofjoining','shareamount','sharesstartingnumber','sharesendingnumber',]
         success_url=reverse_lazy('csadmin:members')
 
-class Fdadd(CreateView):
-        #model=FixedDeposits
-        fields='__all__'
-        success_url=reverse_lazy('csadmin:members')
-
-class Loanadd(CreateView):
+class FDUpdate(UpdateView):
         model=Account
-        fields=['isloantaken','longloanamount']
+        fields=['username','fdcapital','fdmaturitydate']
+        success_url=reverse_lazy('csadmin:bank')
+
+class LoanUpdate(UpdateView):
+        model=Account
+        fields=['username','isloantaken','longloanamount']
         success_url=reverse_lazy('csadmin:members')
 
-class Sharesadd(CreateView):
+class SharesUpdate(UpdateView):
         model=Account
-        fields=['sharesstartingnumber','sharesendingnumber']
+        fields=['user''shareamount']
         success_url=reverse_lazy('csadmin:members')
 
 class GeneratePdf(View):
