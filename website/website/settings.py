@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'landingPage',
+    'background_task',
     'django.contrib.humanize',
 
 
