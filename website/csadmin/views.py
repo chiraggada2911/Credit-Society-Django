@@ -14,6 +14,9 @@ from django.template.loader import get_template
 import datetime
 from dateutil import relativedelta
 
+#Background
+from background_task import background
+
 #forms
 from django.forms import ModelForm
 from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm
@@ -60,14 +63,17 @@ def members(request):
             balance=A-principle
             print(balance)
             i.longloanbalance=balance
+        #
+        # date = i.dateofjoining
+        # datetoday=datetime.date.today()
+        # days=relativedelta.relativedelta(datetoday,date)
+        # nod=days.months
+        # year = days.years
+        # final = nod + 12 * year
+        # totalInvestment = final * (i.sharevalue)
 
-        date = i.dateofjoining
-        datetoday=datetime.date.today()
-        days=relativedelta.relativedelta(datetoday,date)
-        nod=days.months
-        year = days.years
-        final = nod + 12 * year
-        totalInvestment = final * (i.sharevalue)
+        totalInvestment=i.totalamount+(i.sharevalue)
+
         if totalInvestment >= 50000:
             cdbalance = totalInvestment - 50000
             sharebalance = 50000
@@ -84,15 +90,7 @@ def members(request):
         i.save()
         print("shareamount")
         print(i.shareamount)
-        totalInvestment = final * (i.shareamount)
-        if totalInvestment >= 5000:
-            cdbalance = totalInvestment - 5000
-            i.sharebalance = 5000
-            i.cdbalance=cdbalance
-            i.save()
-        print(sharebalance)
-        print(cdbalance)
-    context={
+        context={
         'Members':Members,
         'Interests':Interests,
         'member':"active"
@@ -115,6 +113,7 @@ def loansadmin(request):
     Loansadmin=Account.objects.all
     Interests=interests.objects.all
     print(Interests)
+    #notify_user(2, repeat=5, repeat_until=10)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
@@ -218,3 +217,8 @@ class GeneratePdf(View):
         html = template.render(context)
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
+
+@background(schedule=1)
+def notify_user(user_id):
+    # lookup user by id and send them a message
+    print(user_id+1)
