@@ -48,22 +48,25 @@ def members(request):
         A=i.longloanamount
         print(N)
         print(A)
+        if(N!=0):
+            EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+            print(EMI)
+            interestamount=R*A
+            i.longloaninterestamount=interestamount
+            print(interestamount)
+            principle=EMI-interestamount
+            i.longloanprinciple=principle
+            print(principle)
+            balance=A-principle
+            print(balance)
+            i.longloanbalance=balance
 
-        EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-        print(EMI)
-        interestamount=R*A
-        print(interestamount)
-        principle=EMI-interestamount
-        print(principle)
-        balance=A-principle
-        print(balance)
         date = i.dateofjoining
         datetoday=datetime.date.today()
         days=relativedelta.relativedelta(datetoday,date)
         nod=days.months
         year = days.years
         final = nod + 12 * year
-<<<<<<< HEAD
         totalInvestment = final * (i.sharevalue)
         if totalInvestment >= 50000:
             cdbalance = totalInvestment - 50000
@@ -79,7 +82,6 @@ def members(request):
             i.cdamount=0
         i.totalamount=totalInvestment
         i.save()
-=======
         print("shareamount")
         print(i.shareamount)
         totalInvestment = final * (i.shareamount)
@@ -88,11 +90,8 @@ def members(request):
             i.sharebalance = 5000
             i.cdbalance=cdbalance
             i.save()
-            i.save()
         print(sharebalance)
         print(cdbalance)
->>>>>>> master
-
     context={
         'Members':Members,
         'Interests':Interests,
