@@ -77,7 +77,8 @@ def details(request):
 
 #calculating totalInvestment
     date = Accountholder.dateofjoining
-
+    print("loan")
+    print(Accountholder.isloantaken)
     context={
     'name':name,
     'Accountholder':Accountholder,
@@ -189,15 +190,21 @@ def Investment(request):
     nod=days.months
     year = days.years
     final = nod + 12 * year
-    print(Accountholder.shareamount)
-    totalInvestment = final * (Accountholder.shareamount)
-    if totalInvestment >= 500:
-        cdbalance = totalInvestment - 500
-        sharebalance = 500
-    Accountholder.cdbalance=cdbalance
+    print(Accountholder.sharevalue)
+    totalInvestment = final * (Accountholder.sharevalue)
+    if totalInvestment >= 50000:
+        cdbalance = totalInvestment - 50000
+        sharebalance = 50000
+        Accountholder.sharebalance=sharebalance
+        Accountholder.cdbalance=cdbalance
+        Accountholder.cdamount=Accountholder.sharevalue
+        Accountholder.shareamount=0
+    else:
+        Accountholder.sharebalance=totalInvestment
+        Accountholder.cdbalance=cdbalance
+        Accountholder.shareamount=Accountholder.sharevalue
+        Accountholder.cdamount=0
     Accountholder.save()
-    print(sharebalance)
-    print(cdbalance)
     context={
     'Accountholder':Accountholder,
     'totalInvestment':totalInvestment,

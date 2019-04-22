@@ -4,9 +4,8 @@
 {%block content%}
 <h2>Console</h2>
 
-<h1 class="h2">List Of Current Members</h1>
 <div class="table-responsive">
-  <table class="table table-bordered">
+  <table  border="1">
     <thead>
       <tr>
         <th>A/C No.</th>
@@ -16,12 +15,6 @@
         <th>Share Balance</th>
         <th>CD Amount</th>
         <th>CD Balance</th>
-        <th>Long Loan Principle</th>
-        <th>Long Loan Interest</th>
-        <th>Long Loan Balance</th>
-        <th>Emer Loan Principle</th>
-        <th>Emer Loan Interest</th>
-        <th>Emer Loan Balance</th>
         <th>Total Amount</th>
 
       </tr>
@@ -32,16 +25,10 @@
     <td>{{i.accountnumber}}</td>
     <td>{{i.sapid}}</td>
     <td>{{i.name}}</td>
-    <td>{{i.shareamount}}</td>
-    <td>{{i.sharebalance}}</td>
+    <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.fdcapital}}</a></td>
+    <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">{{i.sharebalance}}</a></td>
     <td>{{i.cdamount}}</td>
     <td>{{i.cdbalance}}</td>
-    <td>{{i.longloanprinciple}}</td>
-    <td>{{i.longloaninterest}}</td>
-    <td>{{i.longloanbalance}}</td>
-    <td>{{i.emerloanprinciple}}</td>
-    <td>{{i.emerloaninterest}}</td>
-    <td>{{i.emerloanbalance}}</td>
     <td>{{i.totalamount}}</td>
 
   </tr>
@@ -49,5 +36,7 @@
 
 </tbody>
 </table>
+
+</div>
 </div>
 {%endblock%}

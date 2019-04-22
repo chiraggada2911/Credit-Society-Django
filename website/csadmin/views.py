@@ -25,35 +25,73 @@ def index(request):
 
 @login_required
 def commander(request):
+    Members=Account.objects.all()
     context={
-        'dashb':"active"
+        'dashb':"active",
+        'Members':Members,
     }
     return render (request,'console.html',context=context)
 
 @login_required
 def members(request):
     Members=Account.objects.all()
-    Interests=interests.objects.all
+    Interests=interests.objects.get(id=1)
     sharebalance = 0
     cdbalance = 0
+    #loan parameters
+    Rate=Interests.longloaninterest
+    R=Rate/(12*100) #rate of interest for each month
+    print(R)
+
     for i in  Members.iterator():
+        N=i.longloanperiod
+        A=i.longloanamount
+        print(N)
+        print(A)
+        if(N!=0):
+            EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+            print(EMI)
+            interestamount=R*A
+            i.longloaninterestamount=interestamount
+            print(interestamount)
+            principle=EMI-interestamount
+            i.longloanprinciple=principle
+            print(principle)
+            balance=A-principle
+            print(balance)
+            i.longloanbalance=balance
+
         date = i.dateofjoining
         datetoday=datetime.date.today()
         days=relativedelta.relativedelta(datetoday,date)
         nod=days.months
         year = days.years
         final = nod + 12 * year
+        totalInvestment = final * (i.sharevalue)
+        if totalInvestment >= 50000:
+            cdbalance = totalInvestment - 50000
+            sharebalance = 50000
+            i.sharebalance=sharebalance
+            i.cdbalance=cdbalance
+            i.cdamount=i.sharevalue
+            i.shareamount=0
+        else:
+            i.sharebalance=totalInvestment
+            i.cdbalance=cdbalance
+            i.shareamount=i.sharevalue
+            i.cdamount=0
+        i.totalamount=totalInvestment
+        i.save()
         print("shareamount")
         print(i.shareamount)
         totalInvestment = final * (i.shareamount)
-        if totalInvestment >= 500:
-            cdbalance = totalInvestment - 500
-            sharebalance = 500
-        i.cdbalance=cdbalance
-        i.save()
+        if totalInvestment >= 5000:
+            cdbalance = totalInvestment - 5000
+            i.sharebalance = 5000
+            i.cdbalance=cdbalance
+            i.save()
         print(sharebalance)
         print(cdbalance)
-
     context={
         'Members':Members,
         'Interests':Interests,
@@ -97,7 +135,7 @@ def totalmoney(request):
             print("POST_1")
             if tsharedividend.is_valid():
                 sharedividend = tsharedividend.cleaned_data['fsharedividend']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.sharedividend=sharedividend
                 t.save()
                 print("valid_share+saved")
@@ -106,7 +144,7 @@ def totalmoney(request):
             print("POST_2")
             if tcddividend.is_valid():
                 cddividend = tcddividend.cleaned_data['fcddividend']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.cddividend=cddividend
                 t.save()
                 print("valid_cd")
@@ -115,7 +153,7 @@ def totalmoney(request):
             print("POST_3")
             if tlongloaninterest.is_valid():
                 longloaninterest = tlongloaninterest.cleaned_data['flongloaninterest']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.longloaninterest=longloaninterest
                 t.save()
                 print("valid_longloan")
@@ -124,7 +162,7 @@ def totalmoney(request):
             print("POST_4")
             if temergencyloaninterest.is_valid():
                 emergencyloaninterest = temergencyloaninterest.cleaned_data['femergencylaoninterest']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.emerloaninterest=emergencyloaninterest
                 t.save()
                 print("valid_emerloan")
@@ -133,7 +171,7 @@ def totalmoney(request):
             print("POST_5")
             if tfdinterest.is_valid():
                 fdinterest = tfdinterest.cleaned_data['ffdinterest']
-                t=interests.objects.get(id=1)
+                t=interests.objects.first()
                 t.fdinterest=fdinterest
                 t.save()
                 print("valid_fd")
@@ -152,22 +190,22 @@ class UserCreate(CreateView):
 
 class AccountCreate(CreateView):
         model=Account
-        fields=['accountnumber','username','name','sapid','dateofjoining','shareamount','cdamount',]
+        fields=['accountnumber','username','name','sapid','dateofjoining','shareamount','sharesstartingnumber','sharesendingnumber',]
         success_url=reverse_lazy('csadmin:members')
 
 class FDUpdate(UpdateView):
-        #model=FixedDeposits
-        fields='__all__'
-        success_url=reverse_lazy('csadmin:members')
+        model=Account
+        fields=['username','fdcapital','fdmaturitydate']
+        success_url=reverse_lazy('csadmin:bank')
 
 class LoanUpdate(UpdateView):
         model=Account
-        fields=['isloantaken','longloanamount']
+        fields=['username','isloantaken','longloanamount']
         success_url=reverse_lazy('csadmin:members')
 
-class ShareUpdate(UpdateView):
+class SharesUpdate(UpdateView):
         model=Account
-        fields=['sharesstartingnumber','sharesendingnumber']
+        fields=['user''shareamount']
         success_url=reverse_lazy('csadmin:members')
 
 class GeneratePdf(View):

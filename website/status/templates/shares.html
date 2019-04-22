@@ -1,4 +1,3 @@
-
 {%extends 'details.html'%}
 {% load humanize %}
 
@@ -8,20 +7,20 @@
 
 <div class="container" style="top-margin:70px">
 
-<h1 class="h2">Shares</h1>
-  <div class="container justify-content-center" >
+  <h1 class="h2">Shares</h1>
+  <div class="container justify-content-center">
     <div class="row justify-content-center">
       <div class="card w-75 h-75">
-          <div class="card-body">
-            <h2 class="card-title">Share Certificate</h2>
-            <h3>ShareHolder Name:{{Accountholder.name}}</h3>
-            <p class="card-text">These are your alloted share details with the credit society.</p>
-            <h3>Share Value: &#x20b9; {{Accountholder.shareamount|intcomma }}</h3>
-            <h3>Shares alloted from:{{Accountholder.sharesstartingnumber}} to {{Accountholder.sharesendingnumber}}</h3>
-            <a href="{% url 'status:GeneratePdf'%}" class="btn btn-primary" target="_blank ">Save</a>
-          </div>
+        <div class="card-body">
+          <h2 class="card-title">Share Certificate</h2>
+          <h3>ShareHolder Name:{{Accountholder.name}}</h3>
+          <p class="card-text">These are your alloted share details with the credit society.</p>
+          <h3>Share Value: &#x20b9; {{Accountholder.shareamount|intcomma }}</h3>
+          <h3>Shares alloted from:{{Accountholder.sharesstartingnumber}} to {{Accountholder.sharesendingnumber}}</h3>
+          <a href="{% url 'status:GeneratePdf'%}" class="btn btn-primary" target="_blank ">Save</a>
         </div>
       </div>
     </div>
+  </div>
 </div>
 {%endblock%}

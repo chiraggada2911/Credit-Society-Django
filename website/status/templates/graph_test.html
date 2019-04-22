@@ -1,60 +1,79 @@
 {% load static%}
 <!DOCTYPE HTML>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<script>
-window.onload = function () {
+	<meta charset="UTF-8">
+	<script>
+		window.onload = function() {
 
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	exportEnabled: true,
-	title:{
-		text: "Total Income"
-	},
-	axisY:{
-		title: "{{Accountholder.name}}"
-	},
-	toolTip: {
-		shared: true
-	},
-	legend:{
-		cursor:"pointer",
-		itemclick: toggleDataSeries
-	},
-	data: [{
-		type: "spline",
-		name: "Month",
-		showInLegend: false,
-		dataPoints: [
-			{ label: "{{Accountholder.name}}" , y: 44 },
-			{ label:"Sydney 2000", y: 37 },
-			{ label: "Athens 2004", y: 36 },
-			{ label: "Beijing 2008", y: 36 },
-			{ label: "London 2012", y: 46 },
-			{ label: "Rio 2016", y: 46 }
-		]
-	}	]
-});
+			var chart = new CanvasJS.Chart("chartContainer", {
+				animationEnabled: true,
+				exportEnabled: true,
+				title: {
+					text: "Total Income"
+				},
+				axisY: {
+					title: "{{Accountholder.name}}"
+				},
+				toolTip: {
+					shared: true
+				},
+				legend: {
+					cursor: "pointer",
+					itemclick: toggleDataSeries
+				},
+				data: [{
+					type: "spline",
+					name: "Month",
+					showInLegend: false,
+					dataPoints: [{
+							label: "{{Accountholder.name}}",
+							y: 44
+						},
+						{
+							label: "Sydney 2000",
+							y: 37
+						},
+						{
+							label: "Athens 2004",
+							y: 36
+						},
+						{
+							label: "Beijing 2008",
+							y: 36
+						},
+						{
+							label: "London 2012",
+							y: 46
+						},
+						{
+							label: "Rio 2016",
+							y: 46
+						}
+					]
+				}]
+			});
 
-chart.render();
+			chart.render();
 
-function toggleDataSeries(e) {
-	if(typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-		e.dataSeries.visible = false;
-	}
-	else {
-		e.dataSeries.visible = true;
-	}
-	chart.render();
-}
+			function toggleDataSeries(e) {
+				if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+					e.dataSeries.visible = false;
+				} else {
+					e.dataSeries.visible = true;
+				}
+				chart.render();
+			}
 
-}
-</script>
+		}
+	</script>
 </head>
+
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<h1>{{Accountholder.name}}</h1>
-<script src="{% static 'status/js/graph_test.js' %}"></script>
+	<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+	<h1>{{Accountholder.name}}</h1>
+	<script src="{% static 'status/js/graph_test.js' %}"></script>
 </body>
+
 </html>
