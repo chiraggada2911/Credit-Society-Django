@@ -39,6 +39,7 @@
       <input type="numeric" name="flongloaninterest" id="new_longloaninterest" placeholder="Enter the new Rate of Interest of Dividend">
       <button class="lw-btn" name="btnlongloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
     </div>
+    {%csrf_token%}
     </form>
     <!-- for changing emergency loan interest -->
     <form class="lw-form" method="post">
@@ -47,6 +48,7 @@
         <input type="numeric" name="femergencylaoninterest" id="new_longloaninterest" placeholder="Enter the new Rate of Interest of Dividend">
         <button class="lw-btn" name="btnemerloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
       </div>
+      {%csrf_token%}
       </form>
 
       <!-- for changing FD interest -->
