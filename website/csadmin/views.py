@@ -8,6 +8,7 @@ from csadmin.utils import render_to_pdf
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
+from django.shortcuts import redirect
 from django.template.loader import get_template
 
 #for date and time
@@ -21,6 +22,8 @@ from background_task import background
 from django.forms import ModelForm
 from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm
 
+#TASKS
+from .tasks import add
 # Create your views here.
 def index(request):
     return render (request,'index.html')
@@ -29,6 +32,8 @@ def index(request):
 @login_required
 def commander(request):
     Members=Account.objects.all()
+    c=add.s(99,1)
+    print(c)
     context={
         'dashb':"active",
         'Members':Members,
@@ -113,7 +118,6 @@ def loansadmin(request):
     Loansadmin=Account.objects.all
     Interests=interests.objects.all
     print(Interests)
-    #notify_user(2, repeat=5, repeat_until=10)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
@@ -217,8 +221,3 @@ class GeneratePdf(View):
         html = template.render(context)
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
-
-@background(schedule=1)
-def notify_user(user_id):
-    # lookup user by id and send them a message
-    print(user_id+1)
