@@ -1,5 +1,8 @@
 
 *.pyc
+/bin/*
+/include/*
+/lib/*
 Lib/
 Scripts/
 tcl/

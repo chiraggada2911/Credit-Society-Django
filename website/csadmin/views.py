@@ -8,12 +8,14 @@ from csadmin.utils import render_to_pdf
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
+from django.shortcuts import redirect
 from django.template.loader import get_template
 
 #for date and time
 import datetime
 from dateutil import relativedelta
 
+#Background
 
 #forms
 from django.forms import ModelForm
@@ -39,6 +41,7 @@ def members(request):
     Interests=interests.objects.get(id=1)
     sharebalance = 0
     cdbalance = 0
+
     #loan parameters
     Rate=Interests.longloaninterest
     R=Rate/(12*100) #rate of interest for each month
@@ -88,6 +91,7 @@ def members(request):
         i.save()
         print("shareamount")
         print(i.shareamount)
+
         context={
         'Members':Members,
         'Interests':Interests,
@@ -110,8 +114,6 @@ def bank(request):
 def loansadmin(request):
     Loansadmin=Account.objects.all
     Interests=interests.objects.all
-    print(Interests)
-    #notify_user(2, repeat=5, repeat_until=10)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
@@ -197,7 +199,7 @@ class FDUpdate(UpdateView):
 
 class LoanUpdate(UpdateView):
         model=Account
-        fields=['username','isloantaken','longloanamount']
+        fields=['username','isloantaken','longloanamount','longloanperiod']
         success_url=reverse_lazy('csadmin:members')
 
 class SharesUpdate(UpdateView):
