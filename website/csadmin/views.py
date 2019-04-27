@@ -14,8 +14,6 @@ from django.template.loader import get_template
 import datetime
 from dateutil import relativedelta
 
-#Background
-from background_task import background
 
 #forms
 from django.forms import ModelForm
@@ -217,8 +215,3 @@ class GeneratePdf(View):
         html = template.render(context)
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
-
-@background(schedule=1)
-def notify_user(user_id):
-    # lookup user by id and send them a message
-    print(user_id+1)
