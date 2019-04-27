@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'landingPage',
     'django.contrib.humanize',
     'autotask',
-]
+    ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
