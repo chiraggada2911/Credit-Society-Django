@@ -16,14 +16,11 @@ import datetime
 from dateutil import relativedelta
 
 #Background
-from background_task import background
 
 #forms
 from django.forms import ModelForm
 from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm
 
-#TASKS
-from .tasks import add
 # Create your views here.
 def index(request):
     return render (request,'index.html')
@@ -32,8 +29,6 @@ def index(request):
 @login_required
 def commander(request):
     Members=Account.objects.all()
-    c=add.s(99,1)
-    print(c)
     context={
         'dashb':"active",
         'Members':Members,
@@ -46,6 +41,7 @@ def members(request):
     Interests=interests.objects.get(id=1)
     sharebalance = 0
     cdbalance = 0
+
     #loan parameters
     Rate=Interests.longloaninterest
     R=Rate/(12*100) #rate of interest for each month
@@ -95,6 +91,7 @@ def members(request):
         i.save()
         print("shareamount")
         print(i.shareamount)
+
         context={
         'Members':Members,
         'Interests':Interests,
@@ -117,7 +114,6 @@ def bank(request):
 def loansadmin(request):
     Loansadmin=Account.objects.all
     Interests=interests.objects.all
-    print(Interests)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
@@ -203,7 +199,7 @@ class FDUpdate(UpdateView):
 
 class LoanUpdate(UpdateView):
         model=Account
-        fields=['username','isloantaken','longloanamount']
+        fields=['username','isloantaken','longloanamount','longloanperiod']
         success_url=reverse_lazy('csadmin:members')
 
 class SharesUpdate(UpdateView):
