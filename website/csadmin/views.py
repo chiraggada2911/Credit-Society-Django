@@ -11,8 +11,11 @@ from django.views.generic import View
 from django.shortcuts import redirect
 from django.template.loader import get_template
 
+#for background tasks
+from autotask.tasks import periodic_task
+
 #for date and time
-import datetime
+from datetime import datetime
 from dateutil import relativedelta
 
 #Background
@@ -35,6 +38,7 @@ def commander(request):
     }
     return render (request,'console.html',context=context)
 
+
 @login_required
 def members(request):
     Members=Account.objects.all()
@@ -45,11 +49,12 @@ def members(request):
     #loan parameters
     Rate=Interests.longloaninterest
     R=Rate/(12*100) #rate of interest for each month
-    print(R)
+
 
     for i in  Members.iterator():
         N=i.longloanperiod
         A=i.longloanamount
+        balance=i.longloanamount
         print(N)
         print(A)
         if(N!=0):
@@ -217,3 +222,8 @@ class GeneratePdf(View):
         html = template.render(context)
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
+
+@periodic_task(seconds=10)
+def clean_up():
+    x=datetime.now()
+    print(x)

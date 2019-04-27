@@ -42,9 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'landingPage',
     'django.contrib.humanize',
-
-    ]
-
+    'autotask',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,6 +56,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'website.urls'
+
+AUTOTASK_IS_ACTIVE = True
 
 TEMPLATES = [
     {
