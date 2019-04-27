@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'landingPage',
-    'background_task',
     'django.contrib.humanize',
+    'autotask',
 
 
 ]
@@ -58,6 +58,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'website.urls'
+
+AUTOTASK_IS_ACTIVE = True
 
 TEMPLATES = [
     {

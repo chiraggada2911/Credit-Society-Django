@@ -11,10 +11,10 @@ from django.views.generic import View
 from django.template.loader import get_template
 
 #for background tasks
-from background_task import background
+from autotask.tasks import periodic_task
 
 #for date and time
-import datetime
+from datetime import datetime
 from dateutil import relativedelta
 
 #forms
@@ -35,6 +35,7 @@ def commander(request):
     }
     return render (request,'console.html',context=context)
 
+
 @login_required
 def members(request):
     Members=Account.objects.all()
@@ -48,22 +49,23 @@ def members(request):
 
 
     for i in  Members.iterator():
-        # N=i.longloanperiod
-        # A=i.longloanamount
-        # print(N)
-        # print(A)
-        # if(N!=0):
-        #     EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-        #     print(EMI)
-        #     interestamount=R*A
-        #     i.longloaninterestamount=interestamount
-        #     print(interestamount)
-        #     principle=EMI-interestamount
-        #     i.longloanprinciple=principle
-        #     print(principle)
-        #     balance=A-principle
-        #     print(balance)
-        #     i.longloanbalance=balance
+        N=i.longloanperiod
+        A=i.longloanamount
+        balance=i.longloanamount
+        print(N)
+        print(A)
+        if(N!=0):
+            EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+            print(EMI)
+            interestamount=R*balance
+            i.longloaninterestamount=interestamount
+            print(interestamount)
+            principle=EMI-interestamount
+            i.longloanprinciple=principle
+            print(principle)
+            balance=balance-principle
+            print(balance)
+            i.longloanbalance=balance
 
         date = i.dateofjoining
         datetoday=datetime.date.today()
@@ -216,6 +218,7 @@ class GeneratePdf(View):
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
 
-@background(schedule=1)
-def notify_user(user_id):
-    print(user_id)
+@periodic_task(seconds=10)
+def clean_up():
+    x=datetime.now()
+    print(x)
