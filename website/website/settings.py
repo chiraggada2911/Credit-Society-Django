@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'landingPage',
     'django.contrib.humanize',
     'autotask',
+    ]
 
 
 MIDDLEWARE = [
