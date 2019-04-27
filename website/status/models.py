@@ -26,19 +26,19 @@ class Account(models.Model):
     #schema for Loans
     isloantaken=models.BooleanField(default=False)
 # main amount , the loan taken
-    longloanamount=models.IntegerField(blank=True,null=True)
-    longloanprinciple=models.IntegerField(blank=True,null=True)
+    longloanamount=models.FloatField(blank=True,null=True)
+    longloanprinciple=models.FloatField(blank=True,null=True)
     longloanperiod=models.IntegerField(blank=True,null=True)
-    longloaninterestamount=models.IntegerField(blank=True,null=True)
-    longloanbalance=models.IntegerField(blank=True,null=True)
+    longloaninterestamount=models.FloatField(blank=True,null=True)
+    longloanbalance=models.FloatField(blank=True,null=True)
 #emi=interest + principle
-    longloanemi=models.IntegerField(blank=True,null=True)
+    longloanemi=models.FloatField(blank=True,null=True)
     #emergency loan
-    emerloanamount=models.IntegerField(blank=True,null=True)
-    emerloanprinciple=models.IntegerField(blank=True,null=True)
+    emerloanamount=models.FloatField(blank=True,null=True)
+    emerloanprinciple=models.FloatField(blank=True,null=True)
     emerloanperiod=models.IntegerField(blank=True,null=True)
-    emerloaninterestamount=models.IntegerField(blank=True,null=True)
-    emerloanbalance=models.IntegerField(blank=True,null=True)
+    emerloaninterestamount=models.FloatField(blank=True,null=True)
+    emerloanbalance=models.FloatField(blank=True,null=True)
 #emi=interest + principle
     emerloanemi=models.IntegerField(blank=True,null=True)
     #schema for fixed Deposits
