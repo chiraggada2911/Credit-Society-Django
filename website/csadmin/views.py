@@ -8,6 +8,7 @@ from csadmin.utils import render_to_pdf
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
+from django.shortcuts import redirect
 from django.template.loader import get_template
 
 #for background tasks
@@ -16,6 +17,8 @@ from autotask.tasks import periodic_task
 #for date and time
 from datetime import datetime
 from dateutil import relativedelta
+
+#Background
 
 #forms
 from django.forms import ModelForm
@@ -42,7 +45,7 @@ def members(request):
     Interests=interests.objects.get(id=1)
     sharebalance = 0
     cdbalance = 0
-    totalInvestment=0
+
     #loan parameters
     Rate=Interests.longloaninterest
     R=Rate/(12*100) #rate of interest for each month
@@ -57,26 +60,26 @@ def members(request):
         if(N!=0):
             EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
             print(EMI)
-            interestamount=R*balance
+            interestamount=R*A
             i.longloaninterestamount=interestamount
             print(interestamount)
             principle=EMI-interestamount
             i.longloanprinciple=principle
             print(principle)
-            balance=balance-principle
+            balance=A-principle
             print(balance)
             i.longloanbalance=balance
+        #
+        # date = i.dateofjoining
+        # datetoday=datetime.date.today()
+        # days=relativedelta.relativedelta(datetoday,date)
+        # nod=days.months
+        # year = days.years
+        # final = nod + 12 * year
+        # totalInvestment = final * (i.sharevalue)
 
-        date = i.dateofjoining
-        datetoday=datetime.date.today()
-        days=relativedelta.relativedelta(datetoday,date)
-        nod=days.months
-        year = days.years
-        final = nod + 12 * year
-        totalInvestment += totalInvestment+(i.sharevalue)
-        print(totalInvestment)
-        print("just")
-        print(totalInvestment)
+        totalInvestment=i.totalamount+(i.sharevalue)
+
         if totalInvestment >= 50000:
             cdbalance = totalInvestment - 50000
             sharebalance = 50000
@@ -91,7 +94,10 @@ def members(request):
             i.cdamount=0
         i.totalamount=totalInvestment
         i.save()
-    context={
+        print("shareamount")
+        print(i.shareamount)
+
+        context={
         'Members':Members,
         'Interests':Interests,
         'member':"active"
@@ -113,7 +119,6 @@ def bank(request):
 def loansadmin(request):
     Loansadmin=Account.objects.all
     Interests=interests.objects.all
-    print(Interests)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
@@ -199,7 +204,7 @@ class FDUpdate(UpdateView):
 
 class LoanUpdate(UpdateView):
         model=Account
-        fields=['username','isloantaken','longloanamount']
+        fields=['username','isloantaken','longloanamount','longloanperiod']
         success_url=reverse_lazy('csadmin:members')
 
 class SharesUpdate(UpdateView):
