@@ -30,7 +30,7 @@ class Account(models.Model):
     longloanprinciple=models.FloatField(blank=True,null=True)
     longloanperiod=models.IntegerField(blank=True,null=True)
     longloaninterestamount=models.FloatField(blank=True,null=True)
-    longloanbalance=models.FloatField(blank=True,null=True)
+    longloanbalance=models.FloatField(blank=True,null=True,default=0)
 #emi=interest + principle
     longloanemi=models.FloatField(blank=True,null=True)
     #emergency loan
