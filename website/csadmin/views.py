@@ -44,61 +44,7 @@ def commander(request):
 def members(request):
     Members=Account.objects.all()
     Interests=interests.objects.get(id=1)
-    sharebalance = 0
-    cdbalance = 0
-
-    #loan parameters
-    Rate=Interests.longloaninterest
-    R=Rate/(12*100) #rate of interest for each month
-
-
-    for i in  Members.iterator():
-        N=i.longloanperiod
-        A=i.longloanamount
-        balance=i.longloanamount
-        print(N)
-        print(A)
-        if(N!=0):
-            EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-            print(EMI)
-            interestamount=R*A
-            i.longloaninterestamount=interestamount
-            print(interestamount)
-            principle=EMI-interestamount
-            i.longloanprinciple=principle
-            print(principle)
-            balance=A-principle
-            print(balance)
-            i.longloanbalance=balance
-        #
-        # date = i.dateofjoining
-        # datetoday=datetime.date.today()
-        # days=relativedelta.relativedelta(datetoday,date)
-        # nod=days.months
-        # year = days.years
-        # final = nod + 12 * year
-        # totalInvestment = final * (i.sharevalue)
-
-        totalInvestment=i.totalamount+(i.sharevalue)
-
-        if totalInvestment >= 50000:
-            cdbalance = totalInvestment - 50000
-            sharebalance = 50000
-            i.sharebalance=sharebalance
-            i.cdbalance=cdbalance
-            i.cdamount=i.sharevalue
-            i.shareamount=0
-        else:
-            i.sharebalance=totalInvestment
-            i.cdbalance=cdbalance
-            i.shareamount=i.sharevalue
-            i.cdamount=0
-        i.totalamount=totalInvestment
-        i.save()
-        print("shareamount")
-        print(i.shareamount)
-
-        context={
+    context={
         'Members':Members,
         'Interests':Interests,
         'member':"active"
@@ -228,7 +174,69 @@ class GeneratePdf(View):
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
 
-@periodic_task(seconds=10)
+@periodic_task(seconds=30)
 def clean_up():
-    x=datetime.now()
-    print(x)
+    Members=Account.objects.all()
+    Interests=interests.objects.get(id=1)
+    sharebalance = 0
+    cdbalance = 0
+
+    #loan parameters
+    Rate=Interests.longloaninterest
+    R=Rate/(12*100) #rate of interest for each month
+
+    for i in  Members.iterator():
+        N=i.longloanperiod
+        A=i.longloanamount
+        print(N)
+        print(A)
+        if(N!=0):
+            if(i.longloanbalance==0):
+                EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                print(EMI)
+                interestamount=R*A
+                i.longloaninterestamount=interestamount
+                print(interestamount)
+                principle=EMI-interestamount
+                i.longloanprinciple=principle
+                print(principle)
+                i.longloanbalance=i.longloanamount-principle
+                print(i.longloanbalance)
+            else:
+                EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                print(EMI)
+                interestamount=R*i.longloanbalance
+                i.longloaninterestamount=interestamount
+                print(interestamount)
+                principle=EMI-interestamount
+                i.longloanprinciple=principle
+                print(principle)
+                i.longloanbalance=i.longloanbalance-principle
+        i.save()
+
+        #
+        # date = i.dateofjoining
+        # datetoday=datetime.date.today()
+        # days=relativedelta.relativedelta(datetoday,date)
+        # nod=days.months
+        # year = days.years
+        # final = nod + 12 * year
+        # totalInvestment = final * (i.sharevalue)
+
+        # totalInvestment=i.totalamount+(i.sharevalue)
+        #
+        # if totalInvestment >= 50000:
+        #     cdbalance = totalInvestment - 50000
+        #     sharebalance = 50000
+        #     i.sharebalance=sharebalance
+        #     i.cdbalance=cdbalance
+        #     i.cdamount=i.sharevalue
+        #     i.shareamount=0
+        # else:
+        #     i.sharebalance=totalInvestment
+        #     i.cdbalance=cdbalance
+        #     i.shareamount=i.sharevalue
+        #     i.cdamount=0
+        # i.totalamount=totalInvestment
+        # print("shareamount")
+        # print(i.shareamount)
