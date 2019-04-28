@@ -10,6 +10,11 @@ class AccountForm(forms.ModelForm):
         model=Account
         fields='__all__'
 
+class NewUserForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=('username','password','first_name','last_name','email')
+
 class ShareDividendForm(forms.ModelForm):
     fsharedividend=forms.FloatField()
     class Meta:
