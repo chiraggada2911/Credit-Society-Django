@@ -11,7 +11,7 @@ urlpatterns = [
     path('fixedDeposits',views.fixedDeposits,name="fixedDeposits"),
     path('Loanuser',views.loanuser,name="loanuser"),
     path('Investment',views.Investment,name="Investment"),
-    path('graph',views.graph,name="graph"),
+    path('committee',views.committee,name="committee"),
     path('pdf',views.GeneratePdf.as_view(),name="GeneratePdf"),
 
 ]

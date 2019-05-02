@@ -135,7 +135,7 @@ def totalmoney(request):
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
     form_class = NewUserForm
-    success_url = 'account_create'
+    success_url = reverse_lazy('csadmin:account_create')
 
     def form_valid(self, form):
         valid = super(UserCreate, self).form_valid(form)
@@ -145,7 +145,8 @@ class UserCreate(CreateView):
 
 class AccountCreate(CreateView):
         model=Account
-        fields=['accountnumber','username','name','sapid','dateofjoining','shareamount','sharesstartingnumber','sharesendingnumber',]
+        template_name = 'AccountCreate.html'
+        fields=['accountnumber','username','name','sapid','dateofjoining','sharevalue','sharesstartingnumber','sharesendingnumber',]
         success_url=reverse_lazy('csadmin:members')
 
 class FDUpdate(UpdateView):
@@ -160,7 +161,7 @@ class LoanUpdate(UpdateView):
 
 class SharesUpdate(UpdateView):
         model=Account
-        fields=['user''shareamount']
+        fields=['username','sharevalue']
         success_url=reverse_lazy('csadmin:members')
 
 class GeneratePdf(View):

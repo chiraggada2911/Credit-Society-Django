@@ -13,6 +13,7 @@ class Account(models.Model):
     dateofjoining=models.DateField(null=False)
 
     sharevalue=models.IntegerField(default=0,null=False)
+
     shareamount=models.IntegerField(default=0,null=False)
     sharebalance=models.IntegerField(default=0)
 
@@ -43,7 +44,7 @@ class Account(models.Model):
 #emi=interest + principle
     emerloanemi=models.IntegerField(blank=True,null=True)
     #schema for fixed Deposits
-    fdcapital=models.IntegerField(default=True,null=True)
+    fdcapital=models.IntegerField(default=0,null=True)
     fdmaturitydate=models.DateField(null=True)
 
 

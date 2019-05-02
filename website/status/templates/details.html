@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <!-- Custom styles for this template -->
   <link href="{% static 'status/css/dashboard.css'%}" rel="stylesheet">
+  <link href="{% static 'status/css/committee.css'%}" rel="stylesheet">
   <link href="{% static 'status/css/pop.css'%}" rel="stylesheet">
 </head>
 
@@ -63,6 +64,12 @@
               <a class="nav-link {{investment}}" href="{%url 'status:Investment'%}">
                 <span data-feather="file-text"></span>
                 Change Investment
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{committee}}" href="{%url 'status:committee'%}">
+                <span data-feather="file-text"></span>
+                Committee
               </a>
             </li>
           </ul>
