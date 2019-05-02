@@ -89,15 +89,12 @@ def details(request):
 
     return render(request,'dashboard.html',context=context)
 
-#not using!!
 @login_required
-def graph(request):
-        current_user_id=request.user.username
-        Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+def committee(request):
         context={
-            'Accountholder':Accountholder,
+        'committee':"active",
         }
-        return render(request,'graph_test.html',context=context)
+        return render(request,'committee.html',context=context)
 
 
 @login_required
@@ -133,7 +130,7 @@ def fixedDeposits(request):
 
     if ((date_diff_fd).months==1 & (date_diff_fd).days==0):
         subject = 'FD is getting matured soon'
-        message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + Accountholder.fdmaturitydate + "what wolud you like to do? reply on this email or contact Admin"
+        message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + str(Accountholder.fdmaturitydate) + "what wolud you like to do? reply on this email or contact Admin"
         email_from = settings.EMAIL_HOST_USER
         recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
         send_mail( subject, message, email_from, recipient_list )
