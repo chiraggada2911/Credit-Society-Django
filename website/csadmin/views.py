@@ -13,7 +13,7 @@ from django.template.loader import get_template
 from django.contrib.auth.models import User
 
 #for background tasks
-from autotask.tasks import periodic_task
+from autotask.tasks import cron_task
 
 #for date and time
 from datetime import datetime
@@ -174,7 +174,7 @@ class GeneratePdf(View):
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
 
-@periodic_task(seconds=30)
+@cron_task(crontab="* * * * *")
 def clean_up():
     Members=Account.objects.all()
     Interests=interests.objects.get(id=1)
@@ -214,29 +214,68 @@ def clean_up():
                 i.longloanbalance=i.longloanbalance-principle
         i.save()
 
-        #
-        # date = i.dateofjoining
-        # datetoday=datetime.date.today()
-        # days=relativedelta.relativedelta(datetoday,date)
-        # nod=days.months
-        # year = days.years
-        # final = nod + 12 * year
-        # totalInvestment = final * (i.sharevalue)
+        date = i.dateofjoining
+        datetoday=datetime.date.today()
+        days=relativedelta.relativedelta(datetoday,date)
+        nod=days.months
+        year = days.years
+        final = nod + 12 * year
+        totalInvestment = final * (i.sharevalue)
 
-        # totalInvestment=i.totalamount+(i.sharevalue)
-        #
-        # if totalInvestment >= 50000:
-        #     cdbalance = totalInvestment - 50000
-        #     sharebalance = 50000
-        #     i.sharebalance=sharebalance
-        #     i.cdbalance=cdbalance
-        #     i.cdamount=i.sharevalue
-        #     i.shareamount=0
-        # else:
-        #     i.sharebalance=totalInvestment
-        #     i.cdbalance=cdbalance
-        #     i.shareamount=i.sharevalue
-        #     i.cdamount=0
-        # i.totalamount=totalInvestment
-        # print("shareamount")
-        # print(i.shareamount)
+        totalInvestment=i.totalamount+(i.sharevalue)
+
+        if totalInvestment >= 50000:
+            cdbalance = totalInvestment - 50000
+            sharebalance = 50000
+            i.sharebalance=sharebalance
+            i.cdbalance=cdbalance
+            i.cdamount=i.sharevalue
+            i.shareamount=0
+        else:
+            i.sharebalance=totalInvestment
+            i.cdbalance=cdbalance
+            i.shareamount=i.sharevalue
+            i.cdamount=0
+        i.totalamount=totalInvestment
+        print("shareamount")
+        print(i.shareamount)
+
+@cron_task(crontab="* * * * *")
+def queue():
+    Members=Account.objects.all()
+    Interests=interests.objects.get(id=1)
+    sharebalance = 0
+    cdbalance = 0
+
+    #Emergencyloan parameters
+    Rate=Interests.emerloaninterest
+    R=Rate/(12*100) #rate of interest for each month
+
+    for i in  Members.iterator():
+        N=i.emerloanperiod
+        A=i.emerloanamount
+        print(N)
+        print(A)
+        if(N!=0):
+            if(i.emerloanbalance==0):
+                EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                print(EMI)
+                interestamount=R*A
+                i.emerloaninterestamount=interestamount
+                print(interestamount)
+                principle=EMI-interestamount
+                i.emerloanprinciple=principle
+                print(principle)
+                i.emerloanbalance=i.emerloanamount-principle
+                print(i.emerloanbalance)
+            else:
+                EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                print(EMI)
+                interestamount=R*i.emerloanbalance
+                i.emerloaninterestamount=interestamount
+                print(interestamount)
+                principle=EMI-interestamount
+                i.emerloanprinciple=principle
+                print(principle)
+                i.emerloanbalance=i.emerloanbalance-principle
+        i.save()
