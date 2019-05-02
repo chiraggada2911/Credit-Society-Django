@@ -182,6 +182,33 @@ def clean_up():
     sharebalance = 0
     cdbalance = 0
 
+    date = i.dateofjoining
+    datetoday=datetime.date.today()
+    days=relativedelta.relativedelta(datetoday,date)
+    nod=days.months
+    year = days.years
+    final = nod + 12 * year
+    totalInvestment = final * (i.sharevalue)
+
+    totalInvestment=i.totalamount+(i.sharevalue)
+
+    if totalInvestment >= 50000:
+        cdbalance = totalInvestment - 50000
+        sharebalance = 50000
+        i.sharebalance=sharebalance
+        i.cdbalance=cdbalance
+        i.cdamount=i.sharevalue
+        i.shareamount=0
+    else:
+        i.sharebalance=totalInvestment
+        i.cdbalance=cdbalance
+        i.shareamount=i.sharevalue
+        i.cdamount=0
+    i.totalamount=totalInvestment
+    print("shareamount")
+    print(i.shareamount)
+    i.save()
+
     #loan parameters
     Rate=Interests.longloaninterest
     R=Rate/(12*100) #rate of interest for each month
@@ -214,30 +241,3 @@ def clean_up():
                 print(principle)
                 i.longloanbalance=i.longloanbalance-principle
         i.save()
-
-        #
-        # date = i.dateofjoining
-        # datetoday=datetime.date.today()
-        # days=relativedelta.relativedelta(datetoday,date)
-        # nod=days.months
-        # year = days.years
-        # final = nod + 12 * year
-        # totalInvestment = final * (i.sharevalue)
-
-        # totalInvestment=i.totalamount+(i.sharevalue)
-        #
-        # if totalInvestment >= 50000:
-        #     cdbalance = totalInvestment - 50000
-        #     sharebalance = 50000
-        #     i.sharebalance=sharebalance
-        #     i.cdbalance=cdbalance
-        #     i.cdamount=i.sharevalue
-        #     i.shareamount=0
-        # else:
-        #     i.sharebalance=totalInvestment
-        #     i.cdbalance=cdbalance
-        #     i.shareamount=i.sharevalue
-        #     i.cdamount=0
-        # i.totalamount=totalInvestment
-        # print("shareamount")
-        # print(i.shareamount)
