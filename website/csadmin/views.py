@@ -13,7 +13,7 @@ from django.template.loader import get_template
 from django.contrib.auth.models import User
 
 #for background tasks
-from autotask.tasks import periodic_task
+from autotask.tasks import cron_task
 
 #for date and time
 from datetime import datetime
@@ -174,7 +174,7 @@ class GeneratePdf(View):
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
 
-@periodic_task(seconds=30)
+@cron_task(crontab="* * * * *")
 def clean_up():
     Members=Account.objects.all()
     Interests=interests.objects.get(id=1)
