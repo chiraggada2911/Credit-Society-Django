@@ -19,8 +19,6 @@ from autotask.tasks import cron_task
 from datetime import datetime
 from dateutil import relativedelta
 
-#Background
-
 #forms
 from django.forms import ModelForm
 from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm,NewUserForm
