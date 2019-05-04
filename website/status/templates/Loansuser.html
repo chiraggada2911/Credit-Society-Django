@@ -4,7 +4,7 @@
 <!-- {%block title%}Loans{%endblock%} -->
 
 {%block content%}
-
+<main role="main" class="col-md-9 col-lg-12 px-4">
 <div class="container" style="top-margin:70px">
 
   <h1 class="h1">Loan</h1>
@@ -14,7 +14,7 @@
         <div class="card-body">
           <h2 class="card-title">Loan Details</h2>
 
-          {% if Accountholder.isloantaken is True %}
+          {% if Accountholder.isloantaken is False %}
 
           <h3>Name:{{Accountholder.name}}</h3>
           <p class="card-text">You are seeing these details because you have taken loan from credit society.</p>
@@ -45,6 +45,6 @@
     </div>
   </div>
 </div>
-
+</main>
 
 {%endblock%}
