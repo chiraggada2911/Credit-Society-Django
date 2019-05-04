@@ -294,7 +294,7 @@ def fdemail():
         print("start")
         date_diff_fd = (relativedelta.relativedelta(i.fdmaturitydate,datetoday))
         print(date_diff_fd)
-        if (date_diff_fd.months==-1 and date_diff_fd.days==0 and date_diff_fd.years==0):
+        if (date_diff_fd.months==+1 and date_diff_fd.days==0 and date_diff_fd.years==0):
             subject = 'FD is getting matured soon'
             message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + str(i.fdmaturitydate) + "what wolud you like to do? reply on this email or contact Admin"
             email_from = settings.EMAIL_HOST_USER
