@@ -3,6 +3,7 @@
 {%block title%}TotalMoney{%endblock%}
 {%block content%}
 <!-- for changing share dividend -->
+<main role="main" class="col-md-6 col-lg-12">
 <form class="lw-form" method="post">
   <div class="lw-field">
     <h3>change share dividend</h3>
@@ -29,6 +30,7 @@
     <input type="numeric" name="flongloaninterest" id="new_longloaninterest" placeholder="Enter the new Rate of Interest of Dividend">
     <button class="lw-btn" name="btnlongloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
   </div>
+  </form>
   <!-- for changing emergency loan interest -->
   <form class="lw-form" method="post">
     <div class="lw-field">
@@ -36,7 +38,7 @@
       <input type="numeric" name="femergencylaoninterest" id="new_longloaninterest" placeholder="Enter the new Rate of Interest of Dividend">
       <button class="lw-btn" name="btnemerloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
     </div>
-
+</form>
     <!-- for changing FD interest -->
     <form class="lw-form" method="post">
       <div class="lw-field">
@@ -47,4 +49,5 @@
 
       {%csrf_token%}
     </form>
+    </main>
     {%endblock%}

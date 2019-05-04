@@ -2,49 +2,61 @@
 
 {%block title%}Loans{%endblock%}
 {%block content%}
-<h1 class="h2">List Of Current Loan</h1>
-<div class="table-responsive">
-  {%for i in Interests%}
-  <h3>Long Loan Rate of Interest = {{i.longloaninterest}}</h3>
-  <h3>Emergency Loan Rate of Interest = {{i.emerloaninterest}}</h3>
-  {%endfor%}
+<main role="main" class="col-md-9 col-lg-10 px-4">
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-18">
+          <div class="card">
+            <div class="card-header card-header-primary">
+              {%for i in Interests%}
+            <h3>Long Loan Rate of Interest = {{i.longloaninterest}}</h3>
+            <h3>Emergency Loan Rate of Interest = {{i.emerloaninterest}}</h3>
+            {%endfor%}
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>A/C No.</th>
+                      <th>SapId</th>
+                      <th>Name</th>
+                      <th>Long loan Principle</th>
+                      <th>Long loan Interest Amount</th>
+                      <th>Long loan Balance</th>
+                      <th>Long loan Emi</th>
+                      <th>Emer loan Principle</th>
+                      <th>Emer loan Interest Amount</th>
+                      <th>Emer loan Balance</th>
+                      <th>Emer loan Emi</th>
 
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>A/C No.</th>
-        <th>SapId</th>
-        <th>Name</th>
-        <th>Long loan Principle</th>
-        <th>Long loan Interest</th>
-        <th>Long loan Balance</th>
-        <th>Long loan Emi</th>
-        <th>Emer loan Principle</th>
-        <th>Emer loan Interest</th>
-        <th>Emer loan Balance</th>
-        <th>Emer loan Emi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%for i in Loansadmin%}
+                    <tr>
+                      <td>{{i.accountnumber}}</td>
+                      <td>{{i.sapid}}</td>
+                      <td>{{i.name}}</td>
+                      <td>{{i.longloanprinciple}}</td>
+                      <td>{{i.longloaninterestamount}}</td>
+                      <td>{{i.longloanbalance}}</td>
+                      <td>{{i.longloanemi}}</td>
+                      <td>{{i.emerloanprinciple}}</td>
+                      <td>{{i.emerloaninterestamount}}</td>
+                      <td>{{i.emerloanbalance}}</td>
+                      <td>{{i.emerloanemi}}</td>
 
-      </tr>
-    </thead>
-    <tbody>
-      {%for i in Loansadmin%}
-      <tr>
-        <td>{{i.accountnumber}}</td>
-        <td>{{i.sapid}}</td>
-        <td>{{i.name}}</td>
-        <td>{{i.longloanprinciple}}</td>
-        <td>{{i.longloaninterestamount}}</td>
-        <td>{{i.longloanbalance}}</td>
-        <td>{{i.longloanemi}}</td>
-        <td>{{i.emerloanprinciple}}</td>
-        <td>{{i.emerloaninterestamount}}</td>
-        <td>{{i.emerloanbalance}}</td>
-        <td>{{i.emerloanemi}}</td>
+                    </tr>
+                    {%endfor%}
 
-      </tr>
-      {%endfor%}
-
-    </tbody>
-  </table>
-</div>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</main>
 {%endblock%}

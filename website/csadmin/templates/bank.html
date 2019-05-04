@@ -2,36 +2,52 @@
 
 {%block title%}Bank{%endblock%}
 {%block content%}
-<h1 class="h2">List Of Current FDs</h1>
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <thead>
-      {%for i in Interests%}
-      <h3>FD rate of interest = {{i.fdinterest}}</h3>{%endfor%}
-      <tr>
-        <th>A/C No.</th>
-        <th>SapId</th>
-        <th>Name</th>
-        <th>FD Capital</th>
-        <th>Maturity Date</th>
 
-      </tr>
-    </thead>
-    <tbody>
+<main role="main" class="col-md-8 col-lg-10 px-4">
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-primary">
+              <h1 class="h2">List Of Current FDs</h1>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    {%for i in Interests%}
+                    <h3>FD rate of interest = {{i.fdinterest}}</h3>{%endfor%}
+                    <tr>
+                      <th>A/C No.</th>
+                      <th>SapId</th>
+                      <th>Name</th>
+                      <th>FD Capital</th>
+                      <th>Maturity Date</th>
 
-{%for i in Banks%}
-  <tr>
-    <td>{{i.accountnumber}}</td>
-    <td>{{i.sapid}}</td>
-    <td>{{i.name}}</td>
-    <td>{{i.fdcapital}}</td>
-    <td>{{i.fdmaturitydate}}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-  </tr>
+              {%for i in Banks%}
+                <tr>
+                  <td>{{i.accountnumber}}</td>
+                  <td>{{i.sapid}}</td>
+                  <td>{{i.name}}</td>
+                  <td>{{i.fdcapital}}</td>
+                  <td>{{i.fdmaturitydate}}</td>
 
-{%endfor%}
+                </tr>
 
-</tbody>
-</table>
-</div>
+              {%endfor%}
+
+              </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+  </div>
+</main>
 {%endblock%}
