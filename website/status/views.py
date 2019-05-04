@@ -78,7 +78,6 @@ def details(request):
 #calculating totalInvestment
     date = Accountholder.dateofjoining
     print("loan")
-    print(Accountholder.isloantaken)
     context={
     'name':name,
     'Accountholder':Accountholder,
@@ -115,26 +114,6 @@ def fixedDeposits(request):
     current_user_id=request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
     Interests=interests.objects.all
-
-#conditional mail for maturity of FDs
-    dateMaturity = Accountholder.fdmaturitydate
-    datetoday=datetime.date.today()
-
-    date_diff_fd = (relativedelta.relativedelta(dateMaturity,datetoday))
-
-    print(dateMaturity)
-    print(datetoday)
-    print((date_diff_fd).months)
-    print((date_diff_fd).days)
-    print(date_diff_fd)
-
-    if ((date_diff_fd).months==1 & (date_diff_fd).days==0):
-        subject = 'FD is getting matured soon'
-        message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + str(Accountholder.fdmaturitydate) + "what wolud you like to do? reply on this email or contact Admin"
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        send_mail( subject, message, email_from, recipient_list )
-        print("mail sent for maturity if FD")
 
     context={
         'Accountholder':Accountholder,
@@ -176,32 +155,6 @@ def loanuser(request):
 
 @login_required
 def Investment(request):
-    sharebalance = 0
-    cdbalance = 0
-    current_user_id=request.user.username
-    Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
-    #calculates totalamount collected
-    date = Accountholder.dateofjoining
-    datetoday=datetime.date.today()
-    days=relativedelta.relativedelta(datetoday,date)
-    nod=days.months
-    year = days.years
-    final = nod + 12 * year
-    print(Accountholder.sharevalue)
-    totalInvestment = final * (Accountholder.sharevalue)
-    if totalInvestment >= 50000:
-        cdbalance = totalInvestment - 50000
-        sharebalance = 50000
-        Accountholder.sharebalance=sharebalance
-        Accountholder.cdbalance=cdbalance
-        Accountholder.cdamount=Accountholder.sharevalue
-        Accountholder.shareamount=0
-    else:
-        Accountholder.sharebalance=totalInvestment
-        Accountholder.cdbalance=cdbalance
-        Accountholder.shareamount=Accountholder.sharevalue
-        Accountholder.cdamount=0
-    Accountholder.save()
     context={
     'Accountholder':Accountholder,
     'totalInvestment':totalInvestment,

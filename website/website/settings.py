@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'landingPage',
     'django.contrib.humanize',
-    #'autotask',
+    'autotask',
 ]
 
 

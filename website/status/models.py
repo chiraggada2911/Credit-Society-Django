@@ -11,37 +11,37 @@ class Account(models.Model):
     name=models.CharField(max_length=50,null=False)
     sapid=models.IntegerField(null=False,unique=True)
     dateofjoining=models.DateField(null=False)
-
     sharevalue=models.IntegerField(default=0,null=False)
-
+    totalinvestment=models.IntegerField(default=0,null=False)
     shareamount=models.IntegerField(default=0,null=False)
     sharebalance=models.IntegerField(default=0)
 
     cdamount=models.IntegerField(default=0)
     cdbalance=models.IntegerField(default=0)
     #cdbalance + sharebalance = total amount
-    totalamount=models.IntegerField(default=0)
+    totalamount=models.DecimalField(default=0,max_digits=10,decimal_places=2)
     #schema for shares
     sharesstartingnumber=models.IntegerField(null=True)
     sharesendingnumber=models.IntegerField(null=True)
     #schema for Loans
-    isloantaken=models.BooleanField(default=False)
+    isloanloantaken=models.BooleanField(default=False)
+    isloanemertaken=models.BooleanField(default=False)
 # main amount , the loan taken
-    longloanamount=models.FloatField(blank=True,null=True)
-    longloanprinciple=models.FloatField(blank=True,null=True)
-    longloanperiod=models.IntegerField(blank=True,null=True)
-    longloaninterestamount=models.FloatField(blank=True,null=True)
-    longloanbalance=models.FloatField(blank=True,null=True,default=0)
+    longloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    longloanprinciple=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    longloanperiod=models.IntegerField(blank=True,null=True,default=0)
+    longloaninterestamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    longloanbalance=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
 #emi=interest + principle
-    longloanemi=models.FloatField(blank=True,null=True)
+    longloanemi=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     #emergency loan
-    emerloanamount=models.FloatField(blank=True,null=True)
-    emerloanprinciple=models.FloatField(blank=True,null=True)
-    emerloanperiod=models.IntegerField(blank=True,null=True)
-    emerloaninterestamount=models.FloatField(blank=True,null=True)
-    emerloanbalance=models.FloatField(blank=True,null=True)
+    emerloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    emerloanprinciple=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    emerloanperiod=models.IntegerField(blank=True,null=True,default=0)
+    emerloaninterestamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    emerloanbalance=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
 #emi=interest + principle
-    emerloanemi=models.IntegerField(blank=True,null=True)
+    emerloanemi=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     #schema for fixed Deposits
     fdcapital=models.IntegerField(default=0,null=True)
     fdmaturitydate=models.DateField(null=True)
@@ -51,8 +51,8 @@ class Account(models.Model):
         return str(self.username)
 
 class interests(models.Model):
-    sharedividend=models.FloatField(blank=True,null=True)
-    cddividend=models.FloatField(blank=True,null=True)
-    fdinterest=models.FloatField(blank=True,null=True)
-    emerloaninterest=models.FloatField(blank=True,null=True)
-    longloaninterest=models.FloatField(blank=True,null=True)
+    sharedividend=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    cddividend=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    fdinterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    emerloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    longloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
