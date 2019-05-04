@@ -2,41 +2,53 @@
 
 {%block title%}Console{%endblock%}
 {%block content%}
-<h2>Console <a href="{% url 'csadmin:user_create'%}"><h3> add user</h3></a></h2>
+
+<main role="main" class="col-md-8 col-lg-10 px-4">
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-primary">
+              <h2>Console </h2>
+              <a href="{% url 'csadmin:user_create'%}" ><button type="button" class="btn btn-primary pull-right" style="background: linear-gradient(45deg, #06beb6, #48b1bf);" name="button">add user</button></a>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>A/C No.</th>
+                      <th>Sap Id</th>
+                      <th>Name</th>
+                      <th>Fixed Deposits</th>
+                      <th>Loan Taken</th>
+                      <th>Share value</th>
 
 
-
-<div class="table-responsive">
-  <table border="1">
-    <thead>
-      <tr>
-        <th>A/C No.</th>
-        <th>Sap Id</th>
-        <th>Name</th>
-        <th>Fixed Deposits</th>
-        <th>Loan Taken</th>
-        <th>Share value</th>
-
-
-      </tr>
-    </thead>
-    <tbody>
-      {%for i in Members%}
-      <tr>
-        <td>{{i.accountnumber}}</td>
-        <td>{{i.sapid}}</td>
-        <td>{{i.name}}</td>
-        <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.fdcapital}}</a></td>
-        <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">{{i.isloantaken}}</a></td>
-        <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%for i in Members%}
+                    <tr>
+                      <td>{{i.accountnumber}}</td>
+                      <td>{{i.sapid}}</td>
+                      <td>{{i.name}}</td>
+                      <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.fdcapital}}</a></td>
+                      <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">{{i.isloantaken}}</a></td>
+                      <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>
 
 
-      </tr>
-      {%endfor%}
+                    </tr>
+                    {%endfor%}
 
-    </tbody>
-  </table>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</main>
 
-</div>
-</div>
 {%endblock%}
