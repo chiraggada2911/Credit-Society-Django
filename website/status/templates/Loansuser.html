@@ -14,7 +14,7 @@
         <div class="card-body">
           <h2 class="card-title">Loan Details</h2>
 
-          {% if Accountholder.isloantaken is False %}
+          {% if Accountholder.islongloantaken and Accountholder.isloanemertaken is True %}
 
           <h3>Name:{{Accountholder.name}}</h3>
           <p class="card-text">You are seeing these details because you have taken loan from credit society.</p>
