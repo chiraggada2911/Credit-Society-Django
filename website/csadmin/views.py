@@ -160,7 +160,7 @@ class FDUpdate(UpdateView):
 
 class LoanUpdate(UpdateView):
         model=Account
-        fields=['username','isloantaken','longloanamount','longloanperiod']
+        fields=['username','isloanloantaken','isloanemertaken','longloanamount','longloanperiod']
         success_url=reverse_lazy('csadmin:members')
 
 class SharesUpdate(UpdateView):
