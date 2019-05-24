@@ -22,7 +22,8 @@
                       <th>Sap Id</th>
                       <th>Name</th>
                       <th>Fixed Deposits</th>
-                      <th>Loan Taken</th>
+                      <th>Long Loan Taken</th>
+                      <th>Emergency Loan Taken</th>
                       <th>Share value</th>
 
 
@@ -35,7 +36,8 @@
                       <td>{{i.sapid}}</td>
                       <td>{{i.name}}</td>
                       <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.fdcapital}}</a></td>
-                      <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">{{i.isloantaken}}</a></td>
+                      <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">{{i.isloanloantaken}}</a></td>
+                      <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">{{i.isloanemertaken}}</a></td>
                       <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>
 
 
