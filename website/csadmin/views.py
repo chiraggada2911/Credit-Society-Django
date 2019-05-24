@@ -142,7 +142,7 @@ class UserCreate(CreateView):
     success_url = reverse_lazy('csadmin:account_create')
 
     def form_valid(self, form):
-        valid = loansuper(UserCreate, self).form_valid(form)
+        valid = super(UserCreate, self).form_valid(form)
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         return valid
 

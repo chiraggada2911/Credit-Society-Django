@@ -37,36 +37,36 @@
         <ul class="nav">
           <li class="nav-item  {{dashb}}">
             <a class="nav-link" href="{%url 'csadmin:commander'%}">
-              Dashboard <span class="sr-only">(current)</span>
+              Dashboard <i class="material-icons">dashboard</i>
             </a>
           </li>
           <li class="nav-item  {{member}} ">
             <a class="nav-link" href="{%url 'csadmin:members' %}">
-              <span data-feather="file"></span>
+              <i class="fa fa-group"></i>
               Members
             </a>
           </li>
           <li class="nav-item  {{Bank}}">
             <a class="nav-link " href="{%url 'csadmin:bank' %}">
-              <span data-feather="shopping-cart"></span>
+              <i class="fa fa-lock"></i>
               Fixed Deposits
             </a>
           </li>
           <li class="nav-item {{loan}}">
             <a class="nav-link" href="{%url 'csadmin:loansadmin' %}">
-              <span data-feather="users"></span>
+              <i class="fa fa-rupee"></i>
               Loans
             </a>
           </li>
           <li class="nav-item {{money}} ">
             <a class="nav-link" href="{%url 'csadmin:totalmoney'%}">
-              <span data-feather="file-text"></span>
+              <i class="fa fa-refresh"></i>
               Change
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="{%url 'logout' %}">
-              <span data-feather="file-text"></span>
+              <i class="fa fa-sign-out" aria-hidden="true"></i>
               Sign Out
             </a>
           </li>
