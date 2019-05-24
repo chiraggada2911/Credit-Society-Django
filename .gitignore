@@ -3,3 +3,7 @@
 /bin/*
 /include/*
 /lib/*
+Lib/
+Scripts/
+tcl/
+Include/
