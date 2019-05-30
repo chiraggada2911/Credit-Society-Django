@@ -27,7 +27,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm,NewUserForm
+from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm,NewUserForm,MessengerForm
 
 # Create your views here.
 def index(request):
@@ -76,6 +76,34 @@ def loansadmin(request):
         'loan':"active"
     }
     return render (request,'loansadmin.html',context=context)
+
+@login_required
+def message(request):
+    recievers = []
+    user=Account.objects.all
+    users = User.objects.all()
+    for i in users.iterator():
+        user_email = i.email
+        print(user_email)
+        recievers.append(i.email)
+    if request.method=="POST":
+        tmessage=MessengerForm(request.POST)
+        if tmessage.is_valid():
+            message=tmessage.cleaned_data['fmessage']
+            print(message)
+            subject = 'This email is from Credit Society Committee'
+            email_from = settings.EMAIL_HOST_USER
+            send_mail( subject, message, email_from, recievers )
+            print("mail sent from messanger")
+
+        else:
+            print("error at validity of message")
+    context={
+
+        'message':"active",
+    }
+    return render (request,'messanger.html',context=context)
+
 
 @login_required
 def totalmoney(request):
