@@ -9,10 +9,13 @@
     <div class="lw-field">
       <h3>change share dividend</h3>
       <input type="numeric" name="fsharedividend" id="new_sharedividend" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btnshare" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+      <button class="lw-btn" name="btnshare" href="#modal">ok!</button>
+
     </div>
     {%csrf_token%}
   </form>
+
+  <a href="#modal">change rates</a>
   <!-- for changing long loan interest -->
   <form class="lw-form" method="post">
     <div class="lw-field">
@@ -30,25 +33,65 @@
       <button class="lw-btn" name="btnshare" href="{%url 'csadmin:totalmoney'%}">ok!</button>
     </div>
     {%csrf_token%}
-    </form>
-    <!-- for changing cd dividend -->
-    <form class="lw-form" method="post">
-      <div class="lw-field">
-        <h3>change cd dividend</h3>
-        <input type="numeric" name="fcddividend" id="new_cddividend" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
-        <button class="lw-btn" name="btncd" href="{%url 'csadmin:totalmoney'%}">ok!</button>
-      </div>
-      {%csrf_token%}
-    </form>
-    <!-- for changing FD interest -->
-    <form class="lw-form" method="post">
-      <div class="lw-field">
-        <h3>Emergency Loan interest</h3>
-        <input type="numeric" name="femergencylaoninterest" id="new_longloaninterest" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
-        <button class="lw-btn" name="btnemerloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
-      </div>
-      {%csrf_token%}
-    </form>
+  </form>
+  <!-- for changing cd dividend -->
+  <form class="lw-form" method="post">
+    <div class="lw-field">
+      <h3>change cd dividend</h3>
+      <input type="numeric" name="fcddividend" id="new_cddividend" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
+      <button class="lw-btn" name="btncd" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+    </div>
+    {%csrf_token%}
+  </form>
+  <!-- for changing FD interest -->
+  <form class="lw-form" method="post">
+    <div class="lw-field">
+      <h3>Emergency Loan interest</h3>
+      <input type="numeric" name="femergencylaoninterest" id="new_longloaninterest" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
+      <button class="lw-btn" name="btnemerloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+    </div>
+    {%csrf_token%}
+  </form>
 
 </main>
+<div id="modal" class="overlay" data-lw-onload>
+  <div class="popup">
+
+    <div class=" lw-container_md">
+      <form method="post">
+        <a class="lw-close" href="#">X</a>
+
+        <div class="lw-wrap lw-bb">
+          <div class="lw-panel lw-panel_lg">
+            <div class="lw-preview"><i class="fa fa-user-secret"style='font-size:100px' aria-hidden="true"></i></div>
+            <div class="lw-group">
+              <div class="lw-title">Checking of authority</div>
+              <div class="lw-content">Inorder to change any field we need to verify the private key given to Chairman and Secretary.Please enter your secret and hit verify button.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lw-wrap lw-bg-white">
+          <div class="lw-inline">
+
+            <div class="lw-field">
+              <div class="lw-label">Chairman</div>
+              <div class="lw-group"><input class="lw-input" type="password" placeholder="Enter your key" required></div>
+            </div>
+            <div class="lw-field">
+              <div class="lw-label">Secretary</div>
+              <div class="lw-group"><input class="lw-input" type="password" placeholder="Enter your key" required></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="lw-foot">
+          <a class="lw-btn" class="lw-close" href="{%url 'csadmin:totalmoney'%}">cancel change</a>
+          <button class="lw-btn lw-btn_color" data-lw-ripple> verify</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 {%endblock%}
