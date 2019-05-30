@@ -6,53 +6,49 @@
 <main role="main" class="col-md-6 col-lg-12">
 <form class="lw-form" method="post">
   <div class="lw-field">
-    <h3>change share dividend</h3>
-    <input type="numeric" name="fsharedividend" id="new_sharedividend" placeholder="Enter the new Rate of Interest of Dividend">
-    <button class="lw-btn" name="btnshare" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+    <h3>Change Share Dividend</h3>
+    <input type="numeric" name="fsharedividend" id="new_sharedividend" style="font-size:11pt; width:35%; height:35%;" placeholder="Enter the new Rate of Interest of Dividend">
+    <button class="lw-btn" name="btnshare" style="padding:7px;" href="{%url 'csadmin:totalmoney'%}">Save</button>
   </div>
 
-<head>
-  <style>
-    input {
-      width: 25%;
-    }
-  </style>
-</head>
-
-<body>
+  {%csrf_token%}
+</form>
+<!-- for changing cd dividend -->
+<form class="lw-form" method="post">
+  <div class="lw-field">
+    <h3>Change Cummulative Deposits Dividend</h3>
+    <input type="numeric" name="fcddividend" id="new_cddividend" style="font-size:11pt; width:35%; height:35%;" placeholder="Enter the new Rate of Interest of Dividend">
+    <button class="lw-btn" name="btncd" style="padding:7px;" href="{%url 'csadmin:totalmoney'%}">Save</button>
+  </div>
 
   {%csrf_token%}
 </form>
 <!-- for changing long loan interest -->
 <form class="lw-form" method="post">
   <div class="lw-field">
-    <h3>Long Loan interest</h3>
-    <input type="numeric" name="flongloaninterest" id="new_longloaninterest" placeholder="Enter the new Rate of Interest of Dividend">
-    <button class="lw-btn" name="btnlongloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+    <h3>Long Loan Interest</h3>
+    <input type="numeric" name="flongloaninterest" id="new_longloaninterest" style="font-size:11pt; width:35%; height:35%;" placeholder="Enter the new Rate of Interest of Dividend">
+    <button class="lw-btn" name="btnlongloan" style="padding:7px;" href="{%url 'csadmin:totalmoney'%}">Save</button>
   </div>
+  {%csrf_token%}
   </form>
   <!-- for changing emergency loan interest -->
   <form class="lw-form" method="post">
     <div class="lw-field">
-      <h3>Change Share Dividend</h3>
-      <input type="numeric" name="fsharedividend" id="new_sharedividend" style="width:100%" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btnshare" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+      <h3>Emergency Loan Interest</h3>
+      <input type="numeric" name="femergencylaoninterest" id="new_longloaninterest" style="font-size:11pt; width:35%; height:35%;" placeholder="Enter the new Rate of Interest of Dividend">
+      <button class="lw-btn" name="btnemerloan" style="padding:7px;" href="{%url 'csadmin:totalmoney'%}">Save</button>
     </div>
     {%csrf_token%}
-  <!-- for changing cd dividend -->
-    <div class="lw-field">
-      <h3>change cd dividend</h3>
-      <input type="numeric" name="fcddividend" id="new_cddividend" style="width:100%" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btncd" href="{%url 'csadmin:totalmoney'%}">ok!</button>
-    </div>
 </form>
     <!-- for changing FD interest -->
     <form class="lw-form" method="post">
       <div class="lw-field">
-        <h3>Emergency Loan interest</h3>
-        <input type="numeric" name="femergencylaoninterest" id="new_longloaninterest" style="width:100%" placeholder="Enter the new Rate of Interest of Dividend">
-        <button class="lw-btn" name="btnemerloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+        <h3>Fixed Deposits Interest</h3>
+        <input type="numeric" name="ffdinterest" id="new_fdinterest" style="font-size:11pt; width:35%; height:35%;" placeholder="Enter the new Rate of Interest of Dividend">
+        <button class="lw-btn" name="btnfd" style="padding:7px;" href="{%url 'csadmin:totalmoney'%}">Save</button>
       </div>
+
       {%csrf_token%}
     </form>
     </main>
