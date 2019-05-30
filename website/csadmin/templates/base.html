@@ -50,7 +50,8 @@
         <ul class="nav">
           <li class="nav-item  {{dashb}}">
             <a class="nav-link" href="{%url 'csadmin:commander'%}">
-              Dashboard <i class="material-icons">dashboard</i>
+              <i class="material-icons">dashboard</i>
+              Dashboard
             </a>
           </li>
           <li class="nav-item  {{member}} ">
@@ -75,6 +76,12 @@
             <a class="nav-link" href="{%url 'csadmin:totalmoney'%}">
               <i class="fa fa-refresh"></i>
               Change
+            </a>
+          </li>
+          <li class="nav-item {{message}} ">
+            <a class="nav-link" href="{%url 'csadmin:message'%}">
+              <i class="fa fa-paper-plane"></i>
+              Message
             </a>
           </li>
           <li class="nav-item ">

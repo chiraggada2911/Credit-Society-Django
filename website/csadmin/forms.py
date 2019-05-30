@@ -32,3 +32,6 @@ class EmergencyLoanForm(forms.Form):
 
 class FDInterestForm(forms.Form):
     ffdinterest=forms.FloatField()
+
+class MessengerForm(forms.Form):
+    fmessage=forms.CharField(widget=forms.TextInput)
