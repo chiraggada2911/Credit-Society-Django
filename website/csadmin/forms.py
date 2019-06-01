@@ -35,3 +35,7 @@ class FDInterestForm(forms.Form):
 
 class MessengerForm(forms.Form):
     fmessage=forms.CharField(widget=forms.TextInput)
+
+class SecretkeyForm(forms.Form):
+    fchairmankey=forms.IntegerField()
+    fsecretarykey=forms.IntegerField()
