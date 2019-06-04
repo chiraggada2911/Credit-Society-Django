@@ -122,6 +122,14 @@ def totalmoney(request):
                 t.sharedividend=sharedividend
                 t.save()
                 print("valid_share+saved")
+                # subject = 'Admin wants to make some changes'
+                # message = Accountholder.name +" : "+ sharedividend
+                # email_from = settings.EMAIL_HOST_USER
+                #
+                # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+                #
+                # send_mail( subject, message, email_from, recipient_list )
+                # print("mail sent")
         elif 'btncd' in request.POST:
             tcddividend=CDDividendForm(request.POST)
             print("POST_2")
