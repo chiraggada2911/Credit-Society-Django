@@ -9,6 +9,7 @@ urlpatterns = [
     path('bank', views.bank,name="bank"),
     path('loansadmin', views.loansadmin,name="loansadmin"),
     path('totalmoney', views.totalmoney,name="totalmoney"),
+    path('message', views.message,name="message"),
     path('usercreate', views.UserCreate.as_view(),name='user_create'),
     path('account/create/', views.AccountCreate.as_view(), name='account_create'),
     path('FDupdate/(?P<pk>)/', views.FDUpdate.as_view(), name='fd_update'),

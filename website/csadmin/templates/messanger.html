@@ -1,0 +1,39 @@
+{%extends 'base.html'%}
+
+{%block title%}messanger{%endblock%}
+{%block content%}
+
+<main role="main" class="col-md-12 col-lg-11">
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-primary">
+              <!-- here the choice vala part will come -->
+              <h5>send to whom and send button</h5>
+            </div>
+            <form class="lw-form" method="POST">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <!-- message body card -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="form-group">
+                          <label class="bmd-label-floating"> Write your message below...</label>
+                          <textarea name="fmessage" id="message" type="text" class="form-control" required rows="10"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="submit" class="btn btn-primary" ></input>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+              {% csrf_token %}
+            </form>
+          </div>
+        </div>
+      </div>
+</main {%endblock%}

@@ -27,7 +27,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm,NewUserForm
+from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm,NewUserForm,MessengerForm,SecretkeyForm
 
 # Create your views here.
 def index(request):
@@ -76,6 +76,34 @@ def loansadmin(request):
         'loan':"active"
     }
     return render (request,'loansadmin.html',context=context)
+
+@login_required
+def message(request):
+    recievers = []
+    user=Account.objects.all
+    users = User.objects.all()
+    for i in users.iterator():
+        user_email = i.email
+        print(user_email)
+        recievers.append(i.email)
+    if request.method=="POST":
+        tmessage=MessengerForm(request.POST)
+        if tmessage.is_valid():
+            message=tmessage.cleaned_data['fmessage']
+            print(message)
+            subject = 'This email is from Credit Society Committee'
+            email_from = settings.EMAIL_HOST_USER
+            send_mail( subject, message, email_from, recievers )
+            print("mail sent from messanger")
+
+        else:
+            print("error at validity of message")
+    context={
+
+        'message':"active",
+    }
+    return render (request,'messanger.html',context=context)
+
 
 @login_required
 def totalmoney(request):
@@ -130,6 +158,20 @@ def totalmoney(request):
                 t.fdinterest=fdinterest
                 t.save()
                 print("valid_fd")
+        elif 'btnverify' in request.POST:
+            tsecretkey=SecretkeyForm(request.POST)
+            print("POST_6")
+            if tsecretkey.is_valid():
+                chairmankey=tsecretkey.cleaned_data['fchairmankey']
+                print("chairman's key")
+                print(chairmankey)
+                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
+                print("secretary's key")
+                print(secretarykey)
+                if (chairmankey == 123 and secretarykey ==321):
+                    print("Allow")
+                else:
+                    print("Not Allow!!")
 
     context={
         'money':"active"
@@ -142,7 +184,7 @@ class UserCreate(CreateView):
     success_url = reverse_lazy('csadmin:account_create')
 
     def form_valid(self, form):
-        valid = loansuper(UserCreate, self).form_valid(form)
+        valid = super(UserCreate, self).form_valid(form)
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         return valid
 
@@ -160,7 +202,7 @@ class FDUpdate(UpdateView):
 
 class LoanUpdate(UpdateView):
         model=Account
-        fields=['username','isloantaken','longloanamount','longloanperiod']
+        fields=['username','isloanloantaken','isloanemertaken','longloanamount','longloanperiod']
         success_url=reverse_lazy('csadmin:members')
 
 class SharesUpdate(UpdateView):

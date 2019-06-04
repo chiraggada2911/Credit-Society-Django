@@ -155,9 +155,11 @@ def loanuser(request):
 
 @login_required
 def Investment(request):
+    current_user_id = request.user.username
+    Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+
     context={
     'Accountholder':Accountholder,
-    'totalInvestment':totalInvestment,
     'investment':"active",
     }
     return render (request,'Investment.html',context=context)

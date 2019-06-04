@@ -68,8 +68,7 @@
                 {% if Accountholder.islongloantaken and Accountholder.isloanemertaken is True %}
                 <h2>Your Loan Amount: &#x20b9; {{ Accountholder.longloanprinciple|intcomma  }}</h2>
                 {% else %}
-                <h1>{{Accountholder.isloantaken}}hi</h1>
-                <h1>you have no loans due</h1>
+                <h4>you have no loans due</h4>
                 <h4>Request Loan
                   <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
                 </h4>

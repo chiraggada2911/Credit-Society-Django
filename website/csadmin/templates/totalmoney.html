@@ -4,50 +4,259 @@
 {%block content%}
 <!-- for changing share dividend -->
 <main role="main" class="col-md-6 col-lg-12">
-<form class="lw-form" method="post">
-  <div class="lw-field">
-    <h3>change share dividend</h3>
-    <input type="numeric" name="fsharedividend" id="new_sharedividend" placeholder="Enter the new Rate of Interest of Dividend">
-    <button class="lw-btn" name="btnshare" href="{%url 'csadmin:totalmoney'%}">ok!</button>
-  </div>
 
-  {%csrf_token%}
-</form>
-<!-- for changing cd dividend -->
-<form class="lw-form" method="post">
-  <div class="lw-field">
-    <h3>change cd dividend</h3>
-    <input type="numeric" name="fcddividend" id="new_cddividend" placeholder="Enter the new Rate of Interest of Dividend">
-    <button class="lw-btn" name="btncd" href="{%url 'csadmin:totalmoney'%}">ok!</button>
-  </div>
+  <form class="lw-form" method="post">
+    <div class="lw-field">
+      <h3>change share dividend</h3>
+      <input type="numeric" name="fsharedividend" id="new_sharedividend" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
+      <button class="lw-btn" name="btnshare" href="#modal">ok!</button>
 
-  {%csrf_token%}
-</form>
-<!-- for changing long loan interest -->
-<form class="lw-form" method="post">
-  <div class="lw-field">
-    <h3>Long Loan interest</h3>
-    <input type="numeric" name="flongloaninterest" id="new_longloaninterest" placeholder="Enter the new Rate of Interest of Dividend">
-    <button class="lw-btn" name="btnlongloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
-  </div>
+    </div>
+    {%csrf_token%}
+  </form>
+
+  <a href="#modal1">change share dicidend rates</a><br>
+  <a href="#modal2">change share dicidend rates</a><br>
+  <a href="#modal3">change share dicidend rates</a><br>
+  <a href="#modal4">change share dicidend rates</a><br>
+  <a href="#modal5">change share dicidend rates</a><br>
+  <!-- for changing long loan interest -->
+  <form class="lw-form" method="post">
+    <div class="lw-field">
+      <h3>Long Loan interest</h3>
+      <input type="numeric" name="flongloaninterest" id="new_longloaninterest" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
+      <button class="lw-btn" name="btnlongloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+    </div>
+    {%csrf_token%}
   </form>
   <!-- for changing emergency loan interest -->
   <form class="lw-form" method="post">
     <div class="lw-field">
+      <h3>Change Share Dividend</h3>
+      <input type="numeric" name="fsharedividend" id="new_sharedividend" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
+      <button class="lw-btn" name="btnshare" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+    </div>
+    {%csrf_token%}
+  </form>
+  <!-- for changing cd dividend -->
+  <form class="lw-form" method="post">
+    <div class="lw-field">
+      <h3>change cd dividend</h3>
+      <input type="numeric" name="fcddividend" id="new_cddividend" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
+      <button class="lw-btn" name="btncd" href="{%url 'csadmin:totalmoney'%}">ok!</button>
+    </div>
+    {%csrf_token%}
+  </form>
+  <!-- for changing FD interest -->
+  <form class="lw-form" method="post">
+    <div class="lw-field">
       <h3>Emergency Loan interest</h3>
-      <input type="numeric" name="femergencylaoninterest" id="new_longloaninterest" placeholder="Enter the new Rate of Interest of Dividend">
+      <input type="numeric" name="femergencylaoninterest" id="new_longloaninterest" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
       <button class="lw-btn" name="btnemerloan" href="{%url 'csadmin:totalmoney'%}">ok!</button>
     </div>
-</form>
-    <!-- for changing FD interest -->
-    <form class="lw-form" method="post">
-      <div class="lw-field">
-        <h3>FD interest</h3>
-        <input type="numeric" name="ffdinterest" id="new_fdinterest" placeholder="Enter the new Rate of Interest of Dividend">
-        <button class="lw-btn" name="btnfd" href="{%url 'csadmin:totalmoney'%}">ok!</button>
-      </div>
+    {%csrf_token%}
+  </form>
 
-      {%csrf_token%}
-    </form>
-    </main>
-    {%endblock%}
+</main>
+<div id="modal1" class="overlay" data-lw-onload>
+  <div class="popup">
+
+    <div class=" lw-container_md">
+      <form method="post">
+        <a class="lw-close" href="#">X</a>
+
+        <div class="lw-wrap lw-bb">
+          <div class="lw-panel lw-panel_lg">
+            <div class="lw-preview"><i class="fa fa-user-secret"style='font-size:100px' aria-hidden="true"></i></div>
+            <div class="lw-group">
+              <div class="lw-title">Checking of authority</div>
+              <div class="lw-content">Inorder to change any field we need to verify the private key given to Chairman and Secretary.Please enter your secret and hit verify button.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lw-wrap lw-bg-white">
+          <div class="lw-inline">
+
+            <div class="lw-field">
+              <div class="lw-label">Chairman</div>
+              <div class="lw-group"><input class="lw-input"  style="font-family:monospace;" name="fchairmankey" type="text" placeholder="Enter your key" required></div>
+            </div>
+            <div class="lw-field">
+              <div class="lw-label">Secretary</div>
+              <div class="lw-group"><input class="lw-input " name="fsecretarykey" type="text" placeholder="Enter your key" required></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="lw-foot">
+          <a class="lw-btn" class="lw-close" href="{%url 'csadmin:totalmoney'%}">cancel change</a>
+          <button class="lw-btn lw-btn_color"name="btnverify" data-lw-ripple> verify</button></div>
+          {%csrf_token%}
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="modal2" class="overlay" data-lw-onload>
+  <div class="popup">
+
+    <div class=" lw-container_md">
+      <form method="post">
+        <a class="lw-close" href="#">X</a>
+
+        <div class="lw-wrap lw-bb">
+          <div class="lw-panel lw-panel_lg">
+            <div class="lw-preview"><i class="fa fa-user-secret"style='font-size:100px' aria-hidden="true"></i></div>
+            <div class="lw-group">
+              <div class="lw-title">Checking of authority</div>
+              <div class="lw-content">Inorder to change any field we need to verify the private key given to Chairman and Secretary.Please enter your secret and hit verify button.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lw-wrap lw-bg-white">
+          <div class="lw-inline">
+
+            <div class="lw-field">
+              <div class="lw-label">Chairman</div>
+              <div class="lw-group"><input class="lw-input" type="password" placeholder="Enter your key" required></div>
+            </div>
+            <div class="lw-field">
+              <div class="lw-label">Secretary</div>
+              <div class="lw-group"><input class="lw-input" type="password" placeholder="Enter your key" required></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="lw-foot">
+          <a class="lw-btn" class="lw-close" href="{%url 'csadmin:totalmoney'%}">cancel change</a>
+          <button class="lw-btn lw-btn_color" data-lw-ripple> verify</button></div>
+          {%csrf_token%}
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="modal3" class="overlay" data-lw-onload>
+  <div class="popup">
+
+    <div class=" lw-container_md">
+      <form method="post">
+        <a class="lw-close" href="#">X</a>
+
+        <div class="lw-wrap lw-bb">
+          <div class="lw-panel lw-panel_lg">
+            <div class="lw-preview"><i class="fa fa-user-secret"style='font-size:100px' aria-hidden="true"></i></div>
+            <div class="lw-group">
+              <div class="lw-title">Checking of authority</div>
+              <div class="lw-content">Inorder to change any field we need to verify the private key given to Chairman and Secretary.Please enter your secret and hit verify button.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lw-wrap lw-bg-white">
+          <div class="lw-inline">
+
+            <div class="lw-field">
+              <div class="lw-label">Chairman</div>
+              <div class="lw-group"><input class="lw-input" type="password" placeholder="Enter your key" required></div>
+            </div>
+            <div class="lw-field">
+              <div class="lw-label">Secretary</div>
+              <div class="lw-group"><input class="lw-input" type="password" placeholder="Enter your key" required></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="lw-foot">
+          <a class="lw-btn" class="lw-close" href="{%url 'csadmin:totalmoney'%}">cancel change</a>
+          <button class="lw-btn lw-btn_color" data-lw-ripple> verify</button></div>
+          {%csrf_token%}
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="modal4" class="overlay" data-lw-onload>
+  <div class="popup">
+
+    <div class=" lw-container_md">
+      <form method="post">
+        <a class="lw-close" href="#">X</a>
+
+        <div class="lw-wrap lw-bb">
+          <div class="lw-panel lw-panel_lg">
+            <div class="lw-preview"><i class="fa fa-user-secret"style='font-size:100px' aria-hidden="true"></i></div>
+            <div class="lw-group">
+              <div class="lw-title">Checking of authority</div>
+              <div class="lw-content">Inorder to change any field we need to verify the private key given to Chairman and Secretary.Please enter your secret and hit verify button.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lw-wrap lw-bg-white">
+          <div class="lw-inline">
+
+            <div class="lw-field">
+              <div class="lw-label">Chairman</div>
+              <div class="lw-group"><input class="lw-input" type="password" placeholder="Enter your key" required></div>
+            </div>
+            <div class="lw-field">
+              <div class="lw-label">Secretary</div>
+              <div class="lw-group"><input class="lw-input" type="password" placeholder="Enter your key" required></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="lw-foot">
+          <a class="lw-btn" class="lw-close" href="{%url 'csadmin:totalmoney'%}">cancel change</a>
+          <button class="lw-btn lw-btn_color" data-lw-ripple> verify</button></div>
+          {%csrf_token%}
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="modal5" class="overlay" data-lw-onload>
+  <div class="popup">
+
+    <div class=" lw-container_md">
+      <form method="post">
+        <a class="lw-close" href="#">X</a>
+
+        <div class="lw-wrap lw-bb">
+          <div class="lw-panel lw-panel_lg">
+            <div class="lw-preview"><i class="fa fa-user-secret"style='font-size:100px' aria-hidden="true"></i></div>
+            <div class="lw-group">
+              <div class="lw-title">Checking of authority</div>
+              <div class="lw-content">Inorder to change any field we need to verify the private key given to Chairman and Secretary.Please enter your secret and hit verify button.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lw-wrap lw-bg-white">
+          <div class="lw-inline">
+
+            <div class="lw-field">
+              <div class="lw-label">Chairman</div>
+              <div class="lw-group"><input class="lw-input" type="password" placeholder="Enter your key" required></div>
+            </div>
+            <div class="lw-field">
+              <div class="lw-label">Secretary</div>
+              <div class="lw-group"><input class="lw-input" type="password" placeholder="Enter your key" required></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="lw-foot">
+          <a class="lw-btn" class="lw-close" href="{%url 'csadmin:totalmoney'%}">cancel change</a>
+          <button class="lw-btn lw-btn_color" data-lw-ripple> verify</button></div>
+          {%csrf_token%}
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{%endblock%}
