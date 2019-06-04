@@ -27,7 +27,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm,NewUserForm,MessengerForm
+from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm,NewUserForm,MessengerForm,SecretkeyForm
 
 # Create your views here.
 def index(request):
@@ -166,6 +166,20 @@ def totalmoney(request):
                 t.fdinterest=fdinterest
                 t.save()
                 print("valid_fd")
+        elif 'btnverify' in request.POST:
+            tsecretkey=SecretkeyForm(request.POST)
+            print("POST_6")
+            if tsecretkey.is_valid():
+                chairmankey=tsecretkey.cleaned_data['fchairmankey']
+                print("chairman's key")
+                print(chairmankey)
+                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
+                print("secretary's key")
+                print(secretarykey)
+                if (chairmankey == 123 and secretarykey ==321):
+                    print("Allow")
+                else:
+                    print("Not Allow!!")
 
     context={
         'money':"active"
