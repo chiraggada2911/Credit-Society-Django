@@ -106,7 +106,7 @@ def message(request):
 
 
 @login_required
-def totalmoney(request):
+def change(request):
     sharedividend=0
     cddividend=0
     longloaninterest=0
@@ -170,13 +170,15 @@ def totalmoney(request):
                 print(secretarykey)
                 if (chairmankey == 123 and secretarykey ==321):
                     print("Allow")
+
+                    return redirect('/csadmin/ratesupdate/(%3FP1)/')
                 else:
                     print("Not Allow!!")
 
     context={
         'money':"active"
     }
-    return render (request,'totalmoney.html',context=context)
+    return render (request,'change.html',context=context)
 
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
@@ -188,6 +190,26 @@ class UserCreate(CreateView):
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         return valid
 
+class ShareUpdate(UpdateView):
+        model=interests
+        fields=['sharedividend']
+        success_url=reverse_lazy('csadmin:members')
+class CDUpdate(UpdateView):
+        model=interests
+        fields=['cddividend']
+        success_url=reverse_lazy('csadmin:members')
+class EmerLoanUpdate(UpdateView):
+        model=interests
+        fields=['emerloaninterest']
+        success_url=reverse_lazy('csadmin:members')
+class FDinterestUpdate(UpdateView):
+        model=interests
+        fields=['fdinterest']
+        success_url=reverse_lazy('csadmin:members')
+class LongLoanUpdate(UpdateView):
+        model=interests
+        fields=['longloaninterest']
+        success_url=reverse_lazy('csadmin:members')
 
 class AccountCreate(CreateView):
         model=Account
