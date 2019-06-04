@@ -5,77 +5,17 @@
 <!-- for changing share dividend -->
 <main role="main" class="col-md-6 col-lg-12">
 
-  <form class="lw-form" method="post">
-    <div class="lw-field">
-      <h3>change share dividend</h3>
-      <input type="numeric" name="fsharedividend" id="new_sharedividend" style="font-size:11pt; width:35%; height:35%;" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btnshare" style="padding:7px;" href="#modal">Save</button>
-
-    </div>
-    {%csrf_token%}
-  </form>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
 
   <a href="#modal1">change share dividend rate</a><br>
   <a href="#modal2">change cd dicidend rates</a><br>
   <a href="#modal3">change Energency Loan interest</a><br>
   <a href="#modal4">change Long Loan interest</a><br>
   <a href="#modal5">change FD interest rates</a><br>
-  <!-- for changing long loan interest -->
-  <form class="lw-form" method="post">
-    <div class="lw-field">
-      <h3>Long Loan interest</h3>
-<<<<<<< HEAD:website/csadmin/templates/change.html
-      <input type="numeric" name="flongloaninterest" id="new_longloaninterest" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btnlongloan" href="{%url 'csadmin:change'%}">ok!</button>
-=======
-      <input type="numeric" name="flongloaninterest" id="new_longloaninterest" style="font-size:11pt; width:35%; height:35%;" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btnlongloan" style="padding:7px;" href="{%url 'csadmin:totalmoney'%}">Save</button>
->>>>>>> becf4b6ad7fb4337861ce7d6d5b302cf988c0fa3:website/csadmin/templates/totalmoney.html
-    </div>
-    {%csrf_token%}
-  </form>
-  <!-- for changing emergency loan interest -->
-  <form class="lw-form" method="post">
-    <div class="lw-field">
-      <h3>Change Share Dividend</h3>
-<<<<<<< HEAD:website/csadmin/templates/change.html
-      <input type="numeric" name="fsharedividend" id="new_sharedividend" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btnshare" href="{%url 'csadmin:change'%}">ok!</button>
-=======
-      <input type="numeric" name="fsharedividend" id="new_sharedividend" style="font-size:11pt; width:35%; height:35%;" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btnshare" style="padding:7px;" href="{%url 'csadmin:totalmoney'%}">Save</button>
->>>>>>> becf4b6ad7fb4337861ce7d6d5b302cf988c0fa3:website/csadmin/templates/totalmoney.html
-    </div>
-    {%csrf_token%}
-  </form>
-  <!-- for changing cd dividend -->
-  <form class="lw-form" method="post">
-    <div class="lw-field">
-      <h3>change cd dividend</h3>
-<<<<<<< HEAD:website/csadmin/templates/change.html
-      <input type="numeric" name="fcddividend" id="new_cddividend" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btncd" href="{%url 'csadmin:change'%}">ok!</button>
-=======
-      <input type="numeric" name="fcddividend" id="new_cddividend" style="font-size:11pt; width:35%; height:35%;" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btncd" style="padding:7px;" href="{%url 'csadmin:totalmoney'%}">Save</button>
->>>>>>> becf4b6ad7fb4337861ce7d6d5b302cf988c0fa3:website/csadmin/templates/totalmoney.html
-    </div>
-    {%csrf_token%}
-  </form>
-  <!-- for changing FD interest -->
-  <form class="lw-form" method="post">
-    <div class="lw-field">
-      <h3>Emergency Loan interest</h3>
-<<<<<<< HEAD:website/csadmin/templates/change.html
-      <input type="numeric" name="femergencylaoninterest" id="new_longloaninterest" style="width:20%" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btnemerloan" href="{%url 'csadmin:change'%}">ok!</button>
-=======
-      <input type="numeric" name="femergencylaoninterest" id="new_longloaninterest" style="font-size:11pt; width:35%; height:35%;" placeholder="Enter the new Rate of Interest of Dividend">
-      <button class="lw-btn" name="btnemerloan" style="padding:7px;" href="{%url 'csadmin:totalmoney'%}">Save</button>
->>>>>>> becf4b6ad7fb4337861ce7d6d5b302cf988c0fa3:website/csadmin/templates/totalmoney.html
-    </div>
-    {%csrf_token%}
-  </form>
 
 </main>
 
@@ -112,7 +52,7 @@
         </div>
         <div class="lw-foot">
           <a class="lw-btn" class="lw-close" href="{%url 'csadmin:change'%}">cancel change</a>
-          <button class="lw-btn lw-btn_color" name="btnverify" data-lw-ripple> verify</button></div>
+          <button class="lw-btn lw-btn_color" name="btnverifyshare" data-lw-ripple> verify</button></div>
         {%csrf_token%}
       </form>
     </div>
@@ -153,7 +93,7 @@
         </div>
         <div class="lw-foot">
           <a class="lw-btn" class="lw-close" href="{%url 'csadmin:change'%}">cancel change</a>
-          <button class="lw-btn lw-btn_color" name="btnverify" data-lw-ripple> verify</button></div>
+          <button class="lw-btn lw-btn_color" name="btnverifycd" data-lw-ripple> verify</button></div>
         {%csrf_token%}
       </form>
     </div>
@@ -193,7 +133,7 @@
         </div>
         <div class="lw-foot">
           <a class="lw-btn" class="lw-close" href="{%url 'csadmin:change'%}">cancel change</a>
-          <button class="lw-btn lw-btn_color" name="btnverify" data-lw-ripple> verify</button></div>
+          <button class="lw-btn lw-btn_color" name="btnverifyemerloan" data-lw-ripple> verify</button></div>
         {%csrf_token%}
       </form>
     </div>
@@ -233,7 +173,7 @@
         </div>
         <div class="lw-foot">
           <a class="lw-btn" class="lw-close" href="{%url 'csadmin:change'%}">cancel change</a>
-          <button class="lw-btn lw-btn_color" name="btnverify" data-lw-ripple> verify</button></div>
+          <button class="lw-btn lw-btn_color" name="btnverifylongloan" data-lw-ripple> verify</button></div>
         {%csrf_token%}
       </form>
     </div>
@@ -273,7 +213,7 @@
         </div>
         <div class="lw-foot">
           <a class="lw-btn" class="lw-close" href="{%url 'csadmin:change'%}">cancel change</a>
-          <button class="lw-btn lw-btn_color" name="btnverify" data-lw-ripple> verify</button></div>
+          <button class="lw-btn lw-btn_color" name="btnverifyfd" data-lw-ripple> verify</button></div>
         {%csrf_token%}
       </form>
     </div>

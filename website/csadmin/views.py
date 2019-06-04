@@ -113,62 +113,10 @@ def change(request):
     emergencyloaninterest=0
     fdinterest=0
     if request.method=="POST":
-        if 'btnshare' in request.POST:
-            tsharedividend=ShareDividendForm(request.POST)
-            print("POST_1")
-            if tsharedividend.is_valid():
-                sharedividend = tsharedividend.cleaned_data['fsharedividend']
-                t=interests.objects.first()
-                t.sharedividend=sharedividend
-                t.save()
-                print("valid_share+saved")
-                # subject = 'Admin wants to make some changes'
-                # message = Accountholder.name +" : "+ sharedividend
-                # email_from = settings.EMAIL_HOST_USER
-                #
-                # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-                #
-                # send_mail( subject, message, email_from, recipient_list )
-                # print("mail sent")
-        elif 'btncd' in request.POST:
-            tcddividend=CDDividendForm(request.POST)
-            print("POST_2")
-            if tcddividend.is_valid():
-                cddividend = tcddividend.cleaned_data['fcddividend']
-                t=interests.objects.first()
-                t.cddividend=cddividend
-                t.save()
-                print("valid_cd")
-        elif 'btnlongloan' in request.POST:
-            tlongloaninterest=LongLoanForm(request.POST)
-            print("POST_3")
-            if tlongloaninterest.is_valid():
-                longloaninterest = tlongloaninterest.cleaned_data['flongloaninterest']
-                t=interests.objects.first()
-                t.longloaninterest=longloaninterest
-                t.save()
-                print("valid_longloan")
-        elif 'btnemerloan' in request.POST:
-            temergencyloaninterest=EmergencyLoanForm(request.POST)
-            print("POST_4")
-            if temergencyloaninterest.is_valid():
-                emergencyloaninterest = temergencyloaninterest.cleaned_data['femergencylaoninterest']
-                t=interests.objects.first()
-                t.emerloaninterest=emergencyloaninterest
-                t.save()
-                print("valid_emerloan")
-        elif 'btnfd' in request.POST:
-            tfdinterest=FDInterestForm(request.POST)
-            print("POST_5")
-            if tfdinterest.is_valid():
-                fdinterest = tfdinterest.cleaned_data['ffdinterest']
-                t=interests.objects.first()
-                t.fdinterest=fdinterest
-                t.save()
-                print("valid_fd")
-        elif 'btnverify' in request.POST:
+
+        if 'btnverifyshare' in request.POST:
             tsecretkey=SecretkeyForm(request.POST)
-            print("POST_6")
+            print("POST_1")
             if tsecretkey.is_valid():
                 chairmankey=tsecretkey.cleaned_data['fchairmankey']
                 print("chairman's key")
@@ -179,7 +127,71 @@ def change(request):
                 if (chairmankey == 123 and secretarykey ==321):
                     print("Allow")
 
-                    return redirect('/csadmin/ratesupdate/(%3FP1)/')
+                    return redirect('/csadmin/shareupdate/(%3FP1)/')
+                else:
+                    print("Not Allow!!")
+        elif 'btnverifycd' in request.POST:
+            tsecretkey=SecretkeyForm(request.POST)
+            print("POST_2")
+            if tsecretkey.is_valid():
+                chairmankey=tsecretkey.cleaned_data['fchairmankey']
+                print("chairman's key")
+                print(chairmankey)
+                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
+                print("secretary's key")
+                print(secretarykey)
+                if (chairmankey == 123 and secretarykey ==321):
+                    print("Allow")
+
+                    return redirect('/csadmin/cdupdate/(%3FP1)/')
+                else:
+                    print("Not Allow!!")
+        elif 'btnverifyemerloan' in request.POST:
+            tsecretkey=SecretkeyForm(request.POST)
+            print("POST_3")
+            if tsecretkey.is_valid():
+                chairmankey=tsecretkey.cleaned_data['fchairmankey']
+                print("chairman's key")
+                print(chairmankey)
+                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
+                print("secretary's key")
+                print(secretarykey)
+                if (chairmankey == 123 and secretarykey ==321):
+                    print("Allow")
+
+                    return redirect('/csadmin/emerloanupdate/(%3FP1)/')
+                else:
+                    print("Not Allow!!")
+        elif 'btnverifylongloan' in request.POST:
+            tsecretkey=SecretkeyForm(request.POST)
+            print("POST_4")
+            if tsecretkey.is_valid():
+                chairmankey=tsecretkey.cleaned_data['fchairmankey']
+                print("chairman's key")
+                print(chairmankey)
+                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
+                print("secretary's key")
+                print(secretarykey)
+                if (chairmankey == 123 and secretarykey ==321):
+                    print("Allow")
+
+                    return redirect('/csadmin/longloanupdate/(%3FP1)/')
+                else:
+                    print("Not Allow!!")
+        elif 'btnverifyfd' in request.POST:
+            tsecretkey=SecretkeyForm(request.POST)
+            print("POST_5")
+            if tsecretkey.is_valid():
+                chairmankey=tsecretkey.cleaned_data['fchairmankey']
+                print("chairman's key")
+                print(chairmankey)
+                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
+                print("secretary's key")
+                print(secretarykey)
+                if (chairmankey == 123 and secretarykey ==321):
+                    print("Allow")
+
+                    return redirect('/csadmin/fdintupdate/(%3FP1)/')
                 else:
                     print("Not Allow!!")
 
