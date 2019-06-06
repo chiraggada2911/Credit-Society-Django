@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from status.models import Account,interests
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
@@ -209,6 +209,15 @@ class UserCreate(CreateView):
         valid = super(UserCreate, self).form_valid(form)
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         return valid
+#big problem here!!!!!!!  username_id
+#deleting only deletes form account model and not from users so soething else need to be done here!!
+class AccountDelete(DeleteView):
+    template_name = 'Userdelete.html'
+    success_url=reverse_lazy('csadmin:members')
+    a="False"
+    def get_object(self):
+        id_=self.kwargs.get("id")
+        return get_object_or_404(User,id=id_)
 
 class ShareUpdate(UpdateView):
         model=interests
@@ -262,6 +271,7 @@ class GeneratePdf(View):
         html = template.render(context)
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
+
 
 @cron_task(crontab="* * * * *")
 def calcinvest():

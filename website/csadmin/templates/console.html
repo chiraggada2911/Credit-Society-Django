@@ -25,6 +25,7 @@
                       <th>Long Loan Taken</th>
                       <th>Emergency Loan Taken</th>
                       <th>Share value</th>
+                      <th>delete</th>
 
 
                     </tr>
@@ -51,6 +52,9 @@
                       {% endifequal %}
 
                       <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>
+
+                      <td><a href="{% url 'csadmin:User_Delete' id=i.pk %}"><i class="fa fa-trash" aria-hidden="true" style='font-size:15px' ></i></a></td>
+
                     </tr>
                     {%endfor%}
 

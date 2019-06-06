@@ -1,0 +1,39 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<form method="POST">{% csrf_token %}
+  <p>Are you sure you want to delete "{{ object }}"?</p>
+  <p><input type="submit" value="Confirm"> <a href="{% url 'csadmin:commander' %}">cancel</a> </p>
+</form>
+
+<div class="lw-widget lw-widget_fullscreen" data-lw-onload>
+  <!-- <div class="lw-overlay" data-lw-close></div> -->
+  <div class="lw-container lw-container_md">
+    <div class="lw-item lw-item_bg" style="--theme-color: #ff2e63">
+      <!-- <button class="lw-close lw-close_circle" data-lw-close><i class="material-icons">close</i></button> -->
+      <div class="lw-wrap lw-p-lg">
+        <div class="lw-center">
+          <div class="lw-title">Please enter verify your password to delete this user</div>
+          <form class="lw-form" method="POST" action="#">
+            <div class="lw-field">
+              <input class="lw-input" name="delpass" type="text" placeholder="Enter your password here" required>
+            </div>
+            <button class="lw-btn">Submit</button>
+            {% csrf_token %}
+          </form>
+          <div class="lw-content lw-content_md lw-mt-md"><a href="{% url 'csadmin:commander' %}">No, Let it be</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{%endblock%}

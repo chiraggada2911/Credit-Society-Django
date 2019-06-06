@@ -10,7 +10,7 @@ urlpatterns = [
     path('loansadmin', views.loansadmin,name="loansadmin"),
     path('change', views.change,name="change"),
     path('message', views.message,name="message"),
-    
+
     path('usercreate', views.UserCreate.as_view(),name='user_create'),
     path('account/create/', views.AccountCreate.as_view(), name='account_create'),
 
@@ -20,6 +20,7 @@ urlpatterns = [
     path('longloanupdate/(?P<pk>)/', views.LongLoanUpdate.as_view(), name='LongLoan_Update'),
     path('fdintupdate/(?P<pk>)/', views.FDinterestUpdate.as_view(), name='FDint_Update'),
 
+    path('<int:id>/delete/',views.AccountDelete.as_view(),name='User_Delete'),
     path('FDupdate/(?P<pk>)/', views.FDUpdate.as_view(), name='fd_update'),
     path('Loanupdate/(?P<pk>)/', views.LoanUpdate.as_view(), name='loan_update'),
     path('Sharesupdate/(?P<pk>)/', views.SharesUpdate.as_view(), name='shares _update'),
