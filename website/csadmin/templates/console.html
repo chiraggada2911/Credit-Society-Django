@@ -12,6 +12,7 @@
             <div class="card-header card-header-primary">
               <h2>Console </h2>
               <a href="{% url 'csadmin:user_create'%}" ><button type="button" class="btn btn-primary pull-right" style="background: linear-gradient(45deg, #06beb6, #48b1bf);" name="button">add user</button></a>
+                <a href="{% url 'csadmin:user_delete'%}" ><button type="button" class="btn btn-primary pull-right" style="background: linear-gradient(45deg, #06beb6, #48b1bf);" name="button">Delete user</button></a>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -25,8 +26,6 @@
                       <th>Long Loan Taken</th>
                       <th>Emergency Loan Taken</th>
                       <th>Share value</th>
-                      <th>delete</th>
-
 
                     </tr>
                   </thead>
@@ -53,7 +52,7 @@
 
                       <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>
 
-                      <td><a href="{% url 'csadmin:User_Delete' id=i.pk %}"><i class="fa fa-trash" aria-hidden="true" style='font-size:15px' ></i></a></td>
+                      <!-- <td><a href="{% url 'csadmin:User_Delete' id=i.pk %}"><i class="fa fa-trash" aria-hidden="true" style='font-size:15px' ></i></a></td> -->
 
                     </tr>
                     {%endfor%}
