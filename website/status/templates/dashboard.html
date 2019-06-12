@@ -85,11 +85,11 @@
           <h2>Change your Monthly Deduction</h2>
           <a class="close" href="{%url 'status:details'%}">×</a>
           <div class="content">
-            <form class="lw-form" method="POST">
+            <form class="lw-form" method="POST" action="{%url 'status:details'%}" >
               <div class="lw-field">
                 <input class="lw-input" name="new_amount" id="new_amnt" type="numeric" placeholder="Enter Amount in Rs" required>
               </div>
-              <button class="lw-btn" href="{%url 'status:details'%}">Submit to admin</button>
+              <button class="lw-btn">Submit to admin</button>
               {% csrf_token %}
             </form>
           </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from status.models import Account,interests
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
@@ -106,61 +106,17 @@ def message(request):
 
 
 @login_required
-def totalmoney(request):
+def change(request):
     sharedividend=0
     cddividend=0
     longloaninterest=0
     emergencyloaninterest=0
     fdinterest=0
     if request.method=="POST":
-        if 'btnshare' in request.POST:
-            tsharedividend=ShareDividendForm(request.POST)
-            print("POST_1")
-            if tsharedividend.is_valid():
-                sharedividend = tsharedividend.cleaned_data['fsharedividend']
-                t=interests.objects.first()
-                t.sharedividend=sharedividend
-                t.save()
-                print("valid_share+saved")
-        elif 'btncd' in request.POST:
-            tcddividend=CDDividendForm(request.POST)
-            print("POST_2")
-            if tcddividend.is_valid():
-                cddividend = tcddividend.cleaned_data['fcddividend']
-                t=interests.objects.first()
-                t.cddividend=cddividend
-                t.save()
-                print("valid_cd")
-        elif 'btnlongloan' in request.POST:
-            tlongloaninterest=LongLoanForm(request.POST)
-            print("POST_3")
-            if tlongloaninterest.is_valid():
-                longloaninterest = tlongloaninterest.cleaned_data['flongloaninterest']
-                t=interests.objects.first()
-                t.longloaninterest=longloaninterest
-                t.save()
-                print("valid_longloan")
-        elif 'btnemerloan' in request.POST:
-            temergencyloaninterest=EmergencyLoanForm(request.POST)
-            print("POST_4")
-            if temergencyloaninterest.is_valid():
-                emergencyloaninterest = temergencyloaninterest.cleaned_data['femergencylaoninterest']
-                t=interests.objects.first()
-                t.emerloaninterest=emergencyloaninterest
-                t.save()
-                print("valid_emerloan")
-        elif 'btnfd' in request.POST:
-            tfdinterest=FDInterestForm(request.POST)
-            print("POST_5")
-            if tfdinterest.is_valid():
-                fdinterest = tfdinterest.cleaned_data['ffdinterest']
-                t=interests.objects.first()
-                t.fdinterest=fdinterest
-                t.save()
-                print("valid_fd")
-        elif 'btnverify' in request.POST:
+
+        if 'btnverifyshare' in request.POST:
             tsecretkey=SecretkeyForm(request.POST)
-            print("POST_6")
+            print("POST_1")
             if tsecretkey.is_valid():
                 chairmankey=tsecretkey.cleaned_data['fchairmankey']
                 print("chairman's key")
@@ -170,13 +126,79 @@ def totalmoney(request):
                 print(secretarykey)
                 if (chairmankey == 123 and secretarykey ==321):
                     print("Allow")
+
+                    return redirect('/csadmin/shareupdate/(%3FP1)/')
+                else:
+                    print("Not Allow!!")
+        elif 'btnverifycd' in request.POST:
+            tsecretkey=SecretkeyForm(request.POST)
+            print("POST_2")
+            if tsecretkey.is_valid():
+                chairmankey=tsecretkey.cleaned_data['fchairmankey']
+                print("chairman's key")
+                print(chairmankey)
+                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
+                print("secretary's key")
+                print(secretarykey)
+                if (chairmankey == 123 and secretarykey ==321):
+                    print("Allow")
+
+                    return redirect('/csadmin/cdupdate/(%3FP1)/')
+                else:
+                    print("Not Allow!!")
+        elif 'btnverifyemerloan' in request.POST:
+            tsecretkey=SecretkeyForm(request.POST)
+            print("POST_3")
+            if tsecretkey.is_valid():
+                chairmankey=tsecretkey.cleaned_data['fchairmankey']
+                print("chairman's key")
+                print(chairmankey)
+                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
+                print("secretary's key")
+                print(secretarykey)
+                if (chairmankey == 123 and secretarykey ==321):
+                    print("Allow")
+
+                    return redirect('/csadmin/emerloanupdate/(%3FP1)/')
+                else:
+                    print("Not Allow!!")
+        elif 'btnverifylongloan' in request.POST:
+            tsecretkey=SecretkeyForm(request.POST)
+            print("POST_4")
+            if tsecretkey.is_valid():
+                chairmankey=tsecretkey.cleaned_data['fchairmankey']
+                print("chairman's key")
+                print(chairmankey)
+                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
+                print("secretary's key")
+                print(secretarykey)
+                if (chairmankey == 123 and secretarykey ==321):
+                    print("Allow")
+
+                    return redirect('/csadmin/longloanupdate/(%3FP1)/')
+                else:
+                    print("Not Allow!!")
+        elif 'btnverifyfd' in request.POST:
+            tsecretkey=SecretkeyForm(request.POST)
+            print("POST_5")
+            if tsecretkey.is_valid():
+                chairmankey=tsecretkey.cleaned_data['fchairmankey']
+                print("chairman's key")
+                print(chairmankey)
+                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
+                print("secretary's key")
+                print(secretarykey)
+                if (chairmankey == 123 and secretarykey ==321):
+                    print("Allow")
+
+                    return redirect('/csadmin/fdintupdate/(%3FP1)/')
                 else:
                     print("Not Allow!!")
 
     context={
         'money':"active"
     }
-    return render (request,'totalmoney.html',context=context)
+    return render (request,'change.html',context=context)
 
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
@@ -187,7 +209,36 @@ class UserCreate(CreateView):
         valid = super(UserCreate, self).form_valid(form)
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         return valid
+#big problem here!!!!!!!  username_id
+#deleting only deletes form account model and not from users so soething else need to be done here!!
+class AccountDelete(DeleteView):
+    template_name = 'Userdelete.html'
+    success_url=reverse_lazy('csadmin:members')
+    a="False"
+    def get_object(self):
+        id_=self.kwargs.get("id")
+        return get_object_or_404(User,id=id_)
 
+class ShareUpdate(UpdateView):
+        model=interests
+        fields=['sharedividend']
+        success_url=reverse_lazy('csadmin:members')
+class CDUpdate(UpdateView):
+        model=interests
+        fields=['cddividend']
+        success_url=reverse_lazy('csadmin:members')
+class EmerLoanUpdate(UpdateView):
+        model=interests
+        fields=['emerloaninterest']
+        success_url=reverse_lazy('csadmin:members')
+class FDinterestUpdate(UpdateView):
+        model=interests
+        fields=['fdinterest']
+        success_url=reverse_lazy('csadmin:members')
+class LongLoanUpdate(UpdateView):
+        model=interests
+        fields=['longloaninterest']
+        success_url=reverse_lazy('csadmin:members')
 
 class AccountCreate(CreateView):
         model=Account
@@ -220,6 +271,7 @@ class GeneratePdf(View):
         html = template.render(context)
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
+
 
 @cron_task(crontab="* * * * *")
 def calcinvest():
