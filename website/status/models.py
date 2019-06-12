@@ -7,7 +7,7 @@ import datetime
 class Account(models.Model):
     #schema for data to show
     accountnumber=models.IntegerField(null=False,unique=True)
-    username=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,unique=True)
+    username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=True)
     name=models.CharField(max_length=50,null=False)
     sapid=models.IntegerField(null=False,unique=True)
     dateofjoining=models.DateField(null=False)

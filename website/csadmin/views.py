@@ -56,6 +56,14 @@ def members(request):
     return render (request,'members.html',context=context)
 
 @login_required
+def UserDelete(request):
+    Users=User.objects.all()
+    context={
+        'User':Users,
+    }
+    return render (request,'deleteuser.html',context=context)
+
+@login_required
 def bank(request):
     Banks=Account.objects.all
     Interests=interests.objects.all
@@ -209,6 +217,7 @@ class UserCreate(CreateView):
         valid = super(UserCreate, self).form_valid(form)
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         return valid
+
 #big problem here!!!!!!!  username_id
 #deleting only deletes form account model and not from users so soething else need to be done here!!
 class AccountDelete(DeleteView):
@@ -217,6 +226,16 @@ class AccountDelete(DeleteView):
     a="False"
     def get_object(self):
         id_=self.kwargs.get("id")
+        Interests=User.objects.get(id=id_)
+        print(Interests)
+        print("ChiruTula")
+        # print(User.objects.get(email=id_))
+        # message="Dear sir/ma'am your DJSCOE CS account " + str(Interests) + "is deleted by admin"
+        # subject = 'This email is from Credit Society Committee'
+        # email_from = settings.EMAIL_HOST_USER
+        # recievers=[]
+        # send_mail( subject, message, email_from, recievers )
+        # print("mail sent from messanger")
         return get_object_or_404(User,id=id_)
 
 class ShareUpdate(UpdateView):

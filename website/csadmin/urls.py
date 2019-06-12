@@ -11,6 +11,7 @@ urlpatterns = [
     path('change', views.change,name="change"),
     path('message', views.message,name="message"),
 
+    path('userdelete', views.UserDelete,name='user_delete'),
     path('usercreate', views.UserCreate.as_view(),name='user_create'),
     path('account/create/', views.AccountCreate.as_view(), name='account_create'),
 
