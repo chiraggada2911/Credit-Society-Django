@@ -224,18 +224,19 @@ class AccountDelete(DeleteView):
     template_name = 'Userdelete.html'
     success_url=reverse_lazy('csadmin:members')
     a="False"
-    def get_object(self):
+    def get_object(self,request):
         id_=self.kwargs.get("id")
-        Interests=User.objects.get(id=id_)
-        print(Interests)
+        Users=User.objects.get(id=id_)
+        print(Users)
         print("ChiruTula")
-        # print(User.objects.get(email=id_))
-        # message="Dear sir/ma'am your DJSCOE CS account " + str(Interests) + "is deleted by admin"
-        # subject = 'This email is from Credit Society Committee'
-        # email_from = settings.EMAIL_HOST_USER
-        # recievers=[]
-        # send_mail( subject, message, email_from, recievers )
-        # print("mail sent from messanger")
+        print(Users.email)
+
+        message="Dear sir/ma'am your DJSCOE CS account " + str(Users) + "is deleted by admin"
+        subject = 'This email is from Credit Society Committee'
+        email_from = settings.EMAIL_HOST_USER
+        recievers=[Users.email]
+        send_mail( subject, message, email_from, recievers )
+        print("mail sent from deleteing account")
         return get_object_or_404(User,id=id_)
 
 class ShareUpdate(UpdateView):
