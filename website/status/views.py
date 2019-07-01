@@ -133,16 +133,35 @@ def loanuser(request):
         if loanreq.is_valid():
             Loan_Amount=str(loanreq.cleaned_data['loan_amount'])
             print(Loan_Amount)
-            Loan_Choice=loanreq.cleaned_data['loanChoice']
-            print(Loan_Choice)
-            subject = 'This guy wants a loan'
-            message = Accountholder.name +" : "+ Loan_Choice +"  "+Loan_Amount
-            email_from = settings.EMAIL_HOST_USER
+            print(Accountholder.teachingstaff)
+            loan_amount=int(Loan_Amount)
+            print(loan_amount)
+            if Accountholder.teachingstaff==True and loan_amount <= 1600000 :
+                print(Loan_Amount)
+                Loan_Choice=loanreq.cleaned_data['loanChoice']
+                print(Loan_Choice)
+                subject = 'This guy wants a loan'
+                message = Accountholder.name +" : "+ Loan_Choice +"  "+Loan_Amount
+                email_from = settings.EMAIL_HOST_USER
 
-            recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+                recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
 
-            send_mail( subject, message, email_from, recipient_list )
-            print("mail sent")
+                send_mail( subject, message, email_from, recipient_list )
+                print("mail sent")
+            elif Accountholder.nonteachingstaff==True and loan_amount <= 1200000:
+                print(Loan_Amount)
+                Loan_Choice=loanreq.cleaned_data['loanChoice']
+                print(Loan_Choice)
+                subject = 'This guy wants a loan'
+                message = Accountholder.name +" : "+ Loan_Choice +"  "+Loan_Amount
+                email_from = settings.EMAIL_HOST_USER
+
+                recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+
+                send_mail( subject, message, email_from, recipient_list )
+                print("mail sent")
+            # else:
+            #     loanreq=LoanReqForm()
 
     else:
         loanreq=LoanReqForm()
