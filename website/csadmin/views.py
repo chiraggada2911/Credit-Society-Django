@@ -243,7 +243,7 @@ class ShareUpdate(UpdateView):
 class CDUpdate(UpdateView):
         model=interests
         fields=['cddividend']
-        interest=interests.objects.get(id=1)
+        # interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
         # recievers = []
         # user=Account.objects.all
@@ -261,7 +261,7 @@ class CDUpdate(UpdateView):
 class EmerLoanUpdate(UpdateView):
         model=interests
         fields=['emerloaninterest']
-        interest=interests.objects.get(id=1)
+        # interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
         # subject = 'Emergency Loan interest rate is updated'
         # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"+ str(interest.emerloaninterest)
@@ -273,7 +273,7 @@ class EmerLoanUpdate(UpdateView):
 class FDinterestUpdate(UpdateView):
     model=interests
     fields=['fdinterest']
-    interest=interests.objects.get(id=1)
+    # interest=interests.objects.get(id=1)
     success_url=reverse_lazy('csadmin:members')
     # subject = 'FD interest rate is updated'
     # message = "Dear sir/ma'am your DJSCOE CS FD interest rate is updated "+ str(interest.fdinterest)
@@ -285,7 +285,7 @@ class FDinterestUpdate(UpdateView):
 class LongLoanUpdate(UpdateView):
         model=interests
         fields=['longloaninterest']
-        interest=interests.objects.get(id=1)
+        # interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
         # subject = 'Long Loan interest rate is updated'
         # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Long Loan interest rate to"+ str(interest.longloaninterest)
