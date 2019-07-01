@@ -262,7 +262,7 @@ class CDUpdate(UpdateView):
 class EmerLoanUpdate(UpdateView):
         model=interests
         fields=['emerloaninterest']
-        interest=interests.objects.get(id=1)
+        # interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
         # subject = 'Emergency Loan interest rate is updated'
         # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"+ str(interest.emerloaninterest)
