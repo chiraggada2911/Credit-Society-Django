@@ -218,6 +218,8 @@ class UserCreate(CreateView):
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         return valid
 
+#big problem here!!!!!!!  username_id
+#deleting only deletes form account model and not from users so soething else need to be done here!!
 class AccountDelete(DeleteView):
     template_name = 'Userdelete.html'
     success_url=reverse_lazy('csadmin:members')
@@ -226,7 +228,7 @@ class AccountDelete(DeleteView):
         id_=self.kwargs.get("id")
         Users=User.objects.get(id=id_)
         print(Users)
-        print("Chiru Tula")
+        print("ChiruTula")
         print(Users.email)
 
         message="Dear sir/ma'am your DJSCOE CS account " + str(Users) + "is deleted by admin"
@@ -370,7 +372,7 @@ def longloan():
         print(N)
         print(A)
         if(N!=0):
-            if(i.longloanbalance==0):
+            if(i.longloanbalance==0 and i.longloanprinciple==0):
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 i.loanloanemi=EMI
                 interestamount=R*A
@@ -382,6 +384,11 @@ def longloan():
                 print(principle)
                 i.longloanbalance=i.longloanamount-principle
                 print(i.longloanbalance)
+            elif(i.longloanbalance==0):
+                i.longloanamount=0
+                i.longloanbalance=0
+                i.longloanperiod=0
+                i.longloaninterestamount=0
             else:
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 print(EMI)
@@ -392,6 +399,8 @@ def longloan():
                 i.longloanprinciple=principle
                 print(principle)
                 i.longloanbalance=i.longloanbalance-principle
+
+
         i.save()
 
 
