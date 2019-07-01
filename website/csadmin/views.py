@@ -389,6 +389,7 @@ def longloan():
                 i.longloanbalance=0
                 i.longloanperiod=0
                 i.longloaninterestamount=0
+                i.longloanprinciple=0
             else:
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 print(EMI)
@@ -399,8 +400,6 @@ def longloan():
                 i.longloanprinciple=principle
                 print(principle)
                 i.longloanbalance=i.longloanbalance-principle
-
-
         i.save()
 
 
@@ -421,7 +420,7 @@ def emergencyloan():
         print(N)
         print(A)
         if(N!=0):
-            if(i.emerloanbalance==0):
+            if(i.emerloanbalance==0 and i.emerloanprinciple==0):
                 EMI=(A*R*(1+R)*N)/(((1+R)*N)-1)
                 interestamount=R*A
                 i.emerloaninterestamount=interestamount
@@ -431,6 +430,14 @@ def emergencyloan():
                 print(principle)
                 i.emerloanbalance=i.emerloanamount-principle
                 print(i.emerloanbalance)
+
+            elif(i.emerloanbalance==0):
+                i.emerloanamount=0
+                i.emerloanbalance=0
+                i.emerloanperiod=0
+                i.emerloaninterestamount=0
+                i.emerloanprinciple=0
+
             else:
                 EMI=(A*R*(1+R)*N)/(((1+R)*N)-1)
                 print(EMI)
