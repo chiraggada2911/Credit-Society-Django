@@ -245,7 +245,7 @@ class CDUpdate(UpdateView):
         fields=['cddividend']
         # interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
-        recievers = []
+        # recievers = []
         # user=Account.objects.all
         # users = User.objects.all()
         # for i in users.iterator():
