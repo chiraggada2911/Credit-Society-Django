@@ -264,12 +264,12 @@ class EmerLoanUpdate(UpdateView):
         fields=['emerloaninterest']
         interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
-        subject = 'Emergency Loan interest rate is updated'
-        message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"+ str(interest.emerloaninterest)
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        send_mail( subject, message, email_from, recipient_list )
-        print("mail sent for update of Emergency Loan interest")
+        # subject = 'Emergency Loan interest rate is updated'
+        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"+ str(interest.emerloaninterest)
+        # email_from = settings.EMAIL_HOST_USER
+        # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+        # send_mail( subject, message, email_from, recipient_list )
+        # print("mail sent for update of Emergency Loan interest")
 
 class FDinterestUpdate(UpdateView):
     model=interests

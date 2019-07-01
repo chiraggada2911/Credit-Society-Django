@@ -21,6 +21,18 @@
       </div>
     </div>
 
+          {% if messages %}
+          <ul>
+             {% for message in messages %}
+             <div class="alert alert-success">
+               <a class="close" href="{%url 'status:details'%}">×</a>
+               <span>
+                 <b> {{ message }}</span>
+             </div>
+             {% endfor %}
+          </ul>
+          {% endif %}
+
     <div class="container">
       <div class="row">
         <div class="col">
@@ -95,7 +107,6 @@
           </div>
         </div>
       </div>
-
 
 </main>
 {%endblock%}
