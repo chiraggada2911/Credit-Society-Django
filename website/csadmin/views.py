@@ -245,54 +245,54 @@ class CDUpdate(UpdateView):
         fields=['cddividend']
         interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
-        recievers = []
-        user=Account.objects.all
-        users = User.objects.all()
-        for i in users.iterator():
-            user_email = i.email
-            print(user_email)
-            recievers.append(i.email)
-        subject = 'Cumulative Deposits dividend is updated'
-        message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Cumulative Deposits dividend to"+ str(interest.cddividend)
-        email_from = settings.EMAIL_HOST_USER
-        send_mail( subject, message, email_from, recievers)
-        print("mail sent for update of cd dividend")
+        # recievers = []
+        # user=Account.objects.all
+        # users = User.objects.all()
+        # for i in users.iterator():
+        #     user_email = i.email
+        #     print(user_email)
+        #     recievers.append(i.email)
+        # subject = 'Cumulative Deposits dividend is updated'
+        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Cumulative Deposits dividend to"+ str(interest.cddividend)
+        # email_from = settings.EMAIL_HOST_USER
+        # send_mail( subject, message, email_from, recievers)
+        # print("mail sent for update of cd dividend")
 
 class EmerLoanUpdate(UpdateView):
         model=interests
         fields=['emerloaninterest']
         interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
-        subject = 'Emergency Loan interest rate is updated'
-        message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"+ str(interest.emerloaninterest)
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        send_mail( subject, message, email_from, recipient_list )
-        print("mail sent for update of Emergency Loan interest")
+        # subject = 'Emergency Loan interest rate is updated'
+        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"+ str(interest.emerloaninterest)
+        # email_from = settings.EMAIL_HOST_USER
+        # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+        # send_mail( subject, message, email_from, recipient_list )
+        # print("mail sent for update of Emergency Loan interest")
 
 class FDinterestUpdate(UpdateView):
     model=interests
     fields=['fdinterest']
     interest=interests.objects.get(id=1)
     success_url=reverse_lazy('csadmin:members')
-    subject = 'FD interest rate is updated'
-    message = "Dear sir/ma'am your DJSCOE CS FD interest rate is updated "+ str(interest.fdinterest)
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-    send_mail( subject, message, email_from, recipient_list )
-    print("mail sent for update of FD interest")
+    # subject = 'FD interest rate is updated'
+    # message = "Dear sir/ma'am your DJSCOE CS FD interest rate is updated "+ str(interest.fdinterest)
+    # email_from = settings.EMAIL_HOST_USER
+    # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+    # send_mail( subject, message, email_from, recipient_list )
+    # print("mail sent for update of FD interest")
 
 class LongLoanUpdate(UpdateView):
         model=interests
         fields=['longloaninterest']
         interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
-        subject = 'Long Loan interest rate is updated'
-        message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Long Loan interest rate to"+ str(interest.longloaninterest)
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        send_mail( subject, message, email_from, recipient_list )
-        print("mail sent for update of Long Loan interest")
+        # subject = 'Long Loan interest rate is updated'
+        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Long Loan interest rate to"+ str(interest.longloaninterest)
+        # email_from = settings.EMAIL_HOST_USER
+        # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+        # send_mail( subject, message, email_from, recipient_list )
+        # print("mail sent for update of Long Loan interest")
 
 class AccountCreate(CreateView):
         model=Account
