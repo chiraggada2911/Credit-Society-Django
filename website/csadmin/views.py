@@ -218,17 +218,14 @@ class UserCreate(CreateView):
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         return valid
 
-#big problem here!!!!!!!  username_id
-#deleting only deletes form account model and not from users so soething else need to be done here!!
 class AccountDelete(DeleteView):
     template_name = 'Userdelete.html'
     success_url=reverse_lazy('csadmin:members')
-    a="False"
-    def get_object(self,request):
+    def get_object(self):
         id_=self.kwargs.get("id")
         Users=User.objects.get(id=id_)
         print(Users)
-        print("ChiruTula")
+        print("Chiru Tula")
         print(Users.email)
 
         message="Dear sir/ma'am your DJSCOE CS account " + str(Users) + "is deleted by admin"
