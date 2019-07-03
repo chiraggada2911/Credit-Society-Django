@@ -147,6 +147,7 @@ def loanuser(request):
                 recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
 
                 send_mail( subject, message, email_from, recipient_list )
+                messages.success(request, 'Mail sent')
                 print("mail sent")
             elif Accountholder.nonteachingstaff==True and loan_amount <= 1200000:
                 print(Loan_Amount)
@@ -159,12 +160,10 @@ def loanuser(request):
                 recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
 
                 send_mail( subject, message, email_from, recipient_list )
+                messages.success(request, 'Mail sent')
                 print("mail sent")
-            # else:
-            #     loanreq=LoanReqForm()
-
-    else:
-        loanreq=LoanReqForm()
+            else:
+                messages.warning(request, 'Please enter value in the range.')
 
     context={
         'Accountholder':Accountholder,
