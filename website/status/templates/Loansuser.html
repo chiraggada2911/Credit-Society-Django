@@ -13,7 +13,12 @@
       <div class="card w-75 h-75">
         <div class="card-body">
           <h2 class="card-title">Loan Details</h2>
-
+          {% if Accountholder.teachingstaff is True %}
+          <h3>You can apply upto value less than Rs.16,00,000</h3>
+          {% endif %}
+          {% if Accountholder.nonteachingstaff is True %}
+          <h3>You can apply upto value less than Rs.12,00,000</h3>
+          {% endif %}
           {% if Accountholder.islongloantaken and Accountholder.isloanemertaken is True %}
 
           <h3>Name:{{Accountholder.name}}</h3>
@@ -25,13 +30,6 @@
           <!-- <a href="{% url 'login'%}" class="btn btn-primary">Save</a> -->
           {% else %}
           <h1>you have no loans due</h1>
-          {% if Accountholder.teachingstaff is True %}
-          <h3>You can apply upto value less than Rs.16,00,000</h3>
-          {% endif %}
-          {% if Accountholder.nonteachingstaff is True %}
-          <h3>You can apply upto value less than Rs.12,00,000</h3>
-          {% endif %}
-
 
           <h2 style="padding-top:50px">Request a loan</h2>
 
@@ -55,7 +53,7 @@
   <ul>
      {% for message in messages %}
      <div class="alert alert-success">
-       <a class="close" href="{%url 'status:Loansuser'%}">×</a>
+       <a class="close" href="{%url 'status:loanuser'%}">×</a>
        <span>
          <b> {{ message }}</span>
      </div>

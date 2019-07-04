@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.views.generic import View
 from django.template.loader import get_template
 from django.contrib import messages
+from django.urls import reverse_lazy
 #forms
 from status.forms import change_MoneyForm,LoanReqForm
 
@@ -149,6 +150,7 @@ def loanuser(request):
                 send_mail( subject, message, email_from, recipient_list )
                 messages.success(request, 'Mail sent')
                 print("mail sent")
+
             elif Accountholder.nonteachingstaff==True and loan_amount <= 1200000:
                 print(Loan_Amount)
                 Loan_Choice=loanreq.cleaned_data['loanChoice']
@@ -164,6 +166,9 @@ def loanuser(request):
                 print("mail sent")
             else:
                 messages.warning(request, 'Please enter value in the range.')
+
+        else:
+            loanreq=LoanReqForm()
 
     context={
         'Accountholder':Accountholder,
