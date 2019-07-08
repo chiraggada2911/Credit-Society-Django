@@ -11,6 +11,8 @@ from django.views.generic import View
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 #for background tasks
 from autotask.tasks import cron_task
@@ -266,24 +268,22 @@ class EmerLoanUpdate(UpdateView):
         fields=['emerloaninterest']
         # interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
-        # subject = 'Emergency Loan interest rate is updated'
-        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"+ str(interest.emerloaninterest)
-        # email_from = settings.EMAIL_HOST_USER
-        # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        # send_mail( subject, message, email_from, recipient_list )
-        # print("mail sent for update of Emergency Loan interest")
+        @receiver(post_save, sender=interests)
+        def changIe(sender, **kwargs):
+            print(kwargs['signal'])
+            subject = 'Emergency Loan interest rate is updated'
+            message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = ['champtem11@gmail.com']
+            send_mail( subject, message, email_from, recipient_list )
+            print("mail sent for update of Emergency Loan interest")
+
 
 class FDinterestUpdate(UpdateView):
     model=interests
     fields=['fdinterest']
     # interest=interests.objects.get(id=1)
     success_url=reverse_lazy('csadmin:members')
-    # subject = 'FD interest rate is updated'
-    # message = "Dear sir/ma'am your DJSCOE CS FD interest rate is updated "+ str(interest.fdinterest)
-    # email_from = settings.EMAIL_HOST_USER
-    # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-    # send_mail( subject, message, email_from, recipient_list )
-    # print("mail sent for update of FD interest")
 
 class LongLoanUpdate(UpdateView):
         model=interests
@@ -310,7 +310,7 @@ class FDUpdate(UpdateView):
 
 class LoanUpdate(UpdateView):
         model=Account
-        fields=['username','isloanloantaken','isloanemertaken','longloanamount','longloanperiod']
+        fields=['username','isloanloantaken','isloanemertaken','longloanamount','longloanperiod','emerloanamount','emerloanperiod']
         success_url=reverse_lazy('csadmin:members')
 
 class SharesUpdate(UpdateView):
