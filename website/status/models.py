@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+#import audit
 
 
 # Create your models here.
@@ -59,3 +60,4 @@ class interests(models.Model):
     fdinterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     emerloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    # history = audit.AuditTrail()
