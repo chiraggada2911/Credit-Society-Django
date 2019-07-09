@@ -240,6 +240,7 @@ class AccountDelete(DeleteView):
 
 class ShareUpdate(UpdateView):
         model=interests
+        template_name = 'shares_form.html'
         fields=['sharedividend']
         success_url=reverse_lazy('csadmin:members')
 class CDUpdate(UpdateView):
@@ -302,6 +303,7 @@ class AccountCreate(CreateView):
 
 class FDUpdate(UpdateView):
         model=Account
+        template_name = 'fixeddeposits_update_form.html'
         fields=['username','fdcapital','fdmaturitydate']
         success_url=reverse_lazy('csadmin:bank')
 
