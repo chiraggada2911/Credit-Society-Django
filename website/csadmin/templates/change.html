@@ -219,8 +219,9 @@
     </div>
   </div>
 </div>
-<h1>hii</h1>
-
+{%for i in full_history%}
+<h1>{{i.changes}}</h1>
+{%endfor%}
 
 
 {%endblock%}

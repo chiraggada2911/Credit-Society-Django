@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.decorators import login_required
 
 app_name='csadmin'
 urlpatterns = [
@@ -11,20 +12,16 @@ urlpatterns = [
     path('change', views.change,name="change"),
     path('message', views.message,name="message"),
 
-    path('userdelete', views.UserDelete,name='user_delete'),
-    path('usercreate', views.UserCreate.as_view(),name='user_create'),
-    path('account/create/', views.AccountCreate.as_view(), name='account_create'),
+    path('userdelete', login_required(views.UserDelete),name='user_delete'),
+    path('usercreate', login_required(views.UserCreate.as_view()),name='user_create'),
+    path('account/create/', login_required(views.AccountCreate.as_view()), name='account_create'),
 
-    path('shareupdate/(?P<pk>)/', views.ShareUpdate.as_view(), name='Shares_Update'),
-    path('cdupdate/(?P<pk>)/', views.CDUpdate.as_view(), name='CD_Update'),
-    path('emerloanupdate/(?P<pk>)/', views.EmerLoanUpdate.as_view(), name='EmerLoan_Update'),
-    path('longloanupdate/(?P<pk>)/', views.LongLoanUpdate.as_view(), name='LongLoan_Update'),
-    path('fdintupdate/(?P<pk>)/', views.FDinterestUpdate.as_view(), name='FDint_Update'),
+    path('interests/(?P<pk>)/update', login_required(views.InterestsUpdate.as_view()), name='Interest_Update'),
 
-    path('<int:id>/delete/',views.AccountDelete.as_view(),name='User_Delete'),
-    path('FDupdate/(?P<pk>)/', views.FDUpdate.as_view(), name='fd_update'),
-    path('Loanupdate/(?P<pk>)/', views.LoanUpdate.as_view(), name='loan_update'),
-    path('Sharesupdate/(?P<pk>)/', views.SharesUpdate.as_view(), name='shares _update'),
-    path('tableview',views.GeneratePdf.as_view(),name="GeneratePdf"),
+    path('<int:id>/delete/',login_required(views.AccountDelete.as_view()),name='User_Delete'),
+    path('FDupdate/(?P<pk>)/', login_required(views.FDUpdate.as_view()), name='fd_update'),
+    path('Loanupdate/(?P<pk>)/', login_required(views.LoanUpdate.as_view()), name='loan_update'),
+    path('Sharesupdate/(?P<pk>)/', login_required(views.SharesUpdate.as_view()), name='shares _update'),
+    path('tableview',login_required(views.GeneratePdf.as_view()),name="GeneratePdf"),
 
 ]

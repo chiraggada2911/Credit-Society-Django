@@ -170,6 +170,7 @@ def loanuser(request):
         else:
             loanreq=LoanReqForm()
 
+
     context={
         'Accountholder':Accountholder,
         'loan':"active",

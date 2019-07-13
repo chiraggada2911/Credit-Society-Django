@@ -13,6 +13,10 @@ from django.template.loader import get_template
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+#convert string to dict
+import ast
+from decimal import Decimal
+
 
 #for background tasks
 from autotask.tasks import cron_task
@@ -205,9 +209,40 @@ def change(request):
                 else:
                     print("Not Allow!!")
 
+    Interests=interests.objects.all()
+    obj = interests.objects.get(id=1)
+    full_history = (obj.history.all()).order_by('-timestamp')
+    for i in full_history:
+        x=i.changes
+        dict=ast.literal_eval(x)
+        for i in dict:
+            col_name=i
+            print(type(col_name))
+            y=dict[i]
+            print(i)
+            print(y)
+            result = Decimal(y[0])
+            print(col_name)
+            if(col_name=="sharedividend"):
+                x=interests(sharedividend=result)
+                x.save()
+            elif(col_name=="cddividend"):
+                x=interests(cddividend=result)
+                x.save()
+            elif(col_name=="fdinterest"):
+                x=interests(fdinterest=result)
+                x.save()
+            elif(col_name=="emerloaninterest"):
+                x=interests(emerloaninterest=result)
+                x.save()
+            elif(col_name=="longloaninterest"):
+                x=interests(longloaninterest=result)
+                x.save()
     context={
-        'money':"active"
+        'money':"active",
+        'full_history':full_history,
     }
+
     return render (request,'change.html',context=context)
 
 class UserCreate(CreateView):
@@ -225,7 +260,6 @@ class UserCreate(CreateView):
 class AccountDelete(DeleteView):
     template_name = 'Userdelete.html'
     success_url=reverse_lazy('csadmin:members')
-    a="False"
     def get_object(self):
         id_=self.kwargs.get("id")
         Users=User.objects.get(id=id_)
@@ -241,31 +275,9 @@ class AccountDelete(DeleteView):
         print("mail sent from deleteing account")
         return get_object_or_404(User,id=id_)
 
-class ShareUpdate(UpdateView):
+class InterestsUpdate(UpdateView):
         model=interests
-        fields=['sharedividend']
-        success_url=reverse_lazy('csadmin:members')
-class CDUpdate(UpdateView):
-        model=interests
-        fields=['cddividend']
-        # interest=interests.objects.get(id=1)
-        success_url=reverse_lazy('csadmin:members')
-        # recievers = []
-        # user=Account.objects.all
-        # users = User.objects.all()
-        # for i in users.iterator():
-        #     user_email = i.email
-        #     print(user_email)
-        #     recievers.append(i.email)
-        # subject = 'Cumulative Deposits dividend is updated'
-        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Cumulative Deposits dividend to"+ str(interest.cddividend)
-        # email_from = settings.EMAIL_HOST_USER
-        # send_mail( subject, message, email_from, recievers)
-        # print("mail sent for update of cd dividend")
-
-class EmerLoanUpdate(UpdateView):
-        model=interests
-        fields=['emerloaninterest']
+        fields=['sharedividend','cddividend','fdinterest','emerloaninterest','longloaninterest']
         # interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
         @receiver(post_save, sender=interests)
@@ -278,24 +290,6 @@ class EmerLoanUpdate(UpdateView):
             send_mail( subject, message, email_from, recipient_list )
             print("mail sent for update of Emergency Loan interest")
 
-
-class FDinterestUpdate(UpdateView):
-    model=interests
-    fields=['fdinterest']
-    # interest=interests.objects.get(id=1)
-    success_url=reverse_lazy('csadmin:members')
-
-class LongLoanUpdate(UpdateView):
-        model=interests
-        fields=['longloaninterest']
-        # interest=interests.objects.get(id=1)
-        success_url=reverse_lazy('csadmin:members')
-        # subject = 'Long Loan interest rate is updated'
-        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Long Loan interest rate to"+ str(interest.longloaninterest)
-        # email_from = settings.EMAIL_HOST_USER
-        # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        # send_mail( subject, message, email_from, recipient_list )
-        # print("mail sent for update of Long Loan interest")
 
 class AccountCreate(CreateView):
         model=Account
@@ -310,7 +304,7 @@ class FDUpdate(UpdateView):
 
 class LoanUpdate(UpdateView):
         model=Account
-        fields=['username','isloanloantaken','isloanemertaken','longloanamount','longloanperiod','emerloanamount','emerloanperiod']
+        fields=['username','islongloantaken','isloanemertaken','longloanamount','longloanperiod','emerloanamount','emerloanperiod']
         success_url=reverse_lazy('csadmin:members')
 
 class SharesUpdate(UpdateView):
@@ -390,6 +384,7 @@ def longloan():
                 i.longloanperiod=0
                 i.longloaninterestamount=0
                 i.longloanprinciple=0
+                i.islongloantaken=False
             else:
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 print(EMI)
@@ -400,6 +395,8 @@ def longloan():
                 i.longloanprinciple=principle
                 print(principle)
                 i.longloanbalance=i.longloanbalance-principle
+                print("jd is best")
+                print(type(i.longloanbalance))
         i.save()
 
 
@@ -437,6 +434,7 @@ def emergencyloan():
                 i.emerloanperiod=0
                 i.emerloaninterestamount=0
                 i.emerloanprinciple=0
+                i.isemerloantaken=False
 
             else:
                 EMI=(A*R*(1+R)*N)/(((1+R)*N)-1)
