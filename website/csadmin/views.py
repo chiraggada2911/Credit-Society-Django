@@ -29,7 +29,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm,NewUserForm,MessengerForm,SecretkeyForm
+from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm
 
 # Create your views here.
 def index(request):
@@ -240,6 +240,7 @@ class AccountDelete(DeleteView):
 
 class ShareUpdate(UpdateView):
         model=interests
+        form_class = ShareUpdateForm
         template_name = 'shares_form.html'
         fields=['sharedividend']
         success_url=reverse_lazy('csadmin:members')
@@ -303,8 +304,9 @@ class AccountCreate(CreateView):
 
 class FDUpdate(UpdateView):
         model=Account
+        form_class = FDUpdateForm
         template_name = 'fixeddeposits_update_form.html'
-        fields=['username','fdcapital','fdmaturitydate']
+
         success_url=reverse_lazy('csadmin:bank')
 
 class LoanUpdate(UpdateView):

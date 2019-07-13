@@ -15,6 +15,14 @@ class NewUserForm(forms.ModelForm):
         model=User
         fields=('username','password','first_name','last_name','email')
 
+class FDUpdateForm(forms.ModelForm):
+    class Meta:
+        model=Account
+        fields=('username','fdcapital','fdmaturitydate')
+
+class ShareUpdateForm(forms.Form):
+    fshareupdate=forms.FloatField()
+
 class ShareDividendForm(forms.ModelForm):
     fsharedividend=forms.FloatField()
     class Meta:
