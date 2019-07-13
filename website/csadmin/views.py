@@ -11,8 +11,6 @@ from django.views.generic import View
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 #for background tasks
 # from autotask.tasks import cron_task
@@ -114,17 +112,12 @@ def message(request):
     }
     return render (request,'messanger.html',context=context)
 
-
 @login_required
 def change(request):
-    sharedividend=0
-    cddividend=0
-    longloaninterest=0
-    emergencyloaninterest=0
-    fdinterest=0
+
     if request.method=="POST":
 
-        if 'btnverifyshare' in request.POST:
+        if 'btnverify' in request.POST:
             tsecretkey=SecretkeyForm(request.POST)
             print("POST_1")
             if tsecretkey.is_valid():
@@ -137,78 +130,23 @@ def change(request):
                 if (chairmankey == 123 and secretarykey ==321):
                     print("Allow")
 
-                    return redirect('/csadmin/shareupdate/(%3FP1)/')
-                else:
-                    print("Not Allow!!")
-        elif 'btnverifycd' in request.POST:
-            tsecretkey=SecretkeyForm(request.POST)
-            print("POST_2")
-            if tsecretkey.is_valid():
-                chairmankey=tsecretkey.cleaned_data['fchairmankey']
-                print("chairman's key")
-                print(chairmankey)
-                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
-                print("secretary's key")
-                print(secretarykey)
-                if (chairmankey == 123 and secretarykey ==321):
-                    print("Allow")
-
-                    return redirect('/csadmin/cdupdate/(%3FP1)/')
-                else:
-                    print("Not Allow!!")
-        elif 'btnverifyemerloan' in request.POST:
-            tsecretkey=SecretkeyForm(request.POST)
-            print("POST_3")
-            if tsecretkey.is_valid():
-                chairmankey=tsecretkey.cleaned_data['fchairmankey']
-                print("chairman's key")
-                print(chairmankey)
-                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
-                print("secretary's key")
-                print(secretarykey)
-                if (chairmankey == 123 and secretarykey ==321):
-                    print("Allow")
-
-                    return redirect('/csadmin/emerloanupdate/(%3FP1)/')
-                else:
-                    print("Not Allow!!")
-        elif 'btnverifylongloan' in request.POST:
-            tsecretkey=SecretkeyForm(request.POST)
-            print("POST_4")
-            if tsecretkey.is_valid():
-                chairmankey=tsecretkey.cleaned_data['fchairmankey']
-                print("chairman's key")
-                print(chairmankey)
-                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
-                print("secretary's key")
-                print(secretarykey)
-                if (chairmankey == 123 and secretarykey ==321):
-                    print("Allow")
-
-                    return redirect('/csadmin/longloanupdate/(%3FP1)/')
-                else:
-                    print("Not Allow!!")
-        elif 'btnverifyfd' in request.POST:
-            tsecretkey=SecretkeyForm(request.POST)
-            print("POST_5")
-            if tsecretkey.is_valid():
-                chairmankey=tsecretkey.cleaned_data['fchairmankey']
-                print("chairman's key")
-                print(chairmankey)
-                secretarykey=tsecretkey.cleaned_data['fsecretarykey']
-                print("secretary's key")
-                print(secretarykey)
-                if (chairmankey == 123 and secretarykey ==321):
-                    print("Allow")
-
-                    return redirect('/csadmin/fdintupdate/(%3FP1)/')
+                    return redirect('/csadmin/changeit')
                 else:
                     print("Not Allow!!")
 
     context={
+
+        'money':"active",
+    }
+
+    return render (request,'change.html',context=context)
+@login_required
+def changeit(request):
+
+    context={
         'money':"active"
     }
-    return render (request,'change.html',context=context)
+    return render (request,'changeit.html',context=context)
 
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
@@ -245,7 +183,7 @@ class ShareUpdate(UpdateView):
 class CDUpdate(UpdateView):
         model=interests
         fields=['cddividend']
-        # interest=interests.objects.get(id=1)
+        interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
         # recievers = []
         # user=Account.objects.all
@@ -263,29 +201,31 @@ class CDUpdate(UpdateView):
 class EmerLoanUpdate(UpdateView):
         model=interests
         fields=['emerloaninterest']
-        # interest=interests.objects.get(id=1)
+        interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
-        @receiver(post_save, sender=interests)
-        def changIe(sender, **kwargs):
-            print(kwargs['signal'])
-            subject = 'Emergency Loan interest rate is updated'
-            message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = ['champtem11@gmail.com']
-            send_mail( subject, message, email_from, recipient_list )
-            print("mail sent for update of Emergency Loan interest")
-
+        # subject = 'Emergency Loan interest rate is updated'
+        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"+ str(interest.emerloaninterest)
+        # email_from = settings.EMAIL_HOST_USER
+        # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+        # send_mail( subject, message, email_from, recipient_list )
+        # print("mail sent for update of Emergency Loan interest")
 
 class FDinterestUpdate(UpdateView):
     model=interests
     fields=['fdinterest']
-    # interest=interests.objects.get(id=1)
+    interest=interests.objects.get(id=1)
     success_url=reverse_lazy('csadmin:members')
+    # subject = 'FD interest rate is updated'
+    # message = "Dear sir/ma'am your DJSCOE CS FD interest rate is updated "+ str(interest.fdinterest)
+    # email_from = settings.EMAIL_HOST_USER
+    # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+    # send_mail( subject, message, email_from, recipient_list )
+    # print("mail sent for update of FD interest")
 
 class LongLoanUpdate(UpdateView):
         model=interests
         fields=['longloaninterest']
-        # interest=interests.objects.get(id=1)
+        interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
         # subject = 'Long Loan interest rate is updated'
         # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Long Loan interest rate to"+ str(interest.longloaninterest)
@@ -307,7 +247,7 @@ class FDUpdate(UpdateView):
 
 class LoanUpdate(UpdateView):
         model=Account
-        fields=['username','isloanloantaken','isloanemertaken','longloanamount','longloanperiod','emerloanamount','emerloanperiod']
+        fields=['username','isloanloantaken','isloanemertaken','longloanamount','longloanperiod']
         success_url=reverse_lazy('csadmin:members')
 
 class SharesUpdate(UpdateView):
