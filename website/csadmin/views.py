@@ -11,9 +11,15 @@ from django.views.generic import View
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+#convert string to dict
+import ast
+from decimal import Decimal
+
 
 #for background tasks
-# from autotask.tasks import cron_task
+from autotask.tasks import cron_task
 
 #for date and time
 from datetime import datetime
@@ -143,10 +149,41 @@ def change(request):
 @login_required
 def changeit(request):
 
+    Interests=interests.objects.all()
+    obj = interests.objects.get(id=1)
+    full_history = (obj.history.all()).order_by('-timestamp')
+    for i in full_history:
+        x=i.changes
+        dict=ast.literal_eval(x)
+        for i in dict:
+            col_name=i
+            print(type(col_name))
+            y=dict[i]
+            print(i)
+            print(y)
+            result = Decimal(y[0])
+            print(col_name)
+            if(col_name=="sharedividend"):
+                x=interests(sharedividend=result)
+                x.save()
+            elif(col_name=="cddividend"):
+                x=interests(cddividend=result)
+                x.save()
+            elif(col_name=="fdinterest"):
+                x=interests(fdinterest=result)
+                x.save()
+            elif(col_name=="emerloaninterest"):
+                x=interests(emerloaninterest=result)
+                x.save()
+            elif(col_name=="longloaninterest"):
+                x=interests(longloaninterest=result)
+                x.save()
     context={
-        'money':"active"
+        'money':"active",
+        'full_history':full_history,
     }
-    return render (request,'changeit.html',context=context)
+
+    return render (request,'change.html',context=context)
 
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
@@ -158,6 +195,8 @@ class UserCreate(CreateView):
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         return valid
 
+#big problem here!!!!!!!  username_id
+#deleting only deletes form account model and not from users so soething else need to be done here!!
 class AccountDelete(DeleteView):
     template_name = 'Userdelete.html'
     success_url=reverse_lazy('csadmin:members')
@@ -165,7 +204,7 @@ class AccountDelete(DeleteView):
         id_=self.kwargs.get("id")
         Users=User.objects.get(id=id_)
         print(Users)
-        print("Chiru Tula")
+        print("ChiruTula")
         print(Users.email)
 
         message="Dear sir/ma'am your DJSCOE CS account " + str(Users) + "is deleted by admin"
@@ -176,34 +215,10 @@ class AccountDelete(DeleteView):
         print("mail sent from deleteing account")
         return get_object_or_404(User,id=id_)
 
-class ShareUpdate(UpdateView):
+class InterestsUpdate(UpdateView):
         model=interests
-        form_class = ShareUpdateForm
-        template_name = 'shares_form.html'
-        fields=['sharedividend']
-        success_url=reverse_lazy('csadmin:members')
-class CDUpdate(UpdateView):
-        model=interests
-        fields=['cddividend']
-        interest=interests.objects.get(id=1)
-        success_url=reverse_lazy('csadmin:members')
-        # recievers = []
-        # user=Account.objects.all
-        # users = User.objects.all()
-        # for i in users.iterator():
-        #     user_email = i.email
-        #     print(user_email)
-        #     recievers.append(i.email)
-        # subject = 'Cumulative Deposits dividend is updated'
-        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Cumulative Deposits dividend to"+ str(interest.cddividend)
-        # email_from = settings.EMAIL_HOST_USER
-        # send_mail( subject, message, email_from, recievers)
-        # print("mail sent for update of cd dividend")
-
-class EmerLoanUpdate(UpdateView):
-        model=interests
-        fields=['emerloaninterest']
-        interest=interests.objects.get(id=1)
+        fields=['sharedividend','cddividend','fdinterest','emerloaninterest','longloaninterest']
+        # interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
         # subject = 'Emergency Loan interest rate is updated'
         # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"+ str(interest.emerloaninterest)
@@ -211,30 +226,6 @@ class EmerLoanUpdate(UpdateView):
         # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
         # send_mail( subject, message, email_from, recipient_list )
         # print("mail sent for update of Emergency Loan interest")
-
-class FDinterestUpdate(UpdateView):
-    model=interests
-    fields=['fdinterest']
-    interest=interests.objects.get(id=1)
-    success_url=reverse_lazy('csadmin:members')
-    # subject = 'FD interest rate is updated'
-    # message = "Dear sir/ma'am your DJSCOE CS FD interest rate is updated "+ str(interest.fdinterest)
-    # email_from = settings.EMAIL_HOST_USER
-    # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-    # send_mail( subject, message, email_from, recipient_list )
-    # print("mail sent for update of FD interest")
-
-class LongLoanUpdate(UpdateView):
-        model=interests
-        fields=['longloaninterest']
-        interest=interests.objects.get(id=1)
-        success_url=reverse_lazy('csadmin:members')
-        # subject = 'Long Loan interest rate is updated'
-        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Long Loan interest rate to"+ str(interest.longloaninterest)
-        # email_from = settings.EMAIL_HOST_USER
-        # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        # send_mail( subject, message, email_from, recipient_list )
-        # print("mail sent for update of Long Loan interest")
 
 class AccountCreate(CreateView):
         model=Account
@@ -251,7 +242,7 @@ class FDUpdate(UpdateView):
 
 class LoanUpdate(UpdateView):
         model=Account
-        fields=['username','isloanloantaken','isloanemertaken','longloanamount','longloanperiod']
+        fields=['username','islongloantaken','isloanemertaken','longloanamount','longloanperiod','emerloanamount','emerloanperiod']
         success_url=reverse_lazy('csadmin:members')
 
 class SharesUpdate(UpdateView):
@@ -270,126 +261,144 @@ class GeneratePdf(View):
         pdf = render_to_pdf('tableview.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
 
-#
-# @cron_task(crontab="* * * * *")
-# def calcinvest():
-#     Members=Account.objects.all()
-#     Interests=interests.objects.get(id=1)
-#     for i in  Members.iterator():
-#         if(i.sharevalue==0 and i.shareamount==0):
-#             i.sharevalue=i.cdamount
-#         elif(i.sharevalue==0 and i.cdamount==0):
-#             i.sharevalue=i.shareamount
-#         if(i.totalinvestment==0):
-#             i.totalinvestment=i.sharebalance+i.cdbalance
-#
-#
-#         i.totalinvestment=i.totalinvestment+(i.sharevalue)
-#         if (i.totalinvestment >= 50000):
-#             i.cdbalance = i.totalinvestment - 50000
-#             i.sharebalance = 50000
-#             i.cdamount=i.sharevalue
-#             i.shareamount=0
-#         else:
-#             i.sharebalance=i.totalinvestment
-#             i.cdbalance=0
-#             i.shareamount=i.sharevalue
-#             i.cdamount=0
-#         print("shareamount")
-#         print(i.shareamount)
-#         i.save()
-#
-# @cron_task(crontab="* * * * *")
-# def longloan():
-#     Members=Account.objects.all()
-#     Interests=interests.objects.get(id=1)
-#     #loan parameters
-#     Rate=Interests.longloaninterest
-#     R=Rate/(12*100) #rate of interest for each month
-#
-#     for i in  Members.iterator():
-#         N=i.longloanperiod
-#         A=i.longloanamount
-#         print(N)
-#         print(A)
-#         if(N!=0):
-#             if(i.longloanbalance==0):
-#                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-#                 i.loanloanemi=EMI
-#                 interestamount=R*A
-#                 print(interestamount)
-#                 i.longloaninterestamount=interestamount
-#                 print(interestamount)
-#                 principle=EMI-interestamount
-#                 i.longloanprinciple=principle
-#                 print(principle)
-#                 i.longloanbalance=i.longloanamount-principle
-#                 print(i.longloanbalance)
-#             else:
-#                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-#                 print(EMI)
-#                 interestamount=R*i.longloanbalance
-#                 i.longloaninterestamount=interestamount
-#                 print(interestamount)
-#                 principle=EMI-interestamount
-#                 i.longloanprinciple=principle
-#                 print(principle)
-#                 i.longloanbalance=i.longloanbalance-principle
-#         i.save()
-#
-#
-# @cron_task(crontab="* * * * *")
-# def emergencyloan():
-#     Members=Account.objects.all()
-#     Interests=interests.objects.get(id=1)
-#     sharebalance = 0
-#     cdbalance = 0
-#
-#     #Emergencyloan parameters
-#     Rate=Interests.emerloaninterest
-#     R=Rate/(12*100) #rate of interest for each month
-#
-#     for i in  Members.iterator():
-#         N=i.emerloanperiod
-#         A=i.emerloanamount
-#         print(N)
-#         print(A)
-#         if(N!=0):
-#             if(i.emerloanbalance==0):
-#                 EMI=(A*R*(1+R)*N)/(((1+R)*N)-1)
-#                 interestamount=R*A
-#                 i.emerloaninterestamount=interestamount
-#                 print(interestamount)
-#                 principle=EMI-interestamount
-#                 i.emerloanprinciple=principle
-#                 print(principle)
-#                 i.emerloanbalance=i.emerloanamount-principle
-#                 print(i.emerloanbalance)
-#             else:
-#                 EMI=(A*R*(1+R)*N)/(((1+R)*N)-1)
-#                 print(EMI)
-#                 interestamount=R*i.emerloanbalance
-#                 i.emerloaninterestamount=interestamount
-#                 print(interestamount)
-#                 principle=EMI-interestamount
-#                 i.emerloanprinciple=principle
-#                 print(principle)
-#                 i.emerloanbalance=i.emerloanbalance-principle
-#         i.totalamount=i.shareamount+i.cdamount+i.longloanprinciple+i.longloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
-#         i.save()
-#
-# @cron_task(crontab="* * * * *")
-# def fdemail():
-#     Members=Account.objects.all()
-#     datetoday=datetime.date.today()
-#     for i in  Members.iterator():
-#         print("start")
-#         date_diff_fd = (relativedelta.relativedelta(i.fdmaturitydate,datetoday))
-#         print(date_diff_fd)
-#         if (date_diff_fd.months==+1 and date_diff_fd.days==0 and date_diff_fd.years==0):
-#             subject = 'FD is getting matured soon'
-#             message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + str(i.fdmaturitydate) + "what wolud you like to do? reply on this email or contact Admin"
-#             email_from = settings.EMAIL_HOST_USER
-#             recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-#             send_mail( subject, message, email_from, recipient_list )
-#             print("mail sent for maturity if FD")
+
+@cron_task(crontab="* * * * *")
+def calcinvest():
+    Members=Account.objects.all()
+    Interests=interests.objects.get(id=1)
+    for i in  Members.iterator():
+        if(i.sharevalue==0 and i.shareamount==0):
+            i.sharevalue=i.cdamount
+        elif(i.sharevalue==0 and i.cdamount==0):
+            i.sharevalue=i.shareamount
+        if(i.totalinvestment==0):
+            i.totalinvestment=i.sharebalance+i.cdbalance
+
+
+        i.totalinvestment=i.totalinvestment+(i.sharevalue)
+        if (i.totalinvestment >= 50000):
+            i.cdbalance = i.totalinvestment - 50000
+            i.sharebalance = 50000
+            i.cdamount=i.sharevalue
+            i.shareamount=0
+        else:
+            i.sharebalance=i.totalinvestment
+            i.cdbalance=0
+            i.shareamount=i.sharevalue
+            i.cdamount=0
+        print("shareamount")
+        print(i.shareamount)
+        i.save()
+
+@cron_task(crontab="* * * * *")
+def longloan():
+    Members=Account.objects.all()
+    Interests=interests.objects.get(id=1)
+    #loan parameters
+    Rate=Interests.longloaninterest
+    R=Rate/(12*100) #rate of interest for each month
+
+    for i in  Members.iterator():
+        N=i.longloanperiod
+        A=i.longloanamount
+        print(N)
+        print(A)
+        if(N!=0):
+            if(i.longloanbalance==0 and i.longloanprinciple==0):
+                EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.loanloanemi=EMI
+                interestamount=R*A
+                print(interestamount)
+                i.longloaninterestamount=interestamount
+                print(interestamount)
+                principle=EMI-interestamount
+                i.longloanprinciple=principle
+                print(principle)
+                i.longloanbalance=i.longloanamount-principle
+                print(i.longloanbalance)
+            elif(i.longloanbalance==0):
+                i.longloanamount=0
+                i.longloanbalance=0
+                i.longloanperiod=0
+                i.longloaninterestamount=0
+                i.longloanprinciple=0
+                i.islongloantaken=False
+            else:
+                EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                print(EMI)
+                interestamount=R*i.longloanbalance
+                i.longloaninterestamount=interestamount
+                print(interestamount)
+                principle=EMI-interestamount
+                i.longloanprinciple=principle
+                print(principle)
+                i.longloanbalance=i.longloanbalance-principle
+                print("jd is best")
+                print(type(i.longloanbalance))
+        i.save()
+
+
+@cron_task(crontab="* * * * *")
+def emergencyloan():
+    Members=Account.objects.all()
+    Interests=interests.objects.get(id=1)
+    sharebalance = 0
+    cdbalance = 0
+
+    #Emergencyloan parameters
+    Rate=Interests.emerloaninterest
+    R=Rate/(12*100) #rate of interest for each month
+
+    for i in  Members.iterator():
+        N=i.emerloanperiod
+        A=i.emerloanamount
+        print(N)
+        print(A)
+        if(N!=0):
+            if(i.emerloanbalance==0 and i.emerloanprinciple==0):
+                EMI=(A*R*(1+R)*N)/(((1+R)*N)-1)
+                interestamount=R*A
+                i.emerloaninterestamount=interestamount
+                print(interestamount)
+                principle=EMI-interestamount
+                i.emerloanprinciple=principle
+                print(principle)
+                i.emerloanbalance=i.emerloanamount-principle
+                print(i.emerloanbalance)
+
+            elif(i.emerloanbalance==0):
+                i.emerloanamount=0
+                i.emerloanbalance=0
+                i.emerloanperiod=0
+                i.emerloaninterestamount=0
+                i.emerloanprinciple=0
+                i.isemerloantaken=False
+
+            else:
+                EMI=(A*R*(1+R)*N)/(((1+R)*N)-1)
+                print(EMI)
+                interestamount=R*i.emerloanbalance
+                i.emerloaninterestamount=interestamount
+                print(interestamount)
+                principle=EMI-interestamount
+                i.emerloanprinciple=principle
+                print(principle)
+                i.emerloanbalance=i.emerloanbalance-principle
+        i.totalamount=i.shareamount+i.cdamount+i.longloanprinciple+i.longloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
+        i.save()
+
+@cron_task(crontab="* * * * *")
+def fdemail():
+    Members=Account.objects.all()
+    datetoday=datetime.date.today()
+    for i in  Members.iterator():
+        print("start")
+        date_diff_fd = (relativedelta.relativedelta(i.fdmaturitydate,datetoday))
+        print(date_diff_fd)
+        if (date_diff_fd.months==+1 and date_diff_fd.days==0 and date_diff_fd.years==0):
+            subject = 'FD is getting matured soon'
+            message = "Dear sir/ma'am your DJSCOE CS FD is getting matured on " + str(i.fdmaturitydate) + "what wolud you like to do? reply on this email or contact Admin"
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
+            send_mail( subject, message, email_from, recipient_list )
+            print("mail sent for maturity if FD")

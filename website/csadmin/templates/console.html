@@ -38,7 +38,7 @@
                       <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.fdcapital}}</a></td>
 
 
-                      {% ifequal i.isloanloantaken True %}
+                      {% ifequal i.islongloantaken True %}
                       <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">Yes</a></td>
                       {% else %}
                       <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">No</a></td>
