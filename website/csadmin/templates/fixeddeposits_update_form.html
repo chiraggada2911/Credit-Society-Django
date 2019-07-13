@@ -1,0 +1,58 @@
+{%extends 'base.html'%}
+{%block title%}Accounts{%endblock%}
+{%block content%}
+<h2>ADD Account Details</h2>
+<div class="container-fluid">
+  <div class="row">
+
+
+  <div class="col-sm-12 col-md-7">
+           <div class="panel panel-default">
+               <div class="panel-body">
+
+                  <form action="" method="post">
+                    {% csrf_token %}
+                    <table>
+                    <!-- {{ form.as_table }} -->
+                    <p><label for="id_username">Username:</label> <select name="username" required id="id_username">
+                        
+  <option value="" >---------</option>
+
+  <option value="1">admin</option>
+
+  <option value="21">aashulikabra</option>
+
+  <option value="22">shaunak</option>
+
+  <option value="25">rugvedmhatre</option>
+
+  <option value="27">mayurparulekar</option>
+
+  <option value="28">riteshsingh</option>
+
+  <option value="29">mayuresh</option>
+
+  <option value="30">sattu</option>
+
+  <option value="31">bro</option>
+
+  <option value="32">qwert</option>
+
+</select></p>
+<p><label for="id_fdcapital">FD Capital:</label> <input type="number" name="fdcapital" value="0" required id="id_fdcapital"></p>
+<p><label for="id_fdmaturitydate">Fd Maturity Date:</label> <input type="date" name="fdmaturitydate" required id="id_fdmaturitydate"></p>
+                    </table>
+                    <div class="form-group " style="margin-top:20px">
+                       <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">SAVE DETAILS</button>
+                      </div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+            <h1>fd</h1>
+
+      </div>
+</div>
+</div>
+{%endblock%}

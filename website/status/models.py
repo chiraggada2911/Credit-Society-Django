@@ -47,9 +47,6 @@ class Account(models.Model):
     #schema for fixed Deposits
     fdcapital=models.IntegerField(default=0,null=True)
     fdmaturitydate=models.DateField(null=True)
-    #teaching and nonteaching staff
-    teachingstaff=models.BooleanField(default=False)
-    nonteachingstaff=models.BooleanField(default=False)
 
 
     def __str__(self):
