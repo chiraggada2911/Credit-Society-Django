@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'landingPage',
     'django.contrib.humanize',
-    # 'autotask',
+    'auditlog',
+    'autotask',
 ]
 
 
@@ -56,11 +57,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'auditlog.middleware.AuditlogMiddleware',
 ]
 
 ROOT_URLCONF = 'website.urls'
 
-# AUTOTASK_IS_ACTIVE = True
+AUTOTASK_IS_ACTIVE = False
 
 TEMPLATES = [
     {
