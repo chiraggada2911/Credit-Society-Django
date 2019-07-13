@@ -86,33 +86,6 @@ def loansadmin(request):
     return render (request,'loansadmin.html',context=context)
 
 @login_required
-def message(request):
-    recievers = []
-    user=Account.objects.all
-    users = User.objects.all()
-    for i in users.iterator():
-        user_email = i.email
-        print(user_email)
-        recievers.append(i.email)
-    if request.method=="POST":
-        tmessage=MessengerForm(request.POST)
-        if tmessage.is_valid():
-            message=tmessage.cleaned_data['fmessage']
-            print(message)
-            subject = 'This email is from Credit Society Committee'
-            email_from = settings.EMAIL_HOST_USER
-            send_mail( subject, message, email_from, recievers )
-            print("mail sent from messanger")
-
-        else:
-            print("error at validity of message")
-    context={
-
-        'message':"active",
-    }
-    return render (request,'messanger.html',context=context)
-
-@login_required
 def change(request):
 
     if request.method=="POST":
@@ -140,6 +113,7 @@ def change(request):
     }
 
     return render (request,'change.html',context=context)
+
 @login_required
 def changeit(request):
 
@@ -147,6 +121,33 @@ def changeit(request):
         'money':"active"
     }
     return render (request,'changeit.html',context=context)
+
+@login_required
+def message(request):
+    recievers = []
+    user=Account.objects.all
+    users = User.objects.all()
+    for i in users.iterator():
+        user_email = i.email
+        print(user_email)
+        recievers.append(i.email)
+    if request.method=="POST":
+        tmessage=MessengerForm(request.POST)
+        if tmessage.is_valid():
+            message=tmessage.cleaned_data['fmessage']
+            print(message)
+            subject = 'This email is from Credit Society Committee'
+            email_from = settings.EMAIL_HOST_USER
+            send_mail( subject, message, email_from, recievers )
+            print("mail sent from messanger")
+
+        else:
+            print("error at validity of message")
+    context={
+
+        'message':"active",
+    }
+    return render (request,'messanger.html',context=context)
 
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
@@ -163,18 +164,20 @@ class AccountDelete(DeleteView):
     success_url=reverse_lazy('csadmin:members')
     def get_object(self):
         id_=self.kwargs.get("id")
-        Users=User.objects.get(id=id_)
-        print(Users)
-        print("Chiru Tula")
-        print(Users.email)
+        Userd=User.objects.get(id=id_)
+        print(Userd)
+        print("This User is deleted")
+        print(Userd.email)
 
-        message="Dear sir/ma'am your DJSCOE CS account " + str(Users) + "is deleted by admin"
+        message="Dear sir/ma'am your DJSCOE CS account " + str(Userd) + "is deleted by admin"
         subject = 'This email is from Credit Society Committee'
         email_from = settings.EMAIL_HOST_USER
-        recievers=[Users.email]
+        recievers=[Userd.email]
         send_mail( subject, message, email_from, recievers )
         print("mail sent from deleteing account")
         return get_object_or_404(User,id=id_)
+
+#
 
 class ShareUpdate(UpdateView):
         model=interests
@@ -182,6 +185,7 @@ class ShareUpdate(UpdateView):
         template_name = 'shares_form.html'
         fields=['sharedividend']
         success_url=reverse_lazy('csadmin:members')
+
 class CDUpdate(UpdateView):
         model=interests
         fields=['cddividend']
@@ -205,36 +209,18 @@ class EmerLoanUpdate(UpdateView):
         fields=['emerloaninterest']
         interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
-        # subject = 'Emergency Loan interest rate is updated'
-        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Emergency Loan interest rate to"+ str(interest.emerloaninterest)
-        # email_from = settings.EMAIL_HOST_USER
-        # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        # send_mail( subject, message, email_from, recipient_list )
-        # print("mail sent for update of Emergency Loan interest")
 
 class FDinterestUpdate(UpdateView):
-    model=interests
-    fields=['fdinterest']
-    interest=interests.objects.get(id=1)
-    success_url=reverse_lazy('csadmin:members')
-    # subject = 'FD interest rate is updated'
-    # message = "Dear sir/ma'am your DJSCOE CS FD interest rate is updated "+ str(interest.fdinterest)
-    # email_from = settings.EMAIL_HOST_USER
-    # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-    # send_mail( subject, message, email_from, recipient_list )
-    # print("mail sent for update of FD interest")
+        model=interests
+        fields=['fdinterest']
+        interest=interests.objects.get(id=1)
+        success_url=reverse_lazy('csadmin:members')
 
 class LongLoanUpdate(UpdateView):
         model=interests
         fields=['longloaninterest']
         interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
-        # subject = 'Long Loan interest rate is updated'
-        # message = "Dear sir/ma'am, Committee of DJSCOE Credit Society has updated the Long Loan interest rate to"+ str(interest.longloaninterest)
-        # email_from = settings.EMAIL_HOST_USER
-        # recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-        # send_mail( subject, message, email_from, recipient_list )
-        # print("mail sent for update of Long Loan interest")
 
 class AccountCreate(CreateView):
         model=Account
