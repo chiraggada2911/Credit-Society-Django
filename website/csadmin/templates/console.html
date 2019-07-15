@@ -39,15 +39,15 @@
 
 
                       {% ifequal i.islongloantaken True %}
-                      <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">Yes</a></td>
+                      <td><a href="{% url 'csadmin:longloan_update' pk=i.pk %}">Yes</a></td>
                       {% else %}
-                      <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">No</a></td>
+                      <td><a href="{% url 'csadmin:longloan_update' pk=i.pk %}">No</a></td>
                       {% endifequal %}
 
                       {% ifequal i.isloanemertaken True %}
-                      <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">Yes</a></td>
+                      <td><a href="{% url 'csadmin:emerloan_update' pk=i.pk %}">Yes</a></td>
                       {% else %}
-                      <td><a href="{% url 'csadmin:loan_update' pk=i.pk %}">No</a></td>
+                      <td><a href="{% url 'csadmin:emerloan_update' pk=i.pk %}">No</a></td>
                       {% endifequal %}
 
                       <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>

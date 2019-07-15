@@ -33,7 +33,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import ShareDividendForm,CDDividendForm,LongLoanForm,EmergencyLoanForm,FDInterestForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm
+from csadmin.forms import NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm
 
 # Create your views here.
 def index(request):
@@ -234,13 +234,19 @@ class FDUpdate(UpdateView):
         model=Account
         form_class = FDUpdateForm
         template_name = 'fixeddeposits_update_form.html'
-
         success_url=reverse_lazy('csadmin:bank')
 
-class LoanUpdate(UpdateView):
+class LongLoanUpdate(UpdateView):
         model=Account
-        fields=['username','islongloantaken','isloanemertaken','longloanamount','longloanperiod','emerloanamount','emerloanperiod']
-        success_url=reverse_lazy('csadmin:members')
+        form_class = LongLoanUpdateForm
+        template_name = 'longloan_update_form.html'
+        success_url=reverse_lazy('csadmin:loansadmin')
+
+class EmerLoanUpdate(UpdateView):
+        model=Account
+        form_class = EmerLoanUpdateForm
+        template_name = 'emerloan_update_form.html'
+        success_url=reverse_lazy('csadmin:loansadmin')
 
 class SharesUpdate(UpdateView):
         model=Account
