@@ -44,6 +44,17 @@
       </div>
     </div>
   </div>
+  {% if messages %}
+  <ul>
+     {% for message in messages %}
+     <div class="alert alert-success">
+       <a class="close" href="{%url 'status:loanuser'%}">×</a>
+       <span>
+         <b> {{ message }}</span>
+     </div>
+     {% endfor %}
+  </ul>
+  {% endif %}
 </div>
 </main>
 
