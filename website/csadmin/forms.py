@@ -20,16 +20,20 @@ class FDUpdateForm(forms.ModelForm):
         model=Account
         fields=('username','fdcapital','fdmaturitydate')
 
-class ShareUpdateForm(forms.Form):
+class ShareUpdateForm(forms.ModelForm):
     class Meta:
         model=Account
         fields=('username','fdcapital','fdmaturitydate')
 
-class LongLoanUpdateForm(forms.Form):
+class LongLoanUpdateForm(forms.ModelForm):
     class Meta:
         model=Account
-        fields=('username','isloanloantaken','isloanemertaken','longloanamount','longloanperiod')
+        fields=('username','islongloantaken','longloanamount','longloanperiod')
 
+class EmerLoanUpdateForm(forms.ModelForm):
+    class Meta:
+        model=Account
+        fields=('username','isloanemertaken','emerloanamount','emerloanperiod')
 
 #<<interests form>>
 

@@ -8,7 +8,7 @@ urlpatterns = [
     path('', views.commander,name="commander"),
     path('members', views.members,name="members"),
     path('bank', views.bank,name="bank"),
-    path('loansadmin', views.loansadmin,name="loansadmin"),
+    path('loans', views.loansadmin,name="loansadmin"),
     path('changeit', views.changeit,name="changeit"),
     path('change', views.change,name="change"),
     path('message', views.message,name="message"),
@@ -21,7 +21,8 @@ urlpatterns = [
 
     path('<int:id>/delete/',login_required(views.AccountDelete.as_view()),name='User_Delete'),
     path('FDupdate/(?P<pk>)/', login_required(views.FDUpdate.as_view()), name='fd_update'),
-    path('Loanupdate/(?P<pk>)/', login_required(views.LoanUpdate.as_view()), name='loan_update'),
+    path('LongLoanupdate/(?P<pk>)/', login_required(views.LongLoanUpdate.as_view()), name='longloan_update'),
+    path('EmerLoanupdate/(?P<pk>)/', login_required(views.EmerLoanUpdate.as_view()), name='emerloan_update'),
     path('Sharesupdate/(?P<pk>)/', login_required(views.SharesUpdate.as_view()), name='shares _update'),
     path('tableview',login_required(views.GeneratePdf.as_view()),name="GeneratePdf"),
 
