@@ -20,11 +20,24 @@ class FDUpdateForm(forms.ModelForm):
         model=Account
         fields=('username','fdcapital','fdmaturitydate')
 
-class ShareUpdateForm(forms.Form):
-    fshareupdate=forms.FloatField()
+class ShareUpdateForm(forms.ModelForm):
+    class Meta:
+        model=Account
+        fields=('username','fdcapital','fdmaturitydate')
+
+class LongLoanUpdateForm(forms.ModelForm):
+    class Meta:
+        model=Account
+        fields=('username','islongloantaken','longloanamount','longloanperiod')
+
+class EmerLoanUpdateForm(forms.ModelForm):
+    class Meta:
+        model=Account
+        fields=('username','isloanemertaken','emerloanamount','emerloanperiod')
+
+#<<interests form>>
 
 class ShareDividendForm(forms.ModelForm):
-    fsharedividend=forms.FloatField()
     class Meta:
         model=interests
         fields=('sharedividend',)
@@ -40,6 +53,8 @@ class EmergencyLoanForm(forms.Form):
 
 class FDInterestForm(forms.Form):
     ffdinterest=forms.FloatField()
+#<<interest forms end>>
+
 
 class MessengerForm(forms.Form):
     fmessage=forms.CharField(widget=forms.TextInput)
