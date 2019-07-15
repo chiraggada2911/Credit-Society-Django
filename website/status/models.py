@@ -60,4 +60,11 @@ class interests(models.Model):
     longloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     history = AuditlogHistoryField()
 
+class cal(models.Model):
+    sharedividend=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    cddividend=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    fdinterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    emerloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    longloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+
 auditlog.register(interests)

@@ -17,7 +17,7 @@ urlpatterns = [
     path('usercreate', login_required(views.UserCreate.as_view()),name='user_create'),
     path('account/create/', login_required(views.AccountCreate.as_view()), name='account_create'),
 
-    path('interests/(?P<pk>)/update', login_required(views.InterestsUpdate.as_view()), name='Interest_Update'),
+    path('interests/(?P<pk>)', login_required(views.InterestsUpdate.as_view()), name='interest_update'),
 
     path('<int:id>/delete/',login_required(views.AccountDelete.as_view()),name='User_Delete'),
     path('FDupdate/(?P<pk>)/', login_required(views.FDUpdate.as_view()), name='fd_update'),
