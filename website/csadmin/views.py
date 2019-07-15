@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from status.models import Account,interests
+from status.models import Account,interests,cal
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -123,38 +123,10 @@ def change(request):
 @login_required
 def changeit(request):
 
-    Interests=interests.objects.all()
-    obj = interests.objects.get(id=1)
-    full_history = (obj.history.all()).order_by('-timestamp')
-    for i in full_history:
-        x=i.changes
-        dict=ast.literal_eval(x)
-        for i in dict:
-            col_name=i
-            print(type(col_name))
-            y=dict[i]
-            print(i)
-            print(y)
-            result = Decimal(y[0])
-            print(col_name)
-            if(col_name=="sharedividend"):
-                x=interests(sharedividend=result)
-                x.save()
-            elif(col_name=="cddividend"):
-                x=interests(cddividend=result)
-                x.save()
-            elif(col_name=="fdinterest"):
-                x=interests(fdinterest=result)
-                x.save()
-            elif(col_name=="emerloaninterest"):
-                x=interests(emerloaninterest=result)
-                x.save()
-            elif(col_name=="longloaninterest"):
-                x=interests(longloaninterest=result)
-                x.save()
+    
     context={
         'money':"active",
-        'full_history':full_history,
+        # 'full_history':full_history,
     }
 
     return render (request,'changeit.html',context=context)
@@ -221,6 +193,36 @@ class InterestsUpdate(UpdateView):
         fields=['sharedividend','cddividend','fdinterest','emerloaninterest','longloaninterest']
         # interest=interests.objects.get(id=1)
         success_url=reverse_lazy('csadmin:members')
+        @receiver(post_save, sender=interests)
+        def cal(sender,**kwargs):
+            Interests = cal.objects.all()
+            obj = interests.objects.get(id=1)
+            full_history = (obj.history.all()).order_by('-timestamp')
+            # print(full_history)
+            for i in full_history:
+                print(i)
+                x=i.changes
+                print(x)
+                dict=ast.literal_eval(x)
+                for i in dict:
+                    col_name=i
+                    print(type(col_name))
+                    y=dict[i]   
+                    # print(i)
+                    # print(y)
+                    result = Decimal(y[0])
+                    print(col_name)
+                    if(col_name=="sharedividend"):
+                        x=cal(sharedividend=result)
+                    if(col_name=="cddividend"):
+                        x=cal(cddividend=result)
+                    if(col_name=="fdinterest"):
+                        x=cal(fdinterest=result)
+                    if(col_name=="emerloaninterest"):
+                        x=cal(emerloaninterest=result)
+                    if(col_name=="longloaninterest"):
+                        x=cal(longloaninterest=result)
+                    x.save()
 
 class AccountCreate(CreateView):
         model=Account
