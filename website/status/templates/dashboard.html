@@ -13,7 +13,7 @@
         <h1>{{Accountholder.name}} </h1>
         <h4>SAP Id: {{Accountholder.sapid}}</h4>
         <h4>DoJ: {{date}}</h4>
-        <h4>Monthly Deductions: &#x20b9; {{Accountholder.sharevalue|intcomma }}
+        <h4>Monthly Deductions: &#x20b9; {{Accountholder.shareamount|intcomma }}
           <!--<a href="../status/MonthlyDeduction" style="font-size:0.8rem;"> change</a>-->
           <a href="#modal">change</a>
 
@@ -59,6 +59,7 @@
         </div>
       </div>
     </div>
+    
 
     <div class="container">
       <div class="row">
@@ -67,9 +68,7 @@
             <div class="card-body">
               <h2>Cumulative Deposits </h2>
               <h4>Balance: &#x20b9; {{ Accountholder.cdbalance|intcomma }}</h4>
-              {%for i in Interests%}
-              <h4>CD Interest:{{i.cddividend}} </h4>
-              {%endfor%}
+              <h4>Interest:{{Accountholder.cdinterest}} </h4>
             </div>
           </div>
         </div>

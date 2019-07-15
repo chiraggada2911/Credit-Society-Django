@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 {%block title%}Accounts{%endblock%}
 {%block content%}
-<h2>ADD Account Details</h2>
+<h2>ADD loan Details</h2>
 <div class="container-fluid">
   <div class="row">
 
@@ -18,13 +18,11 @@
                        <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-success">SAVE DETAILS</button>
                       </div>
+                      </form>
                     </div>
-                    </form>
-                    <a href="{% url 'csadmin:account_create'%}">skip to account create</a>
                 </div>
             </div>
 
       </div>
-</div>
 </div>
 {%endblock%}

@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from auditlog.models import AuditlogHistoryField
+from auditlog.registry import auditlog
 import datetime
-#import audit
 
 
 # Create your models here.
@@ -19,13 +20,13 @@ class Account(models.Model):
 
     cdamount=models.IntegerField(default=0)
     cdbalance=models.IntegerField(default=0)
-    #cdbalance + sharebalance = total amount
+    #cdbalance + sharebalance = total investment
     totalamount=models.DecimalField(default=0,max_digits=10,decimal_places=2)
     #schema for shares
     sharesstartingnumber=models.IntegerField(null=True)
     sharesendingnumber=models.IntegerField(null=True)
     #schema for Loans
-    isloanloantaken=models.BooleanField(default=False)
+    islongloantaken=models.BooleanField(default=False)
     isloanemertaken=models.BooleanField(default=False)
 # main amount , the loan taken
     longloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
@@ -46,9 +47,6 @@ class Account(models.Model):
     #schema for fixed Deposits
     fdcapital=models.IntegerField(default=0,null=True)
     fdmaturitydate=models.DateField(null=True)
-    #teaching and nonteaching staff
-    teachingstaff=models.BooleanField(default=False)
-    nonteachingstaff=models.BooleanField(default=False)
 
 
     def __str__(self):
@@ -60,4 +58,6 @@ class interests(models.Model):
     fdinterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     emerloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
-    # history = audit.AuditTrail()
+    history = AuditlogHistoryField()
+
+auditlog.register(interests)
