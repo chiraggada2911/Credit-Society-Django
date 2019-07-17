@@ -45,6 +45,9 @@ class Account(models.Model):
     #schema for fixed Deposits
     fdcapital=models.IntegerField(default=0,null=True)
     fdmaturitydate=models.DateField(null=True)
+    #teaching and nonteaching staff
+    teachingstaff=models.BooleanField(default=False)
+    nonteachingstaff=models.BooleanField(default=False)
 
 
     def __str__(self):
@@ -56,3 +59,4 @@ class interests(models.Model):
     fdinterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     emerloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    year=models.IntegerField(default=0,null=True)
