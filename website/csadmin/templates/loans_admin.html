@@ -9,10 +9,10 @@
         <div class="col-md-18">
           <div class="card">
             <div class="card-header card-header-primary">
-              {%for i in Interests%}
-            <h3>Long Loan Rate of Interest = {{i.longloaninterest}}</h3>
-            <h3>Emergency Loan Rate of Interest = {{i.emerloaninterest}}</h3>
-            {%endfor%}
+
+            <h3>Long Loan Rate of Interest = {{Interests.longloaninterest}}</h3>
+            <h3>Emergency Loan Rate of Interest = {{Interests.emerloaninterest}}</h3>
+
             </div>
             <div class="card-body">
               <div class="table-responsive">

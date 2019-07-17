@@ -3,6 +3,8 @@
 {%block title%}Bank{%endblock%}
 {%block content%}
 
+<!-- template for csadmin:fd -->
+
 <main role="main" class="col-md-8 col-lg-12 px-4">
   <div class="content">
     <div class="container-fluid">
@@ -16,8 +18,8 @@
               <div class="table-responsive">
                 <table class="table">
                   <thead>
-                    {%for i in Interests%}
-                    <h3>FD rate of interest = {{i.fdinterest}}</h3>{%endfor%}
+
+                    <h3>FD rate of interest = {{Interests.fdinterest}}</h3>
                     <tr>
                       <th>A/C No.</th>
                       <th>SapId</th>
@@ -29,7 +31,7 @@
                   </thead>
                   <tbody>
 
-              {%for i in Banks%}
+              {%for i in fdadmin%}
                 <tr>
                   <td>{{i.accountnumber}}</td>
                   <td>{{i.sapid}}</td>
