@@ -43,13 +43,23 @@
   <table class="table">
     <thead>
       <tr>
-        <th>A/C No.</th>
+        <th>year</th>
+        <th>Share dividend</th>
+        <th>CD Dividend</th>
+        <th>FD interest</th>
+        <th>ermergency loan interest</th>
+        <th>Long Loan Interest</th>
       </tr>
     </thead>
     <tbody>
-        {%for i in Interests%}
+        {%for i in Interests reversed%}
       <tr>
-        <td>{{i.fdinterest}}</td>
+        <td>{{i.year}}</td>
+        <td>{{i.sharedividend}}</td>
+          <td>{{i.cddividend}}</td>
+            <td>{{i.fdinterest}}</td>
+              <td>{{i.emerloaninterest}}</td>
+                <td>{{i.longloaninterest}}</td>
         </tr>
 {%endfor%}
 
