@@ -11,12 +11,12 @@
       <div class="col">
         <div class="card">
           <div class="card-body">
-            <h2>Fixed Deposits </h2>
-            <h3>FD Holder Name: {{Accountholder.name}}</h3>
-            <p class="card-text">These are your fixed deposit details with the credit society.</p>
-            <h4>Amount:&#x20b9; {{Accountholder.fdcapital|intcomma }}</h4>
-            <h4>Date of Maturity:{{Accountholder.fdmaturitydate}}</h4>
-            <h4>Interest:{{Interests.fdinterest}} </h4>
+            <h1><b>Fixed Deposits</b> </h1>
+            <h2><b>FD Holder Name:</b> {{Accountholder.name}}</h2>
+            <h3 class="card-text">These are your fixed deposit details with the credit society:</h3>
+            <h3><b>Amount:</b>  &#x20b9; {{Accountholder.fdcapital|intcomma }}</h3>
+            <h3><b>Date of Maturity:</b>{{Accountholder.fdmaturitydate}}</h3>
+            <h3><b>Interest:</b>{{Interests.fdinterest}} </h3>
           </div>
         </div>
       </div>
