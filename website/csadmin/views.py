@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from status.models import Account,interests,cal
+# models
+from status.models import Account,interests
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -13,10 +14,6 @@ from django.template.loader import get_template
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-#convert string to dict
-import ast
-from decimal import Decimal
-
 
 #for background tasks
 from autotask.tasks import cron_task
@@ -41,7 +38,7 @@ def index(request):
 
 
 @login_required
-def commander(request):
+def index(request):
     Members=Account.objects.all()
     context={
         'dashb':"active",
@@ -53,7 +50,7 @@ def commander(request):
 @login_required
 def members(request):
     Members=Account.objects.all()
-    Interests=interests.objects.get(id=1)
+    Interests=interests.objects.all().last()
     context={
         'Members':Members,
         'Interests':Interests,
@@ -61,39 +58,36 @@ def members(request):
     }
     return render (request,'members.html',context=context)
 
-@login_required
-def UserDelete(request):
-    Users=User.objects.all()
-    context={
-        'User':Users,
-    }
-    return render (request,'deleteuser.html',context=context)
 
 @login_required
-def bank(request):
-    Banks=Account.objects.all
-    Interests=interests.objects.all
+def fixeddeposits(request):
+    users=Account.objects.all
+    Interests=interests.objects.all().last()
     context={
-        'Banks':Banks,
+        'fdadmin':users,
         'Interests':Interests,
         'Bank':"active"
     }
-    return render (request,'bank.html',context=context)
+    return render (request,'fd_admin.html',context=context)
+
 
 @login_required
 def loansadmin(request):
     Loansadmin=Account.objects.all
-    Interests=interests.objects.all
+    Interests=interests.objects.all().last()
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
         'loan':"active"
     }
-    return render (request,'loansadmin.html',context=context)
+    return render (request,'loans_admin.html',context=context)
+
 
 @login_required
 def change(request):
 
+    Interest=interests.objects.all().last()
+    Interests=interests.objects.all
     if request.method=="POST":
 
         if 'btnverify' in request.POST:
@@ -109,27 +103,18 @@ def change(request):
                 if (chairmankey == 123 and secretarykey ==321):
                     print("Allow")
 
-                    return redirect('/csadmin/changeit')
+                    return redirect('/csadmin/interests')
                 else:
                     print("Not Allow!!")
 
     context={
-
+        'Interest':Interest,
+        'Interests':Interests,
         'money':"active",
     }
 
     return render (request,'change.html',context=context)
 
-@login_required
-def changeit(request):
-
-    
-    context={
-        'money':"active",
-        # 'full_history':full_history,
-    }
-
-    return render (request,'changeit.html',context=context)
 
 @login_required
 def message(request):
@@ -158,6 +143,7 @@ def message(request):
     }
     return render (request,'messanger.html',context=context)
 
+
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
     form_class = NewUserForm
@@ -168,11 +154,29 @@ class UserCreate(CreateView):
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         return valid
 
-#big problem here!!!!!!!  username_id
-#deleting only deletes form account model and not from users so soething else need to be done here!!
+
+class AccountCreate(CreateView):
+        model=Account
+        template_name = 'AccountCreate.html'
+        fields=['accountnumber','username','name','sapid','dateofjoining','sharevalue','sharesstartingnumber','sharesendingnumber',]
+        success_url=reverse_lazy('csadmin:members')
+
+
+class InterestsUpdate(CreateView):
+        model=interests
+        # template_name = 'InterestsUpdate.html'
+        fields=['sharedividend','cddividend','fdinterest','emerloaninterest','longloaninterest']
+        success_url=reverse_lazy('csadmin:members')
+        @receiver(post_save, sender=interests)
+        def cal(sender,**kwargs):
+            print("hi")
+            # here mail sending will come
+
+
 class AccountDelete(DeleteView):
     template_name = 'Userdelete.html'
     success_url=reverse_lazy('csadmin:members')
+
     def get_object(self):
         id_=self.kwargs.get("id")
         Userd=User.objects.get(id=id_)
@@ -188,53 +192,22 @@ class AccountDelete(DeleteView):
         print("mail sent from deleteing account")
         return get_object_or_404(User,id=id_)
 
-class InterestsUpdate(UpdateView):
-        model=interests
-        fields=['sharedividend','cddividend','fdinterest','emerloaninterest','longloaninterest']
-        # interest=interests.objects.get(id=1)
-        success_url=reverse_lazy('csadmin:members')
-        @receiver(post_save, sender=interests)
-        def cal(sender,**kwargs):
-            Interests = cal.objects.all()
-            obj = interests.objects.get(id=1)
-            full_history = (obj.history.all()).order_by('-timestamp')
-            # print(full_history)
-            for i in full_history:
-                print(i)
-                x=i.changes
-                print(x)
-                dict=ast.literal_eval(x)
-                for i in dict:
-                    col_name=i
-                    print(type(col_name))
-                    y=dict[i]   
-                    # print(i)
-                    # print(y)
-                    result = Decimal(y[0])
-                    print(col_name)
-                    if(col_name=="sharedividend"):
-                        x=cal(sharedividend=result)
-                    if(col_name=="cddividend"):
-                        x=cal(cddividend=result)
-                    if(col_name=="fdinterest"):
-                        x=cal(fdinterest=result)
-                    if(col_name=="emerloaninterest"):
-                        x=cal(emerloaninterest=result)
-                    if(col_name=="longloaninterest"):
-                        x=cal(longloaninterest=result)
-                    x.save()
 
-class AccountCreate(CreateView):
-        model=Account
-        template_name = 'AccountCreate.html'
-        fields=['accountnumber','username','name','sapid','dateofjoining','sharevalue','sharesstartingnumber','sharesendingnumber',]
-        success_url=reverse_lazy('csadmin:members')
+@login_required
+def UserDelete(request):
+    Users=User.objects.all()
+    context={
+        'User':Users,
+    }
+    return render (request,'deleteuser.html',context=context)
+
+
 
 class FDUpdate(UpdateView):
         model=Account
         form_class = FDUpdateForm
         template_name = 'fixeddeposits_update_form.html'
-        success_url=reverse_lazy('csadmin:bank')
+        success_url=reverse_lazy('csadmin:fixeddeposits')
 
 class LongLoanUpdate(UpdateView):
         model=Account
@@ -250,8 +223,10 @@ class EmerLoanUpdate(UpdateView):
 
 class SharesUpdate(UpdateView):
         model=Account
-        fields=['username','sharevalue']
+        form_class = ShareUpdateForm
+        template_name = 'shares_update_form.html'
         success_url=reverse_lazy('csadmin:members')
+
 
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
@@ -265,10 +240,12 @@ class GeneratePdf(View):
         return HttpResponse(pdf, content_type='application/pdf')
 
 
+# cron tak(scheduled tasks)
 @cron_task(crontab="* * * * *")
 def calcinvest():
     Members=Account.objects.all()
-    Interests=interests.objects.get(id=1)
+    Interests=interests.objects.all().last()
+
     for i in  Members.iterator():
         if(i.sharevalue==0 and i.shareamount==0):
             i.sharevalue=i.cdamount
@@ -296,7 +273,7 @@ def calcinvest():
 @cron_task(crontab="* * * * *")
 def longloan():
     Members=Account.objects.all()
-    Interests=interests.objects.get(id=1)
+    Interests=interests.objects.all().last()
     #loan parameters
     Rate=Interests.longloaninterest
     R=Rate/(12*100) #rate of interest for each month
@@ -344,7 +321,7 @@ def longloan():
 @cron_task(crontab="* * * * *")
 def emergencyloan():
     Members=Account.objects.all()
-    Interests=interests.objects.get(id=1)
+    Interests=interests.objects.all().last()
     sharebalance = 0
     cdbalance = 0
 

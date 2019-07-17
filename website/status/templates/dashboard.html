@@ -41,9 +41,7 @@
               <h2>Fixed Deposits </h2>
               <h4>Amount: &#x20b9; {{ Accountholder.fdcapital|intcomma }}</h4>
               <h4>Date of Maturity:{{Accountholder.fdmaturitydate}}</h4>
-              {%for i in Interests%}
-              <h4>Interest:{{i.fdinterest}} </h4>
-              {%endfor%}
+              <h4>Interest:{{Interests.fdinterest}} </h4>
             </div>
           </div>
         </div>
@@ -59,7 +57,7 @@
         </div>
       </div>
     </div>
-    
+
 
     <div class="container">
       <div class="row">

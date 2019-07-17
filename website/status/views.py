@@ -52,7 +52,7 @@ def details(request):
     current_user_id=request.user.username
     name=str(Account.name)
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
-    Interests=interests.objects.all
+    Interests=interests.objects.all().last()
 
 #for changing the monthly monthlyDeduction which shld be in the multiple of Rs. 500
     Final_new_change =0
@@ -113,7 +113,7 @@ def fixedDeposits(request):
 
     current_user_id=request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
-    Interests=interests.objects.all
+    Interests=interests.objects.all().last()
 
     context={
         'Accountholder':Accountholder,
