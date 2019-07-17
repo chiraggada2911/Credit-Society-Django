@@ -21,7 +21,17 @@
       </div>
     </div>
 
-          
+          {% if messages %}
+          <ul>
+             {% for message in messages %}
+             <div class="alert alert-success">
+               <a class="close" href="{%url 'status:details'%}">×</a>
+               <span>
+                 <b> {{ message }}</span>
+             </div>
+             {% endfor %}
+          </ul>
+          {% endif %}
 
     <div class="container">
       <div class="row">
@@ -31,9 +41,7 @@
               <h2>Fixed Deposits </h2>
               <h4>Amount: &#x20b9; {{ Accountholder.fdcapital|intcomma }}</h4>
               <h4>Date of Maturity:{{Accountholder.fdmaturitydate}}</h4>
-              {%for i in Interests%}
-              <h4>Interest:{{i.fdinterest}} </h4>
-              {%endfor%}
+              <h4>Interest:{{Interests.fdinterest}} </h4>
             </div>
           </div>
         </div>
@@ -58,7 +66,7 @@
             <div class="card-body">
               <h2>Cumulative Deposits </h2>
               <h4>Balance: &#x20b9; {{ Accountholder.cdbalance|intcomma }}</h4>
-              <h4>Interest:{{Accountholder.cdinterest}} </h4>
+              <h4>Interest:{{Interests.cddividend}} </h4>
             </div>
           </div>
         </div>
@@ -71,7 +79,7 @@
                 {% if Accountholder.islongloantaken and Accountholder.isloanemertaken is True %}
                 <h2>Your Loan Amount: &#x20b9; {{ Accountholder.longloanprinciple|intcomma  }}</h2>
                 {% else %}
-                <h4>you have no loans due</h4>
+                <h4>You have no loans due</h4>
                 <h4>Request Loan
                   <a href="../status/Loanuser" style="font-size:0.8rem;"> Loan </a>
                 </h4>

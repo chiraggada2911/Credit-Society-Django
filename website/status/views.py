@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #models
-from status.models import Account,interests,cal
+from status.models import Account,interests
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -52,7 +52,7 @@ def details(request):
     current_user_id=request.user.username
     name=str(Account.name)
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
-    Interests=interests.objects.all
+    Interests=interests.objects.all().last()
 
 #for changing the monthly monthlyDeduction which shld be in the multiple of Rs. 500
     Final_new_change =0
@@ -113,7 +113,7 @@ def fixedDeposits(request):
 
     current_user_id=request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
-    Interests=interests.objects.all
+    Interests=interests.objects.all().last()
 
     context={
         'Accountholder':Accountholder,
@@ -126,7 +126,7 @@ def fixedDeposits(request):
 def loanuser(request):
     current_user_id = request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
-
+    type="success"
 #Email for choice on request in taking loan
     if request.method=="POST":
         loanreq = LoanReqForm(request.POST)
@@ -143,9 +143,9 @@ def loanuser(request):
                 subject = 'This guy wants a loan'
                 message = Accountholder.name +" : "+ Loan_Choice +"  "+Loan_Amount
                 email_from = settings.EMAIL_HOST_USER
-
+                type="success"
                 recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-
+                messages.success(request, 'Mail sent')
                 send_mail( subject, message, email_from, recipient_list )
                 print("mail sent")
             elif Accountholder.nonteachingstaff==True and loan_amount <= 1200000:
@@ -155,19 +155,22 @@ def loanuser(request):
                 subject = 'This guy wants a loan'
                 message = Accountholder.name +" : "+ Loan_Choice +"  "+Loan_Amount
                 email_from = settings.EMAIL_HOST_USER
-
+                type="success"
                 recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
-
+                messages.success(request, 'Mail sent')
                 send_mail( subject, message, email_from, recipient_list )
                 print("mail sent")
 
-    else:
-        loanreq=LoanReqForm()
 
+            else:
+                loanreq=LoanReqForm()
+                messages.error(request, 'Enter a valid amount')
+                type="danger"
 
     context={
         'Accountholder':Accountholder,
         'loan':"active",
+        'type':type
     }
     return render (request,'Loansuser.html',context=context)
 

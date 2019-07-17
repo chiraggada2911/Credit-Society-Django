@@ -3,11 +3,7 @@
 {%block title%}change{%endblock%}
 {%block content%}
 <!-- for changing share dividend -->
-<main role="main" class="col-md-6 col-lg-12">
-
-
-  <div id="" class="" data-lw-onload>
-    <div class="popup">
+<main role="main" class="col-md-4 col-lg-8">
 
       <div class=" lw-container_md">
         <form method="post">
@@ -43,7 +39,23 @@
           {%csrf_token%}
         </form>
       </div>
-    </div>
-  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>A/C No.</th>
+      </tr>
+    </thead>
+    <tbody>
+        {%for i in Interests%}
+      <tr>
+        <td>{{i.fdinterest}}</td>
+        </tr>
+{%endfor%}
+
+      </tbody>
+    </table>
+
+
 
   {%endblock%}
