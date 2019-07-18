@@ -12,14 +12,13 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary">
-              <h1 class="h2">List Of Current FDs</h1>
+              <h1 class="h2">List Of FDs</h1>
+              <h3>FD rate of interest = {{Interests.fdinterest}}</h3>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">
                   <thead>
-
-                    <h3>FD rate of interest = {{Interests.fdinterest}}</h3>
                     <tr>
                       <th>A/C No.</th>
                       <th>SapId</th>
@@ -32,12 +31,14 @@
                   <tbody>
 
               {%for i in fdadmin%}
+                    {%if i.fdcapital != 0%}
                 <tr>
                   <td>{{i.accountnumber}}</td>
                   <td>{{i.sapid}}</td>
                   <td>{{i.name}}</td>
                   <td>{{i.fdcapital}}</td>
                   <td>{{i.fdmaturitydate}}</td>
+                    {%endif%}
 
                 </tr>
 
