@@ -251,7 +251,9 @@ class LongLoanUpdate(UpdateView):
             print(Userd.username_id)
             context={
                 'Userid':Userd.username_id,
-                'username':Userd.name
+                'username':Userd.name,
+                'longloanamt':Userd.longloanamount,
+                'longloanprd':Userd.longloanperiod,
             }
             return context
 
@@ -276,6 +278,8 @@ class EmerLoanUpdate(UpdateView):
             print(Userd.username_id)
             context={
                 'Userid':Userd.username_id,
+                'emerloanamt':Userd.emerloanamount,
+                'emerloanprd':Userd.emerloanperiod,
                 'username':Userd.name
             }
             return context
@@ -302,7 +306,8 @@ class SharesUpdate(UpdateView):
             print(Userd.username_id)
             context={
                 'Userid':Userd.username_id,
-                'username':Userd.name
+                'usershare':Userd.sharevalue,
+                'username':Userd.name,
             }
             return context
 
