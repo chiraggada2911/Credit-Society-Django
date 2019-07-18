@@ -5,11 +5,10 @@
 
 {%block content%}
 <main role="main" class="col-md-9 col-lg-12 px-4">
-<div class="container" style="top-margin:70px">
-
-  <div class="container justify-content-center">
-    <div class="row justify-content-center">
-      <div class="card w-75 h-75">
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card">
         <div class="card-body">
           <h1><b class="card-title">Loan Details</b></h1>
 
@@ -17,7 +16,7 @@
 
           <h3>Name:{{Accountholder.name}}</h3>
           <p class="card-text">You are seeing these details because you have taken loan from credit society.</p>
-<h1>Type of loan: EmergencyLoan/normal_loan</h1>
+          <h1>Type of loan: EmergencyLoan/normal_loan</h1>
           <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
           <h5>RoI:{{Accountholder.rateOfInterest}}</h5>
           <h5>Due Date:{{Accountholder.repaymentDue}}</h5>
@@ -50,7 +49,7 @@
     </div>
   </div>
   {% if messages %}
- <ul>
+  <ul>
     {% for message in messages %}
     <div class="alert alert-{{type}}">
       <a class="close" href="{%url 'status:loanuser'%}">×</a>
@@ -58,9 +57,46 @@
         <b> {{ message }}</span>
     </div>
     {% endfor %}
- </ul>
- {% endif %}
+  </ul>
+  {% endif %}
+  </div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          {%if Accountholder.islongloantaken is True%}
+          <h2>Long Loan Details</h2>
+          <h4>Long Loan Principle: {{Accountholder.longloanprinciple}}</h4>
+          <h4>Long Loan Amount: {{Accountholder.longloanamount}}</h4>
+          <h4>Long Loan Balance: {{Accountholder.longloanbalance}}</h4>
+          <h4>Long Loan Period: {{Accountholder.longloanperiod}}</h4>
+          <h4>Long Loan Interest Amount: {{Accountholder.longloaninterestamount}}</h4>
+          <h4>Long Loan EMI: {{Accountholder.longloanemi}}</h4>
+          {%endif%}
+        </div>
+      </div>
+    </div>
 
+    {%if Accountholder.isloanemertaken is True%}
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h2>Emergency Loan Details</h2>
+          <h4>Emergency Loan Principle: {{Accountholder.emerloanprinciple}}</h4>
+          <h4>Emergency Loan Amount: {{Accountholder.emerloanamount}}</h4>
+          <h4>Emergency Loan Balance: {{Accountholder.emerloanbalance}}</h4>
+          <h4>Emergency Loan Period: {{Accountholder.emerloanperiod}}</h4>
+          <h4>Emergency Loan Interest Amount: {{Accountholder.emerloaninterestamount}}</h4>
+          <h4>Emergency Loan EMI: {{Accountholder.emerloanemi}}</h4>
+
+
+
+        </div>
+      </div>
+    </div>
+    {%endif%}
+  </div>
 </div>
 </main>
 

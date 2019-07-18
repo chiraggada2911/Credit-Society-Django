@@ -4,23 +4,21 @@
 {%block title%}Shares{%endblock%}
 {%block content%}
 
-<main role="main" class="col-md-9 col-lg-10 px-4">
-<div class="container" style="top-margin:70px">
-  
-  <div class="container justify-content-center">
-    <div class="row justify-content-center">
-      <div class="card w-75 h-75">
+<main role="main" class="col-md-9 col-lg-12 px-4">
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card">
         <div class="card-body">
-          <h2 class="card-title">Share Certificate</h2>
-          <h3>ShareHolder Name:{{Accountholder.name}}</h3>
-          <p class="card-text">These are your alloted share details with the credit society.</p>
-          <h3>Share Value: &#x20b9; {{Accountholder.shareamount|intcomma }}</h3>
-          <h3>Shares alloted from:{{Accountholder.sharesstartingnumber}} to {{Accountholder.sharesendingnumber}}</h3>
+          <h1 class="card-title"><b>Share Certificate</b></h1>
+          <h3><b>Share Holder Name:</b>{{Accountholder.name}}</h3>
+          <h3><b>Share Value:</b> &#x20b9; {{Accountholder.sharevalue|intcomma }}</h3>
+          <h3><b>Shares alloted from:</b>{{Accountholder.sharesstartingnumber}} to {{Accountholder.sharesendingnumber}}</h3>
           <a href="{% url 'status:GeneratePdf'%}" class="lw-btn" style="btn_color:#0b0bef" target="_blank ">Save</a>
         </div>
       </div>
     </div>
   </div>
-</div>
+  </div>
 </main>
 {%endblock%}

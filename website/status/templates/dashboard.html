@@ -12,8 +12,8 @@
 
         <h1>{{Accountholder.name}} </h1>
         <h4>SAP Id: {{Accountholder.sapid}}</h4>
-        <h4>Date of Joining : {{date}}</h4>
-        <h4>Monthly Deductions: &#x20b9; {{Accountholder.shareamount|intcomma }}
+        <h4>DoJ: {{date}}</h4>
+        <h4>Monthly Deductions: &#x20b9; {{Accountholder.sharevalue|intcomma }}
           <!--<a href="../status/MonthlyDeduction" style="font-size:0.8rem;"> change</a>-->
           <a href="#modal">change</a>
 
@@ -51,7 +51,8 @@
             <div class="card-body">
               <h2>Shares</h2>
               <h4>Shares alloted from:{{Accountholder.sharesstartingnumber}} to {{Accountholder.sharesendingnumber}}</h4>
-              <h4>Share Value: &#x20b9; {{Accountholder.shareamount|intcomma }}</h4>
+              <h4>Share Amount: &#x20b9; {{Accountholder.sharebalance|intcomma }}</h4>
+              <br>
             </div>
           </div>
         </div>

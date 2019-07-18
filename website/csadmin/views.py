@@ -208,18 +208,77 @@ class FDUpdate(UpdateView):
         form_class = FDUpdateForm
         template_name = 'fixeddeposits_update_form.html'
         success_url=reverse_lazy('csadmin:fixeddeposits')
+        def get_object(self):
+            id_=self.kwargs.get("pk")
+            Userd=Account.objects.get(pk=id_)
+            print(Userd)
+            print(Userd.name)
+            return get_object_or_404(Account,pk=id_)
+
+        def get_context_data(self, **kwargs):
+            context = super(UpdateView, self).get_context_data(**kwargs)
+            id_=self.kwargs.get("pk")
+            Userd=Account.objects.get(pk=id_)
+            print(Userd)
+            print('hiii there')
+            print(Userd.username_id)
+            context={
+                'Userid':Userd.username_id,
+                'username':Userd.name,
+                'userfddate':userd.fdmaturitydate,
+                'userfdamt':userd.fdcapital,
+            }
+            return context
 
 class LongLoanUpdate(UpdateView):
         model=Account
         form_class = LongLoanUpdateForm
         template_name = 'longloan_update_form.html'
         success_url=reverse_lazy('csadmin:loansadmin')
+        def get_object(self):
+            id_=self.kwargs.get("pk")
+            Userd=Account.objects.get(pk=id_)
+            print(Userd)
+            print(Userd.name)
+            return get_object_or_404(Account,pk=id_)
+
+        def get_context_data(self, **kwargs):
+            context = super(UpdateView, self).get_context_data(**kwargs)
+            id_=self.kwargs.get("pk")
+            Userd=Account.objects.get(pk=id_)
+            print(Userd)
+            print('hiii there')
+            print(Userd.username_id)
+            context={
+                'Userid':Userd.username_id,
+                'username':Userd.name
+            }
+            return context
 
 class EmerLoanUpdate(UpdateView):
         model=Account
         form_class = EmerLoanUpdateForm
         template_name = 'emerloan_update_form.html'
         success_url=reverse_lazy('csadmin:loansadmin')
+        def get_object(self):
+            id_=self.kwargs.get("pk")
+            Userd=Account.objects.get(pk=id_)
+            print(Userd)
+            print(Userd.name)
+            return get_object_or_404(Account,pk=id_)
+
+        def get_context_data(self, **kwargs):
+            context = super(UpdateView, self).get_context_data(**kwargs)
+            id_=self.kwargs.get("pk")
+            Userd=Account.objects.get(pk=id_)
+            print(Userd)
+            print('hiii there')
+            print(Userd.username_id)
+            context={
+                'Userid':Userd.username_id,
+                'username':Userd.name
+            }
+            return context
 
 class SharesUpdate(UpdateView):
         model=Account
@@ -227,6 +286,25 @@ class SharesUpdate(UpdateView):
         template_name = 'shares_update_form.html'
         success_url=reverse_lazy('csadmin:members')
 
+        def get_object(self):
+            id_=self.kwargs.get("pk")
+            Userd=Account.objects.get(pk=id_)
+            print(Userd)
+            print(Userd.name)
+            return get_object_or_404(Account,pk=id_)
+
+        def get_context_data(self, **kwargs):
+            context = super(UpdateView, self).get_context_data(**kwargs)
+            id_=self.kwargs.get("pk")
+            Userd=Account.objects.get(pk=id_)
+            print(Userd)
+            print('hiii there')
+            print(Userd.username_id)
+            context={
+                'Userid':Userd.username_id,
+                'username':Userd.name
+            }
+            return context
 
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
