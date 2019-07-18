@@ -5,15 +5,14 @@
 
 
 {%block content%}
-<main role="main" class="col-md-9 col-lg-10 px-4">
+<main role="main" class="col-md-9 col-lg-12 px-4">
   <div class="container">
     <div class="row">
       <div class="col">
         <div class="card">
           <div class="card-body">
             <h1><b>Fixed Deposits</b> </h1>
-            <h2><b>FD Holder Name:</b> {{Accountholder.name}}</h2>
-            <h3 class="card-text">These are your fixed deposit details with the credit society:</h3>
+            <h3><b>FD Holder Name:</b> {{Accountholder.name}}</h3>
             <h3><b>Amount:</b>  &#x20b9; {{Accountholder.fdcapital|intcomma }}</h3>
             <h3><b>Date of Maturity:</b>{{Accountholder.fdmaturitydate}}</h3>
             <h3><b>Interest:</b>{{Interests.fdinterest}} </h3>
