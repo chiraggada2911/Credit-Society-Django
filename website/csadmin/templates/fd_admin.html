@@ -19,8 +19,6 @@
               <div class="table-responsive">
                 <table class="table">
                   <thead>
-
-
                     <tr>
                       <th>A/C No.</th>
                       <th>SapId</th>
@@ -33,12 +31,14 @@
                   <tbody>
 
               {%for i in fdadmin%}
+                    {%if i.fdcapital != 0%}
                 <tr>
                   <td>{{i.accountnumber}}</td>
                   <td>{{i.sapid}}</td>
                   <td>{{i.name}}</td>
                   <td>{{i.fdcapital}}</td>
                   <td>{{i.fdmaturitydate}}</td>
+                    {%endif%}
 
                 </tr>
 
