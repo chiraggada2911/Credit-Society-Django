@@ -6,24 +6,41 @@
   <div class="row">
 
 
-  <div class="col-sm-12 col-md-7">
-           <div class="panel panel-default">
-               <div class="panel-body">
-                  <form action="" method="post">
-                    {% csrf_token %}
-                    <table>
-                    {{ form.as_table }}
-                    </table>
-                    <div class="form-group " style="margin-top:20px">
-                       <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">SAVE DETAILS</button>
-                      </div>
-                      </form>
-                    </div>
-                </div>
-            </div>
-
+    <div class="col-sm-12 col-md-7">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form action="" method="post">
+            {% csrf_token %}
+            <table>
+              <tr>
+                <th><label for="id_username">Username:</label></th>
+                <td><select name="username" required id="id_username">
+                    <option value={{Userid}} selected>{{username}}</option>
+                  </select></td>
+              </tr>
+              <tr>
+                <th><label for="id_islongloantaken">Is Long Loan Taken:</label></th>
+                <td><input type="checkbox" name="islongloantaken" id="id_islongloantaken"></td>
+              </tr>
+              <tr>
+                <th><label for="id_longloanamount">Long Loan Amount:</label></th>
+                <td><input type="number" name="longloanamount" value="0" step="0.01" id="id_longloanamount"></td>
+              </tr>
+              <tr>
+                <th><label for="id_longloanperiod">Long Loan Period(In Months):</label></th>
+                <td><input type="number" name="longloanperiod" value="0" id="id_longloanperiod"></td>
+              </tr>
+            </table>
+            <div class="form-group " style="margin-top:20px">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success">SAVE DETAILS</button>
+              </div>
+          </form>
+        </div>
       </div>
+    </div>
+
+  </div>
 </div>
 <h1>loan long update</h1>
 {%endblock%}
