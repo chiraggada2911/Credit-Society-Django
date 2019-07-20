@@ -158,20 +158,33 @@ class UserCreate(CreateView):
 class AccountCreate(CreateView):
         model=Account
         template_name = 'AccountCreate.html'
-        fields=['accountnumber','username','name','sapid','dateofjoining','sharevalue','sharesstartingnumber','sharesendingnumber',]
+        fields=['accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue','sharesstartingnumber','sharesendingnumber',]
         success_url=reverse_lazy('csadmin:members')
 
 
 class InterestsUpdate(CreateView):
         model=interests
         # template_name = 'InterestsUpdate.html'
-        fields=['sharedividend','cddividend','fdinterest','emerloaninterest','longloaninterest']
+        fields=['sharedividend','cddividend','fdinterest','emerloaninterest','longloaninterest','year']
         success_url=reverse_lazy('csadmin:members')
-        @receiver(post_save, sender=interests)
-        def cal(sender,**kwargs):
-            print("hi")
-            # here mail sending will come
-
+        # @receiver(post_save, sender=interests)
+        # def cal(sender,**kwargs):
+        #     print("hi")
+        #     # here mail sending will come
+        # def get_success_url(self):
+        #     id_=self.kwargs.get("id")
+        #     Userd=User.objects.get(id=id_)
+        #     print(Userd)
+        #     print("This Interest is updated")
+        #     print(Userd.email)
+        #     message="Dear sir/ma'am your DJSCOE CS account " + str(Userd) + " is deleted by admin"
+        #     subject = 'This email is from Credit Society Committee'
+        #     email_from = settings.EMAIL_HOST_USER
+        #     recievers=[Userd.email]
+        #     send_mail( subject, message, email_from, recievers )
+        #     print("mail sent from suc deleteing account")
+        #     # return get_object_or_404(User,id=id_)
+        #     return reverse_lazy('csadmin:members')
 
 class AccountDelete(DeleteView):
     template_name = 'Userdelete.html'
@@ -179,18 +192,21 @@ class AccountDelete(DeleteView):
 
     def get_object(self):
         id_=self.kwargs.get("id")
-        Userd=User.objects.get(id=id_)
-        print(Userd)
-        print("This User is deleted")
-        print(Userd.email)
+        UserU=User.objects.get(id=id_)
+        print(str(UserU) + " User is deleted")
+        return get_object_or_404(User,id=id_)
 
-        message="Dear sir/ma'am your DJSCOE CS account " + str(Userd) + "is deleted by admin"
+    def get_success_url(self):
+        id_=self.kwargs.get("id")
+        UserU=User.objects.get(id=id_)
+        print(UserU.email)
+        message="Dear sir/ma'am your DJSCOE CS account " + str(UserU) + " is deleted by admin"
         subject = 'This email is from Credit Society Committee'
         email_from = settings.EMAIL_HOST_USER
-        recievers=[Userd.email]
+        recievers=[UserU.email]
         send_mail( subject, message, email_from, recievers )
-        print("mail sent from deleteing account")
-        return get_object_or_404(User,id=id_)
+        print("mail sent for deleteing account")
+        return reverse_lazy('csadmin:members')
 
 
 @login_required
@@ -208,81 +224,123 @@ class FDUpdate(UpdateView):
         form_class = FDUpdateForm
         template_name = 'fixeddeposits_update_form.html'
         success_url=reverse_lazy('csadmin:fixeddeposits')
+
         def get_object(self):
             id_=self.kwargs.get("pk")
-            Userd=Account.objects.get(pk=id_)
-            print(Userd)
-            print(Userd.name)
+            UserA=Account.objects.get(pk=id_)
+            print(UserA.name)
             return get_object_or_404(Account,pk=id_)
 
         def get_context_data(self, **kwargs):
-            context = super(UpdateView, self).get_context_data(**kwargs)
             id_=self.kwargs.get("pk")
-            Userd=Account.objects.get(pk=id_)
-            print(Userd)
-            print('hiii there')
-            print(Userd.username_id)
+            UserA=Account.objects.get(pk=id_)
+            context = super(UpdateView, self).get_context_data(**kwargs)
+            print(UserA)
+            print('FD update ')
             context={
-                'Userid':Userd.username_id,
-                'username':Userd.name,
-                'userfddate':userd.fdmaturitydate,
-                'userfdamt':userd.fdcapital,
+                'Userid':UserA.username_id,
+                'username':UserA.name,
+                'userfddate':UserA.fdmaturitydate,
+                'userfdamt':UserA.fdcapital,
             }
             return context
+
+        def get_success_url(self):
+            id_=self.kwargs.get("pk")
+            UserA=Account.objects.get(pk=id_)
+            UserU=User.objects.get(pk=UserA.username_id)
+            print(UserU)
+            print("FD updated Mail")
+            print(UserU.email)
+            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Fixed Deposit Capital is updated to " + str(UserA.fdcapital)
+            subject = 'This email is from Credit Society Committee'
+            email_from = settings.EMAIL_HOST_USER
+            recievers=[UserU.email]
+            send_mail( subject, message, email_from, recievers )
+            print("mail sent from suc for update in fdcapital")
+            return reverse_lazy('csadmin:fixeddeposits')
 
 class LongLoanUpdate(UpdateView):
         model=Account
         form_class = LongLoanUpdateForm
         template_name = 'longloan_update_form.html'
         success_url=reverse_lazy('csadmin:loansadmin')
+
         def get_object(self):
             id_=self.kwargs.get("pk")
-            Userd=Account.objects.get(pk=id_)
-            print(Userd)
-            print(Userd.name)
+            UserA=Account.objects.get(pk=id_)
+            print(UserA)
             return get_object_or_404(Account,pk=id_)
 
         def get_context_data(self, **kwargs):
-            context = super(UpdateView, self).get_context_data(**kwargs)
             id_=self.kwargs.get("pk")
-            Userd=Account.objects.get(pk=id_)
-            print(Userd)
-            print('hiii there')
-            print(Userd.username_id)
+            UserA=Account.objects.get(pk=id_)
+            context = super(UpdateView, self).get_context_data(**kwargs)
+            print(UserA)
+            print('Long loan update')
             context={
-                'Userid':Userd.username_id,
-                'username':Userd.name,
-                'longloanamt':Userd.longloanamount,
-                'longloanprd':Userd.longloanperiod,
+                'Userid':UserA.username_id,
+                'username':UserA.name,
+                'longloanamt':UserA.longloanamount,
+                'longloanprd':UserA.longloanperiod,
             }
             return context
+
+        def get_success_url(self):
+            id_=self.kwargs.get("pk")
+            UserA=Account.objects.get(pk=id_)
+            UserU=User.objects.get(pk=UserA.username_id)
+            print(UserU)
+            print("Long Loan Updated Mail")
+            print(UserU.email)
+            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA) + " Long Loan Amount is updated to " + UserA.longloanamount + "for the period of" + UserA.longloanperiod
+            subject = 'This email is from Credit Society Committee'
+            email_from = settings.EMAIL_HOST_USER
+            recievers=[UserU.email]
+            send_mail( subject, message, email_from, recievers )
+            print("mail sent from suc for update in long loan")
+            return reverse_lazy('csadmin:loansadmin')
 
 class EmerLoanUpdate(UpdateView):
         model=Account
         form_class = EmerLoanUpdateForm
         template_name = 'emerloan_update_form.html'
         success_url=reverse_lazy('csadmin:loansadmin')
+
         def get_object(self):
             id_=self.kwargs.get("pk")
-            Userd=Account.objects.get(pk=id_)
-            print(Userd)
-            print(Userd.name)
+            UserA=Account.objects.get(pk=id_)
+            print(UserA)
             return get_object_or_404(Account,pk=id_)
 
         def get_context_data(self, **kwargs):
-            context = super(UpdateView, self).get_context_data(**kwargs)
             id_=self.kwargs.get("pk")
-            Userd=Account.objects.get(pk=id_)
-            print(Userd)
-            print('hiii there')
-            print(Userd.username_id)
+            UserA=Account.objects.get(pk=id_)
+            context = super(UpdateView, self).get_context_data(**kwargs)
+            print(UserA)
+            print('Emergency Loan Upate')
             context={
-                'Userid':Userd.username_id,
-                'emerloanamt':Userd.emerloanamount,
-                'emerloanprd':Userd.emerloanperiod,
-                'username':Userd.name
+                'Userid':UserA.username_id,
+                'emerloanamt':UserA.emerloanamount,
+                'emerloanprd':UserA.emerloanperiod,
+                'username':UserA.name
             }
             return context
+
+        def get_success_url(self):
+            id_=self.kwargs.get("pk")
+            UserA=Account.objects.get(pk=id_)
+            UserU=User.objects.get(pk=UserA.username_id)
+            print(UserU)
+            print("Emergency loan updated mail")
+            print(UserU.email)
+            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Emergency Loan Amount is updated to " + str(UserA.emerloanamount) + " for the period of " + str(UserA.emerloanperiod)
+            subject = 'This email is from Credit Society Committee'
+            email_from = settings.EMAIL_HOST_USER
+            recievers=[UserU.email]
+            send_mail( subject, message, email_from, recievers )
+            print("mail sent from suc for update in emer loan")
+            return reverse_lazy('csadmin:loansadmin')
 
 class SharesUpdate(UpdateView):
         model=Account
@@ -292,24 +350,38 @@ class SharesUpdate(UpdateView):
 
         def get_object(self):
             id_=self.kwargs.get("pk")
-            Userd=Account.objects.get(pk=id_)
-            print(Userd)
-            print(Userd.name)
+            UserA=Account.objects.get(pk=id_)
+            print(UserA)
             return get_object_or_404(Account,pk=id_)
 
         def get_context_data(self, **kwargs):
-            context = super(UpdateView, self).get_context_data(**kwargs)
             id_=self.kwargs.get("pk")
-            Userd=Account.objects.get(pk=id_)
-            print(Userd)
-            print('hiii there')
-            print(Userd.username_id)
+            UserA=Account.objects.get(pk=id_)
+            context = super(UpdateView, self).get_context_data(**kwargs)
+            print(UserA)
+            print('Shares Updated')
             context={
-                'Userid':Userd.username_id,
-                'usershare':Userd.sharevalue,
-                'username':Userd.name,
+                'Userid':UserA.username_id,
+                'usershare':UserA.sharevalue,
+                'username':UserA.name,
             }
             return context
+
+        def get_success_url(self):
+            id_=self.kwargs.get("pk")
+            UserA=Account.objects.get(pk=id_)
+            UserU=User.objects.get(pk=UserA.username_id)
+            print(UserU)
+            print("shares updated mail")
+            print(UserU.email)
+            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Shares is updated to " + str(UserA.sharevalue)
+            subject = 'This email is from Credit Society Committee'
+            email_from = settings.EMAIL_HOST_USER
+            recievers=[UserU.email]
+            send_mail( subject, message, email_from, recievers )
+            print("mail sent from suc for update in shares")
+            # return get_object_or_404(User,id=id_)
+            return reverse_lazy('csadmin:members')
 
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
@@ -324,7 +396,7 @@ class GeneratePdf(View):
 
 
 # cron tak(scheduled tasks)
-@cron_task(crontab="* * * * *")
+@cron_task(crontab="0 * * * *")
 def calcinvest():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -353,7 +425,7 @@ def calcinvest():
         print(i.shareamount)
         i.save()
 
-@cron_task(crontab="* * * * *")
+@cron_task(crontab="0 * * * *")
 def longloan():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -401,7 +473,7 @@ def longloan():
         i.save()
 
 
-@cron_task(crontab="* * * * *")
+@cron_task(crontab="0 * * * *")
 def emergencyloan():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -450,7 +522,7 @@ def emergencyloan():
         i.totalamount=i.shareamount+i.cdamount+i.longloanprinciple+i.longloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
         i.save()
 
-@cron_task(crontab="* * * * *")
+@cron_task(crontab="0 * * * *")
 def fdemail():
     Members=Account.objects.all()
     datetoday=datetime.date.today()
