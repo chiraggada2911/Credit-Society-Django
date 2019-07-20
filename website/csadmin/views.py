@@ -225,8 +225,8 @@ class FDUpdate(UpdateView):
             context={
                 'Userid':Userd.username_id,
                 'username':Userd.name,
-                'userfddate':userd.fdmaturitydate,
-                'userfdamt':userd.fdcapital,
+                'userfddate':Userd.fdmaturitydate,
+                'userfdamt':Userd.fdcapital,
             }
             return context
 
