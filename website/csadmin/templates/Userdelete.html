@@ -14,7 +14,6 @@
           <form class="lw-form" method="POST" action="#">
             <div class="lw-field">
               <p>Are you sure you want to delete "{{ object }}"?</p>
-              <p><input type="submit" value="Confirm"> <a href="{% url 'csadmin:members' %}">cancel</a> </p>
             </div>
             <button class="lw-btn">Submit</button>
             {% csrf_token %}

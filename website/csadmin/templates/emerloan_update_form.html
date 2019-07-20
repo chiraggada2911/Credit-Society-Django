@@ -19,16 +19,16 @@
                   </select></td>
               </tr>
               <tr>
-                <th><label for="id_isloanemertaken">Isloanemertaken:</label></th>
+                <th><label for="id_isloanemertaken">Is Loan Emergency Taken:</label></th>
                 <td><input type="checkbox" name="isloanemertaken" id="id_isloanemertaken"></td>
               </tr>
               <tr>
-                <th><label for="id_emerloanamount">Emerloanamount:</label></th>
-                <td><input type="number" name="emerloanamount" value="0" step="0.01" id="id_emerloanamount"></td>
+                <th><label for="id_emerloanamount">Emergency Loan Amount:</label></th>
+                <td><input type="number" name="emerloanamount" value="{{emerloanamt}}" step="0.01" id="id_emerloanamount"></td>
               </tr>
               <tr>
-                <th><label for="id_emerloanperiod">Emerloanperiod:</label></th>
-                <td><input type="number" name="emerloanperiod" value="0" id="id_emerloanperiod"></td>
+                <th><label for="id_emerloanperiod">Emerloan Period(In months):</label></th>
+                <td><input type="number" name="emerloanperiod" value="{{emerloanprd}}" id="id_emerloanperiod"></td>
               </tr>
             </table>
             <div class="form-group " style="margin-top:20px">
