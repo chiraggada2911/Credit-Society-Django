@@ -158,7 +158,7 @@ class UserCreate(CreateView):
 class AccountCreate(CreateView):
         model=Account
         template_name = 'AccountCreate.html'
-        fields=['accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue','sharesstartingnumber','sharesendingnumber',]
+        fields=['accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue','Noofshares']
         success_url=reverse_lazy('csadmin:members')
 
 

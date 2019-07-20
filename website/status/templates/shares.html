@@ -13,7 +13,7 @@
           <h1 class="card-title"><b>Share Certificate</b></h1>
           <h3><b>Share Holder Name:</b>{{Accountholder.name}}</h3>
           <h3><b>Share Value:</b> &#x20b9; {{Accountholder.sharevalue|intcomma }}</h3>
-          <h3><b>Shares alloted from:</b>{{Accountholder.sharesstartingnumber}} to {{Accountholder.sharesendingnumber}}</h3>
+          <h3><b>Shares alloted from:</b>{{Accountholder.Noofshares}}</h3>
           <a href="{% url 'status:GeneratePdf'%}" class="lw-btn" style="btn_color:#0b0bef" target="_blank ">Save</a>
         </div>
       </div>
