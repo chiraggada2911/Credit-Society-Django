@@ -396,7 +396,7 @@ class GeneratePdf(View):
 
 
 # cron tak(scheduled tasks)
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def calcinvest():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -425,7 +425,7 @@ def calcinvest():
         print(i.shareamount)
         i.save()
 
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def longloan():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -441,7 +441,7 @@ def longloan():
         if(N!=0):
             if(i.longloanbalance==0 and i.longloanprinciple==0):
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.loanloanemi=EMI
+                i.longloanemi=EMI
                 interestamount=R*A
                 print(interestamount)
                 i.longloaninterestamount=interestamount
@@ -451,16 +451,22 @@ def longloan():
                 print(principle)
                 i.longloanbalance=i.longloanamount-principle
                 print(i.longloanbalance)
+            elif(i.longloanbalance<=i.longloanemi and i.longloanbalance!=0):
+                i.longloanprinciple=i.longloanbalance
+                i.longloaninterestamount=i.longloanemi-i.longloanprinciple
+                i.longloanbalance=0
             elif(i.longloanbalance==0):
                 i.longloanamount=0
                 i.longloanbalance=0
                 i.longloanperiod=0
+                i.longloanemi=0
                 i.longloaninterestamount=0
                 i.longloanprinciple=0
                 i.islongloantaken=False
             else:
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 print(EMI)
+                i.longloanemi=EMI
                 interestamount=R*i.longloanbalance
                 i.longloaninterestamount=interestamount
                 print(interestamount)
@@ -473,7 +479,7 @@ def longloan():
         i.save()
 
 
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def emergencyloan():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -522,7 +528,7 @@ def emergencyloan():
         i.totalamount=i.shareamount+i.cdamount+i.longloanprinciple+i.longloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
         i.save()
 
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def fdemail():
     Members=Account.objects.all()
     datetoday=datetime.date.today()
