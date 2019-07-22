@@ -423,6 +423,7 @@ def calcinvest():
             i.cdamount=0
         print("shareamount")
         print(i.shareamount)
+        i.Noofshares=(i.sharevalue)/100
         i.save()
 
 @cron_task(crontab="* * * * *")
