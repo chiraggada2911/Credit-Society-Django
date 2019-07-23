@@ -278,6 +278,8 @@ class LongLoanUpdate(UpdateView):
             context = super(UpdateView, self).get_context_data(**kwargs)
             print(UserA)
             print('Long loan update')
+            print(type(UserA.longloanamount))
+            print(type(UserA.longloanperiod))
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
@@ -293,7 +295,7 @@ class LongLoanUpdate(UpdateView):
             print(UserU)
             print("Long Loan Updated Mail")
             print(UserU.email)
-            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA) + " Long Loan Amount is updated to " + UserA.longloanamount + "for the period of" + UserA.longloanperiod
+            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA) + " Long Loan Amount is updated to " + str(UserA.longloanamount) + "for the period of" + str(UserA.longloanperiod)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
             recievers=[UserU.email]
