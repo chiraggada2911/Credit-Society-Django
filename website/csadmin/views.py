@@ -30,7 +30,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm
 
 # Create your views here.
 def index(request):
@@ -157,9 +157,17 @@ class UserCreate(CreateView):
 
 class AccountCreate(CreateView):
         model=Account
+        form_class = AccountForm
         template_name = 'AccountCreate.html'
-        fields=['accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue','sharesstartingnumber','sharesendingnumber',]
         success_url=reverse_lazy('csadmin:members')
+
+        def get_context_data(self, **kwargs):
+            user=User.objects.all()
+            context = super(CreateView, self).get_context_data(**kwargs)
+            context={
+                'user':user,
+            }
+            return context
 
 
 class InterestsUpdate(CreateView):
@@ -396,7 +404,7 @@ class GeneratePdf(View):
 
 
 # cron tak(scheduled tasks)
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def calcinvest():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -425,7 +433,7 @@ def calcinvest():
         print(i.shareamount)
         i.save()
 
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def longloan():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -473,7 +481,7 @@ def longloan():
         i.save()
 
 
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def emergencyloan():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -522,7 +530,7 @@ def emergencyloan():
         i.totalamount=i.shareamount+i.cdamount+i.longloanprinciple+i.longloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
         i.save()
 
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def fdemail():
     Members=Account.objects.all()
     datetoday=datetime.date.today()
