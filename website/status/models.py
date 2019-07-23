@@ -21,11 +21,11 @@ class Account(models.Model):
     #cdbalance + sharebalance = total investment
     totalamount=models.DecimalField(default=0,max_digits=10,decimal_places=2)
     #schema for shares
-    sharesstartingnumber=models.IntegerField(null=True)
-    sharesendingnumber=models.IntegerField(null=True)
+    Noofshares=models.IntegerField(null=True)
     #schema for Loans
     islongloantaken=models.BooleanField(default=False)
     isloanemertaken=models.BooleanField(default=False)
+    
 # main amount , the loan taken
     longloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloanprinciple=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)

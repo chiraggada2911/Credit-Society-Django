@@ -286,6 +286,8 @@ class LongLoanUpdate(UpdateView):
             context = super(UpdateView, self).get_context_data(**kwargs)
             print(UserA)
             print('Long loan update')
+            print(type(UserA.longloanamount))
+            print(type(UserA.longloanperiod))
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
@@ -301,7 +303,7 @@ class LongLoanUpdate(UpdateView):
             print(UserU)
             print("Long Loan Updated Mail")
             print(UserU.email)
-            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA) + " Long Loan Amount is updated to " + UserA.longloanamount + "for the period of" + UserA.longloanperiod
+            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA) + " Long Loan Amount is updated to " + str(UserA.longloanamount) + "for the period of" + str(UserA.longloanperiod)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
             recievers=[UserU.email]
@@ -431,6 +433,7 @@ def calcinvest():
             i.cdamount=0
         print("shareamount")
         print(i.shareamount)
+        i.Noofshares=(i.sharevalue)/100
         i.save()
 
 @cron_task(crontab="* * * * *")
@@ -449,7 +452,7 @@ def longloan():
         if(N!=0):
             if(i.longloanbalance==0 and i.longloanprinciple==0):
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.loanloanemi=EMI
+                i.longloanemi=EMI
                 interestamount=R*A
                 print(interestamount)
                 i.longloaninterestamount=interestamount
@@ -459,16 +462,22 @@ def longloan():
                 print(principle)
                 i.longloanbalance=i.longloanamount-principle
                 print(i.longloanbalance)
+            elif(i.longloanbalance<=i.longloanemi and i.longloanbalance!=0):
+                i.longloanprinciple=i.longloanbalance
+                i.longloaninterestamount=i.longloanemi-i.longloanprinciple
+                i.longloanbalance=0
             elif(i.longloanbalance==0):
                 i.longloanamount=0
                 i.longloanbalance=0
                 i.longloanperiod=0
+                i.longloanemi=0
                 i.longloaninterestamount=0
                 i.longloanprinciple=0
                 i.islongloantaken=False
             else:
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 print(EMI)
+                i.longloanemi=EMI
                 interestamount=R*i.longloanbalance
                 i.longloaninterestamount=interestamount
                 print(interestamount)
