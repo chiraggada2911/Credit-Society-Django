@@ -30,6 +30,7 @@ urlpatterns = [
     path('LongLoanupdate/(?P<pk>)/', login_required(views.LongLoanUpdate.as_view()), name='longloan_update'),
     path('EmerLoanupdate/(?P<pk>)/', login_required(views.EmerLoanUpdate.as_view()), name='emerloan_update'),
     path('Sharesupdate/(?P<pk>)/', login_required(views.SharesUpdate.as_view()), name='shares _update'),
+    # path('actionUrl', views.FDUpdate.as_view(),name='fdrenew'),
 
     # pdf conversion
     path('tableview',login_required(views.GeneratePdf.as_view()),name="GeneratePdf"),
