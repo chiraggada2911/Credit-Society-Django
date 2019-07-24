@@ -127,6 +127,15 @@ def loanuser(request):
     current_user_id = request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
     type="success"
+    eligibility=""
+
+    if Accountholder.longloanbalance < Accountholder.longloanamount*50/100:
+        print("Not eligible for loan")
+        eligibility="No"
+    else:
+        print("eligible for loan")
+        eligibility="Yes"
+
 #Email for choice on request in taking loan
     if request.method=="POST":
         loanreq = LoanReqForm(request.POST)
@@ -161,7 +170,6 @@ def loanuser(request):
                 send_mail( subject, message, email_from, recipient_list )
                 print("mail sent")
 
-
             else:
                 loanreq=LoanReqForm()
                 messages.error(request, 'Enter a valid amount')
@@ -170,7 +178,8 @@ def loanuser(request):
     context={
         'Accountholder':Accountholder,
         'loan':"active",
-        'type':type
+        'type':type,
+        'eligibility':eligibility,
     }
     return render (request,'Loansuser.html',context=context)
 
