@@ -136,7 +136,7 @@ def loanuser(request):
             print(Accountholder.teachingstaff)
             loan_amount=int(Loan_Amount)
             print(loan_amount)
-            if Accountholder.teachingstaff==True and loan_amount <= 1600000 :
+            if Accountholder.teachingstaff==True and loan_amount <= 1200000 :
                 print(Loan_Amount)
                 Loan_Choice=loanreq.cleaned_data['loanChoice']
                 print(Loan_Choice)
@@ -148,7 +148,7 @@ def loanuser(request):
                 messages.success(request, 'Mail sent')
                 send_mail( subject, message, email_from, recipient_list )
                 print("mail sent")
-            elif Accountholder.nonteachingstaff==True and loan_amount <= 1200000:
+            elif Accountholder.nonteachingstaff==True and loan_amount <= 900000:
                 print(Loan_Amount)
                 Loan_Choice=loanreq.cleaned_data['loanChoice']
                 print(Loan_Choice)
