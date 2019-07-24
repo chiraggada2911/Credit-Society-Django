@@ -30,7 +30,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm
 
 # Create your views here.
 def index(request):
@@ -157,9 +157,17 @@ class UserCreate(CreateView):
 
 class AccountCreate(CreateView):
         model=Account
+        form_class = AccountForm
         template_name = 'AccountCreate.html'
-        fields=['accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue','sharesstartingnumber','sharesendingnumber',]
         success_url=reverse_lazy('csadmin:members')
+
+        def get_context_data(self, **kwargs):
+            user=User.objects.all()
+            context = super(CreateView, self).get_context_data(**kwargs)
+            context={
+                'user':user,
+            }
+            return context
 
 
 class InterestsUpdate(CreateView):
@@ -278,6 +286,8 @@ class LongLoanUpdate(UpdateView):
             context = super(UpdateView, self).get_context_data(**kwargs)
             print(UserA)
             print('Long loan update')
+            print(type(UserA.longloanamount))
+            print(type(UserA.longloanperiod))
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
@@ -293,7 +303,7 @@ class LongLoanUpdate(UpdateView):
             print(UserU)
             print("Long Loan Updated Mail")
             print(UserU.email)
-            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA) + " Long Loan Amount is updated to " + UserA.longloanamount + "for the period of" + UserA.longloanperiod
+            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA) + " Long Loan Amount is updated to " + str(UserA.longloanamount) + "for the period of" + str(UserA.longloanperiod)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
             recievers=[UserU.email]
@@ -396,7 +406,7 @@ class GeneratePdf(View):
 
 
 # cron tak(scheduled tasks)
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def calcinvest():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -423,9 +433,10 @@ def calcinvest():
             i.cdamount=0
         print("shareamount")
         print(i.shareamount)
+        i.Noofshares=(i.sharevalue)/100
         i.save()
 
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def longloan():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -441,7 +452,7 @@ def longloan():
         if(N!=0):
             if(i.longloanbalance==0 and i.longloanprinciple==0):
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.loanloanemi=EMI
+                i.longloanemi=EMI
                 interestamount=R*A
                 print(interestamount)
                 i.longloaninterestamount=interestamount
@@ -451,16 +462,22 @@ def longloan():
                 print(principle)
                 i.longloanbalance=i.longloanamount-principle
                 print(i.longloanbalance)
+            elif(i.longloanbalance<=i.longloanemi and i.longloanbalance!=0):
+                i.longloanprinciple=i.longloanbalance
+                i.longloaninterestamount=i.longloanemi-i.longloanprinciple
+                i.longloanbalance=0
             elif(i.longloanbalance==0):
                 i.longloanamount=0
                 i.longloanbalance=0
                 i.longloanperiod=0
+                i.longloanemi=0
                 i.longloaninterestamount=0
                 i.longloanprinciple=0
                 i.islongloantaken=False
             else:
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 print(EMI)
+                i.longloanemi=EMI
                 interestamount=R*i.longloanbalance
                 i.longloaninterestamount=interestamount
                 print(interestamount)
@@ -473,7 +490,7 @@ def longloan():
         i.save()
 
 
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def emergencyloan():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -522,7 +539,7 @@ def emergencyloan():
         i.totalamount=i.shareamount+i.cdamount+i.longloanprinciple+i.longloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
         i.save()
 
-@cron_task(crontab="0 * * * *")
+@cron_task(crontab="* * * * *")
 def fdemail():
     Members=Account.objects.all()
     datetoday=datetime.date.today()

@@ -62,10 +62,11 @@
   </div>
 <div class="container">
   <div class="row">
+    {%if Accountholder.islongloantaken is True%}
     <div class="col">
       <div class="card">
         <div class="card-body">
-          {%if Accountholder.islongloantaken is True%}
+          
           <h2>Long Loan Details</h2>
           <h4>Long Loan Principle: {{Accountholder.longloanprinciple}}</h4>
           <h4>Long Loan Amount: {{Accountholder.longloanamount}}</h4>
