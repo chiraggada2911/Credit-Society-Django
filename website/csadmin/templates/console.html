@@ -22,10 +22,10 @@
                       <th>A/C No.</th>
                       <th>Sap Id</th>
                       <th>Name</th>
+                      <th>Share value</th>
                       <th>Fixed Deposits</th>
                       <th>Long Loan Taken</th>
                       <th>Emergency Loan Taken</th>
-                      <th>Share value</th>
 
                     </tr>
                   </thead>
@@ -35,6 +35,7 @@
                       <td>{{i.accountnumber}}</td>
                       <td>{{i.sapid}}</td>
                       <td>{{i.name}}</td>
+                      <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>
                       <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.fdcapital}}</a></td>
 
 
@@ -49,8 +50,6 @@
                       {% else %}
                       <td><a href="{% url 'csadmin:emerloan_update' pk=i.pk %}">No</a></td>
                       {% endifequal %}
-
-                      <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>
 
                       <!-- <td><a href="{% url 'csadmin:User_Delete' id=i.pk %}"><i class="fa fa-trash" aria-hidden="true" style='font-size:15px' ></i></a></td> -->
 
