@@ -7,7 +7,7 @@ from .models import interests
 class AccountForm(forms.ModelForm):
     class Meta:
         model=Account
-        fields=('accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue')
+        fields=('accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue','Noofshares')
 
 class NewUserForm(forms.ModelForm):
     class Meta:
@@ -33,6 +33,9 @@ class EmerLoanUpdateForm(forms.ModelForm):
     class Meta:
         model=Account
         fields=('username','isloanemertaken','emerloanamount','emerloanperiod')
+
+class Downpayment(forms.Form):
+    downpayment=forms.IntegerField()
 
 class MessengerForm(forms.Form):
     fmessage=forms.CharField(widget=forms.TextInput)
