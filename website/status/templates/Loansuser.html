@@ -5,100 +5,104 @@
 
 {%block content%}
 <main role="main" class="col-md-9 col-lg-12 px-4">
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <h1><b class="card-title">Loan Details</b></h1>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h1><b class="card-title">Loan Details</b></h1>
 
-          {% if Accountholder.islongloantaken and Accountholder.isloanemertaken is True %}
+            {% if Accountholder.islongloantaken or Accountholder.isloanemertaken is True %}
 
-          <h3>Name:{{Accountholder.name}}</h3>
-          <p class="card-text">You are seeing these details because you have taken loan from credit society.</p>
-          <h1>Type of loan: EmergencyLoan/normal_loan</h1>
-          <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
-          <h5>RoI:{{Accountholder.rateOfInterest}}</h5>
-          <h5>Due Date:{{Accountholder.repaymentDue}}</h5>
-          <!-- <a href="{% url 'login'%}" class="btn btn-primary">Save</a> -->
-          {% else %}
-          {% if Accountholder.teachingstaff is True %}
-          <h2>You Can apply for loan up to &#x20b9;16,00,000</h2>
-          {% endif %}
-          {% if Accountholder.nonteachingstaff is True %}
-          <h2>You Can apply for loan up to &#x20b9;12,00,000</h2>
-          {% endif %}
-          <h2>You have no loans due</h2>
+            <h3>Name:{{Accountholder.name}}</h3>
+            {% if Accountholder.islongloantaken is True %}
+            <h4>Type of loan:Long loan</h4>
+            {% endif %}
+            {% if Accountholder.isloanemertaken is True %}
+            <h4>Type of loan:Emergency Loan</h4>
+            {% endif %}
+            <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
+            <h5>RoI:{{Accountholder.rateOfInterest}}</h5>
+            <h5>Due Date:{{Accountholder.repaymentDue}}</h5>
+            {% else %}
+            {% if Accountholder.teachingstaff is True %}
+            <h2>You Can apply for loan up to &#x20b9;16,00,000</h2>
+            {% endif %}
+            {% if Accountholder.nonteachingstaff is True %}
+            <h2>You Can apply for loan up to &#x20b9;12,00,000</h2>
+            {% endif %}
+            <h2>You have no loans due</h2>
 
-          <h2 style="padding-top:50px">Request a loan</h2>
+            <h2 style="padding-top:50px">Request a loan</h2>
 
-          <form class="lw-form" method="POST">
-            <input type="radio" name="loanChoice" value="normal_loan"> Normal Loan<br>
-            <input type="radio" name="loanChoice" value="emergency_loan"> Emergency Loan<br>
+            <form class="lw-form" method="POST">
+              <input type="radio" name="loanChoice" value="normal_loan"> Normal Loan<br>
+              <input type="radio" name="loanChoice" value="emergency_loan"> Emergency Loan<br>
 
-            <div class="lw-field">
-              <input class="lw-input" name="loan_amount" id="loan_amnt" type="numeric" placeholder="Enter Amount in Rs" required>
-            </div>
-            <button class="lw-btn" href="{%url 'status:details'%}">Submit to admin</button>
-            {% csrf_token %}
-          </form>
-          {% endif %}
+              <div class="lw-field">
+                <input class="lw-input" name="loan_amount" id="loan_amnt" type="numeric"
+                  placeholder="Enter Amount in Rs" required>
+              </div>
+              <button class="lw-btn" href="{%url 'status:details'%}">Submit to admin</button>
+              {% csrf_token %}
+            </form>
+            {% endif %}
 
+          </div>
         </div>
       </div>
     </div>
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <div class="alert alert-{{type}}">
+        <a class="close" href="{%url 'status:loanuser'%}">×</a>
+        <span>
+          <b> {{ message }}</span>
+      </div>
+      {% endfor %}
+    </ul>
+    {% endif %}
   </div>
-  {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <div class="alert alert-{{type}}">
-      <a class="close" href="{%url 'status:loanuser'%}">×</a>
-      <span>
-        <b> {{ message }}</span>
-    </div>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  </div>
-<div class="container">
-  <div class="row">
-    {%if Accountholder.islongloantaken is True%}
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          
-          <h2>Long Loan Details</h2>
-          <h4>Long Loan Principle: {{Accountholder.longloanprinciple}}</h4>
-          <h4>Long Loan Amount: {{Accountholder.longloanamount}}</h4>
-          <h4>Long Loan Balance: {{Accountholder.longloanbalance}}</h4>
-          <h4>Long Loan Period: {{Accountholder.longloanperiod}}</h4>
-          <h4>Long Loan Interest Amount: {{Accountholder.longloaninterestamount}}</h4>
-          <h4>Long Loan EMI: {{Accountholder.longloanemi}}</h4>
-          {%endif%}
+  <div class="container">
+    <div class="row">
+      {%if Accountholder.islongloantaken is True%}
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+
+            <h2>Long Loan Details</h2>
+            <h4>Long Loan Principle: {{Accountholder.longloanprinciple}}</h4>
+            <h4>Long Loan Amount: {{Accountholder.longloanamount}}</h4>
+            <h4>Long Loan Balance: {{Accountholder.longloanbalance}}</h4>
+            <h4>Long Loan Period: {{Accountholder.longloanperiod}}</h4>
+            <h4>Long Loan Interest Amount: {{Accountholder.longloaninterestamount}}</h4>
+            <h4>Long Loan EMI: {{Accountholder.longloanemi}}</h4>
+            {%endif%}
+          </div>
         </div>
       </div>
-    </div>
 
-    {%if Accountholder.isloanemertaken is True%}
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <h2>Emergency Loan Details</h2>
-          <h4>Emergency Loan Principle: {{Accountholder.emerloanprinciple}}</h4>
-          <h4>Emergency Loan Amount: {{Accountholder.emerloanamount}}</h4>
-          <h4>Emergency Loan Balance: {{Accountholder.emerloanbalance}}</h4>
-          <h4>Emergency Loan Period: {{Accountholder.emerloanperiod}}</h4>
-          <h4>Emergency Loan Interest Amount: {{Accountholder.emerloaninterestamount}}</h4>
-          <h4>Emergency Loan EMI: {{Accountholder.emerloanemi}}</h4>
-
+      {%if Accountholder.isloanemertaken is True%}
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h2>Emergency Loan Details</h2>
+            <h4>Emergency Loan Principle: {{Accountholder.emerloanprinciple}}</h4>
+            <h4>Emergency Loan Amount: {{Accountholder.emerloanamount}}</h4>
+            <h4>Emergency Loan Balance: {{Accountholder.emerloanbalance}}</h4>
+            <h4>Emergency Loan Period: {{Accountholder.emerloanperiod}}</h4>
+            <h4>Emergency Loan Interest Amount: {{Accountholder.emerloaninterestamount}}</h4>
+            <h4>Emergency Loan EMI: {{Accountholder.emerloanemi}}</h4>
 
 
+
+          </div>
         </div>
       </div>
+      {%endif%}
     </div>
-    {%endif%}
   </div>
-</div>
 </main>
 
 {%endblock%}
