@@ -7,7 +7,7 @@ from .models import interests
 class AccountForm(forms.ModelForm):
     class Meta:
         model=Account
-        fields=('accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue','sharesstartingnumber','sharesendingnumber')
+        fields=('accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue')
 
 class NewUserForm(forms.ModelForm):
     class Meta:
