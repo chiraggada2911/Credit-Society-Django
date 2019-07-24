@@ -267,6 +267,11 @@ class FDUpdate(UpdateView):
             send_mail( subject, message, email_from, recievers )
             print("mail sent from suc for update in fdcapital")
             return reverse_lazy('csadmin:fixeddeposits')
+             
+        def get(self,request,**kwargs):
+            if "renew_button" in request.GET:
+                print("Fdrenew")
+            return render(request,'fixeddeposits_update_form.html')
 
 class LongLoanUpdate(UpdateView):
         model=Account
