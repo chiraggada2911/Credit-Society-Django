@@ -38,7 +38,7 @@
                       <td>{{i.name}}</td>
                       <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>
                       <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.fdcapital}}</a></td>
-                      <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.downpayment}}</a></td>
+                      <td><a href="{% url 'csadmin:downpayment_update' pk=i.pk %}">{{i.downpayment}}</a></td>
 
 
                       {% ifequal i.islongloantaken True %}

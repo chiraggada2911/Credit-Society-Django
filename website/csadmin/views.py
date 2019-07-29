@@ -229,7 +229,7 @@ class Downpayment(UpdateView):
         model=Account
         form_class = DownPaymentForm
         template_name = 'downpayment_form.html'
-        success_url=reverse_lazy('csadmin:Downpayment')
+        success_url=reverse_lazy('csadmin:downpayment_update')
 
 class FDUpdate(UpdateView):
         model=Account
