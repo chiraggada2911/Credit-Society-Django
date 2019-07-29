@@ -30,7 +30,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm
 
 # Create your views here.
 def index(request):
@@ -225,7 +225,11 @@ def UserDelete(request):
     }
     return render (request,'deleteuser.html',context=context)
 
-
+class Downpayment(UpdateView):
+        model=Account
+        form_class = DownPaymentForm
+        template_name = 'downpayment_form.html'
+        success_url=reverse_lazy('csadmin:Downpayment')
 
 class FDUpdate(UpdateView):
         model=Account
@@ -267,7 +271,7 @@ class FDUpdate(UpdateView):
             send_mail( subject, message, email_from, recievers )
             print("mail sent from suc for update in fdcapital")
             return reverse_lazy('csadmin:fixeddeposits')
-             
+
         def get(self,request,**kwargs):
             if "renew_button" in request.GET:
                 print("Fdrenew")

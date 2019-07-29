@@ -26,6 +26,7 @@
                       <th>Fixed Deposits</th>
                       <th>Long Loan Taken</th>
                       <th>Emergency Loan Taken</th>
+                      <th>Down Payment</th>
 
                     </tr>
                   </thead>
@@ -37,6 +38,7 @@
                       <td>{{i.name}}</td>
                       <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>
                       <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.fdcapital}}</a></td>
+                      <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}">{{i.downpayment}}</a></td>
 
 
                       {% ifequal i.islongloantaken True %}

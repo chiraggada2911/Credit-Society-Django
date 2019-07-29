@@ -1,0 +1,47 @@
+{%extends 'base.html'%}
+{%block title%}Accounts{%endblock%}
+{%block content%}
+<h2>ADD Account Details</h2>
+<div class="container-fluid">
+  <div class="row">
+
+
+    <div class="col-sm-12 col-md-7">
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+          <form action="" method="post">
+            {% csrf_token %}
+            <table>
+              <tr>
+                <th><label for="id_username">Username:</label></th>
+                <td><select name="username" required id="id_username">
+                    <option value={{Userid}} selected>{{username}}</option>
+                  </select></td>
+              </tr>
+              <tr>
+                <th><label for="id_fdcapital">Fd Capital:</label></th>
+                <td><input type="number" name="fdcapital" value="userfdamt" required id="id_fdcapital"></td>
+              </tr>
+              <tr>
+                <th><label for="id_fdmaturitydate">FD Maturity Date:</label></th>
+                <td><input type="date" name="fdmaturitydate"  required id="id_fdmaturitydate"></td>
+              </tr>
+            </table>
+            <div class="form-group " style="margin-top:20px">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success">SAVE DETAILS</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <h1>fd</h1>
+    <form method='get'>
+        {% csrf_token %}
+        <button type='submit' name="renew_button">Renew</button>
+    </form>
+  </div>
+</div>
+</div>
+{%endblock%}
