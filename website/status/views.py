@@ -178,7 +178,7 @@ def loanuser(request):
             else:
                 messages.error(request, 'pay 50% of loan first')
                 type="danger"
-                
+
 
     context={
         'Accountholder':Accountholder,
