@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'landingPage',
     'django.contrib.humanize',
     'autotask',
+    # 'django_popup_view_field',
 ]
 
 
@@ -60,7 +61,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'website.urls'
 
-AUTOTASK_IS_ACTIVE = True
+AUTOTASK_IS_ACTIVE = False
 
 TEMPLATES = [
     {
