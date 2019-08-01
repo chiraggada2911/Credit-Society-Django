@@ -268,10 +268,58 @@ class FDUpdate(UpdateView):
             print("mail sent from suc for update in fdcapital")
             return reverse_lazy('csadmin:fixeddeposits')
              
-        def get(self,request,**kwargs):
-            if "renew_button" in request.GET:
-                print("Fdrenew")
-            return render(request,'fixeddeposits_update_form.html')
+        def post(self,request,**kwargs):
+            id_=self.kwargs.get("pk")
+            Members=Account.objects.get(pk=id_)
+            Interests=interests.objects.all().last()
+
+            UserU=User.objects.get(pk=Members.username_id)
+            datetoday=datetime.date.today()
+            if "renew_button" in request.POST:
+                # date_diff_fd = (relativedelta.relativedelta(Members.fdmaturitydate,datetoday))
+                print(Members.fdmaturitydate)
+                print(type(Members.fdmaturitydate))
+                # print(Members.fdmaturitydate.year + 1 )
+                if (Members.fdmaturitydate.year%4==0 and Members.fdmaturitydate.year%100!=0 or Members.fdmaturitydate.year%400==0):
+                    Members.fdmaturitydate=Members.fdmaturitydate + datetime.timedelta(days=366)
+                    SimpleInterest=Members.fdcapital*Interests.fdinterest/100
+
+                    Members.fdcapital=Members.fdcapital+SimpleInterest
+                    message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(Members.fdmaturitydate) 
+                    subject = 'This email is from Credit Society Committee'
+                    email_from = settings.EMAIL_HOST_USER
+                    recievers=[UserU.email]
+                    send_mail( subject, message, email_from, recievers )
+                    print("mail sent of fdcapital")
+                else:
+                    Members.fdmaturitydate=Members.fdmaturitydate + datetime.timedelta(days=365)
+                    SimpleInterest=Members.fdcapital*Interests.fdinterest/100
+                    Members.fdcapital=Members.fdcapital+SimpleInterest
+                    Members.fdcapital=Members.fdcapital+SimpleInterest
+                    message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(Members.fdmaturitydate) 
+                    subject = 'This email is from Credit Society Committee'
+                    email_from = settings.EMAIL_HOST_USER
+                    recievers=[UserU.email]
+                    send_mail( subject, message, email_from, recievers )
+                    print("mail sent of fdcapital")
+                Members.save()   
+                # print(date_diff_fd)
+
+            if "clr_button" in request.POST:
+                print("clear")
+                Members.fdcapital=0
+                # Members.fdmaturitydate=0
+                Members.fdcapital=Members.fdcapital+SimpleInterest
+                message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Your account is" + str(Members.fdmaturitydate) 
+                subject = 'This email is from Credit Society Committee'
+                email_from = settings.EMAIL_HOST_USER
+                recievers=[UserU.email]
+                send_mail( subject, message, email_from, recievers )
+                print("mail sent of fdcapital")
+                
+            Members.save()
+            return super(FDUpdate, self).post(request)
+        
 
 class LongLoanUpdate(UpdateView):
         model=Account
@@ -353,7 +401,7 @@ class EmerLoanUpdate(UpdateView):
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
             recievers=[UserU.email]
-            send_mail( subject, message, email_from, recievers )
+            send_mail( subject, message, email_from, recievers)
             print("mail sent from suc for update in emer loan")
             return reverse_lazy('csadmin:loansadmin')
 
