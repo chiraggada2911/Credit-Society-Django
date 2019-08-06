@@ -30,7 +30,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm
 
 # Create your views here.
 def index(request):
@@ -225,7 +225,35 @@ def UserDelete(request):
     }
     return render (request,'deleteuser.html',context=context)
 
+class Downpayment(UpdateView):
+        model=Account
+        form_class = DownPaymentForm
+        template_name = 'downpayment_form.html'
+        success_url=reverse_lazy('csadmin:loansadmin')
 
+        def get_object(self):
+            id_=self.kwargs.get("pk")
+            UserA=Account.objects.get(pk=id_)
+            print(UserA.name)
+            residue=UserA.longloanbalance-UserA.downpayment
+            print('downpayment')
+            print(residue)
+            UserA.longloanbalance=residue
+            UserA.save()
+
+            return get_object_or_404(Account,pk=id_)
+
+        def get_context_data(self, **kwargs):
+            id_=self.kwargs.get("pk")
+            UserA=Account.objects.get(pk=id_)
+            context = super(UpdateView, self).get_context_data(**kwargs)
+            print(UserA)
+            print('downpayment')
+            context={
+                'Userid':UserA.username_id,
+                'username':UserA.name,
+            }
+            return context
 
 class FDUpdate(UpdateView):
         model=Account
@@ -267,7 +295,7 @@ class FDUpdate(UpdateView):
             send_mail( subject, message, email_from, recievers )
             print("mail sent from suc for update in fdcapital")
             return reverse_lazy('csadmin:fixeddeposits')
-             
+
         def post(self,request,**kwargs):
             id_=self.kwargs.get("pk")
             Members=Account.objects.get(pk=id_)
@@ -285,7 +313,7 @@ class FDUpdate(UpdateView):
                     SimpleInterest=Members.fdcapital*Interests.fdinterest/100
 
                     Members.fdcapital=Members.fdcapital+SimpleInterest
-                    message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(Members.fdmaturitydate) 
+                    message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(Members.fdmaturitydate)
                     subject = 'This email is from Credit Society Committee'
                     email_from = settings.EMAIL_HOST_USER
                     recievers=[UserU.email]
@@ -296,13 +324,13 @@ class FDUpdate(UpdateView):
                     SimpleInterest=Members.fdcapital*Interests.fdinterest/100
                     Members.fdcapital=Members.fdcapital+SimpleInterest
                     Members.fdcapital=Members.fdcapital+SimpleInterest
-                    message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(Members.fdmaturitydate) 
+                    message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(Members.fdmaturitydate)
                     subject = 'This email is from Credit Society Committee'
                     email_from = settings.EMAIL_HOST_USER
                     recievers=[UserU.email]
                     send_mail( subject, message, email_from, recievers )
                     print("mail sent of fdcapital")
-                Members.save()   
+                Members.save()
                 # print(date_diff_fd)
 
             if "clr_button" in request.POST:
@@ -310,16 +338,16 @@ class FDUpdate(UpdateView):
                 Members.fdcapital=0
                 # Members.fdmaturitydate=0
                 Members.fdcapital=Members.fdcapital+SimpleInterest
-                message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Your account is" + str(Members.fdmaturitydate) 
+                message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Your account is" + str(Members.fdmaturitydate)
                 subject = 'This email is from Credit Society Committee'
                 email_from = settings.EMAIL_HOST_USER
                 recievers=[UserU.email]
                 send_mail( subject, message, email_from, recievers )
                 print("mail sent of fdcapital")
-                
+
             Members.save()
             return super(FDUpdate, self).post(request)
-        
+
 
 class LongLoanUpdate(UpdateView):
         model=Account
