@@ -335,7 +335,10 @@ class FDUpdate(UpdateView):
 
             if "clr_button" in request.POST:
                 print("clear")
+                SimpleInterest=Members.fdcapital*5/100
+                fd_totalpay=Members.fdcapital+SimpleInterest
                 Members.fdcapital=0
+                
                 # Members.fdmaturitydate=0
                 Members.fdcapital=Members.fdcapital+SimpleInterest
                 message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Your account is" + str(Members.fdmaturitydate)
