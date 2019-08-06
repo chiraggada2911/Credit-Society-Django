@@ -235,10 +235,12 @@ class Downpayment(UpdateView):
             id_=self.kwargs.get("pk")
             UserA=Account.objects.get(pk=id_)
             print(UserA.name)
+            print(UserA.downpayment)
             residue=UserA.longloanbalance-UserA.downpayment
             print('downpayment')
+            print(UserA.longloanbalance)
             print(residue)
-            UserA.longloanbalance=residue
+            print(UserA.downpayment+)
             UserA.save()
 
             return get_object_or_404(Account,pk=id_)
