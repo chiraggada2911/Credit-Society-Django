@@ -240,7 +240,7 @@ class Downpayment(UpdateView):
             print('downpayment')
             print(UserA.longloanbalance)
             print(residue)
-            print(UserA.downpayment+)
+            print(UserA.downpayment)
             UserA.save()
 
             return get_object_or_404(Account,pk=id_)
