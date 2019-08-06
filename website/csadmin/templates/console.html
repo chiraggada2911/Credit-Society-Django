@@ -26,6 +26,7 @@
                       <th>Fixed Deposits</th>
                       <th>Long Loan Taken</th>
                       <th>Emergency Loan Taken</th>
+                      <th>Down Payment</th>
 
                     </tr>
                   </thead>
@@ -52,6 +53,8 @@
                       {% endifequal %}
 
                       <!-- <td><a href="{% url 'csadmin:User_Delete' id=i.pk %}"><i class="fa fa-trash" aria-hidden="true" style='font-size:15px' ></i></a></td> -->
+
+                      <td><a href="{% url 'csadmin:downpayment_update' pk=i.pk %}">{{i.downpayment}}</a></td>
 
                     </tr>
                     {%endfor%}
