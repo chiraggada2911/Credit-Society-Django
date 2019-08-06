@@ -16,22 +16,22 @@
 
             <h3>Name:{{Accountholder.name}}</h3>
 
-                {% if Accountholder.islongloantaken is True %}
-                  <h4>Type of loan:Long loan</h4>
-                {% endif %}
-                {% if Accountholder.isloanemertaken is True %}
-                  <h4>Type of loan:Emergency Loan</h4>
-                {% endif %}
+            {% if Accountholder.islongloantaken is True %}
+            <h4>Type of loan:Long loan</h4>
+            {% endif %}
+            {% if Accountholder.isloanemertaken is True %}
+            <h4>Type of loan:Emergency Loan</h4>
+            {% endif %}
             <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
             <h5>RoI:{{Accountholder.rateOfInterest}}</h5>
             <h5>Due Date:{{Accountholder.repaymentDue}}</h5>
             {% else %}
-                {% if Accountholder.teachingstaff is True %}
-                  <h2>You Can apply for loan up to &#x20b9;16,00,000</h2>
-                {% endif %}
-                {% if Accountholder.nonteachingstaff is True %}
-                  <h2>You Can apply for loan up to &#x20b9;12,00,000</h2>
-                {% endif %}
+            {% if Accountholder.teachingstaff is True %}
+            <h2>You Can apply for loan up to &#x20b9;16,00,000</h2>
+            {% endif %}
+            {% if Accountholder.nonteachingstaff is True %}
+            <h2>You Can apply for loan up to &#x20b9;12,00,000</h2>
+            {% endif %}
             <h2>You have no loans due</h2>
             {% endif %}
 
@@ -45,7 +45,9 @@
                 <input class="lw-input" name="loan_amount" id="loan_amnt" type="numeric"
                   placeholder="Enter Amount in Rs" required>
               </div>
-              <button class="lw-btn" onclick="md.showNotification('top','center','You will be chagrged 0.25% of the loan amount')" href="{%url 'status:details'%}">Submit to admin</button>
+              <button class="lw-btn"
+                onclick="md.showNotification('top','center','You will be chagrged 0.25% of the loan amount')"
+                href="{%url 'status:details'%}">Submit to admin</button>
               {% csrf_token %}
             </form>
 
@@ -65,45 +67,149 @@
     </ul>
     {% endif %}
   </div>
-  <div class="container">
-    <div class="row">
-      {%if Accountholder.islongloantaken is True%}
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-
-            <h2>Long Loan Details</h2>
-            <h4>Long Loan Principle: {{Accountholder.longloanprinciple}}</h4>
-            <h4>Long Loan Amount: {{Accountholder.longloanamount}}</h4>
-            <h4>Long Loan Balance: {{Accountholder.longloanbalance}}</h4>
-            <h4>Long Loan Period: {{Accountholder.longloanperiod}}</h4>
-            <h4>Long Loan Interest Amount: {{Accountholder.longloaninterestamount}}</h4>
-            <h4>Long Loan EMI: {{Accountholder.longloanemi}}</h4>
-            {%endif%}
+  <div class="row">
+    <div class="col-lg-6 col-md-12">
+      <div class="card">
+        <div class="card-header card-header-tabs card-header-primary">
+          <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+              <span class="nav-tabs-title">Loans:</span>
+              <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#profile" data-toggle="tab">
+                    <i class="material-icons">bug_report</i> Emergency Loan
+                    <div class="ripple-container"></div>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#messages" data-toggle="tab">
+                    <i class="material-icons">code</i> Long Loan
+                    <div class="ripple-container"></div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <div class="tab-pane active" id="profile">
+              <table class="table">
+                {%if Accountholder.isloanemertaken is True%}
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h2>Emergency Loan Details</h2>
+                    </td>
+                    <td class="td-actions text-right">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Emergency Loan Principle: {{Accountholder.emerloanprinciple}}</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Emergency Loan Amount: {{Accountholder.emerloanamount}}</h4>
+                    </td>
+                    <td class="td-actions text-right">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Emergency Loan Balance: {{Accountholder.emerloanbalance}}</h4>
+                    </td>
+                    <td class="td-actions text-right">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Emergency Loan Period: {{Accountholder.emerloanperiod}}</h4>
+                    </td>
+                    <td class="td-actions text-right">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Emergency Loan Interest Amount: {{Accountholder.emerloaninterestamount}}</h4>
+                    </td>
+                    <td class="td-actions text-right">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Emergency Loan EMI: {{Accountholder.emerloanemi}}</h4>
+                    </td>
+                    <td class="td-actions text-right">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              {%endif%}
+            </div>
+            <div class="tab-pane" id="messages">
+              <table class="table">
+                {%if Accountholder.islongloantaken is True%}
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>
+                          <h2>Long Loan Details</h2>
+                        </td>
+                        <td class="td-actions text-right">
+                        </td>
+                      </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Long Loan Principle: {{Accountholder.longloanprinciple}}</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Long Loan Amount: {{Accountholder.longloanamount}}</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Long Loan Balance: {{Accountholder.longloanbalance}}</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Long Loan EMI: {{Accountholder.longloanemi}}</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Long Loan Period: {{Accountholder.longloanperiod}}</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h4>Long Loan Interest Amount: {{Accountholder.longloaninterestamount}}</h4></td>
+                  </tr>
+                </tbody>
+                {%endif%}
+              </table>
+            </div>
           </div>
         </div>
       </div>
-
-      {%if Accountholder.isloanemertaken is True%}
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <h2>Emergency Loan Details</h2>
-            <h4>Emergency Loan Principle: {{Accountholder.emerloanprinciple}}</h4>
-            <h4>Emergency Loan Amount: {{Accountholder.emerloanamount}}</h4>
-            <h4>Emergency Loan Balance: {{Accountholder.emerloanbalance}}</h4>
-            <h4>Emergency Loan Period: {{Accountholder.emerloanperiod}}</h4>
-            <h4>Emergency Loan Interest Amount: {{Accountholder.emerloaninterestamount}}</h4>
-            <h4>Emergency Loan EMI: {{Accountholder.emerloanemi}}</h4>
-
-
-
-          </div>
-        </div>
-      </div>
-      {%endif%}
     </div>
-  </div>
 </main>
 
 {%endblock%}
