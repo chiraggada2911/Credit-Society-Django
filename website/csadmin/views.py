@@ -300,9 +300,13 @@ class FDUpdate(UpdateView):
             id_=self.kwargs.get("pk")
             Members=Account.objects.get(pk=id_)
             Interests=interests.objects.all().last()
+            datetoday=datetime.date.today()
+            date_diff_fd = (relativedelta.relativedelta(Members.fdmaturitydate,datetoday))
+            print("date")
+            print(date_diff_fd)
 
             UserU=User.objects.get(pk=Members.username_id)
-            datetoday=datetime.date.today()
+            # datetoday=datetime.date.today()
             if "renew_button" in request.POST:
                 # date_diff_fd = (relativedelta.relativedelta(Members.fdmaturitydate,datetoday))
                 print(Members.fdmaturitydate)
@@ -335,13 +339,21 @@ class FDUpdate(UpdateView):
 
             if "clr_button" in request.POST:
                 print("clear")
-                SimpleInterest=Members.fdcapital*5/100
-                fd_totalpay=Members.fdcapital+SimpleInterest
-                Members.fdcapital=0
+                if (date_diff_fd.months==-1 or date_diff_fd.days==-1 or date_diff_fd.years==-1):
+                    SimpleInterest=Members.fdcapital*5/100
+                    fd_totalpay=Members.fdcapital+SimpleInterest
+                    print(fd_totalpay)
+                    print("justin")
+                    Members.fdcapital=0
+                else:
+                    SimpleInterest=Members.fdcapital*Interests.fdinterest/100
+                    fd_totalpay=Members.fdcapital+SimpleInterest
+                    print(fd_totalpay)
+                    Members.fdcapital=0
                 
                 # Members.fdmaturitydate=0
-                Members.fdcapital=Members.fdcapital+SimpleInterest
-                message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Your account is" + str(Members.fdmaturitydate)
+                
+                message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Your total amount" + str(fd_totalpay)
                 subject = 'This email is from Credit Society Committee'
                 email_from = settings.EMAIL_HOST_USER
                 recievers=[UserU.email]
