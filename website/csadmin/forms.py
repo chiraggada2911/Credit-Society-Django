@@ -34,8 +34,10 @@ class EmerLoanUpdateForm(forms.ModelForm):
         model=Account
         fields=('username','isloanemertaken','emerloanamount','emerloanperiod')
 
-class Downpayment(forms.Form):
-    downpayment=forms.IntegerField()
+class DownPaymentForm(forms.ModelForm):
+    class Meta:
+        model=Account
+        fields=('username','downpayment')
 
 class MessengerForm(forms.Form):
     fmessage=forms.CharField(widget=forms.TextInput)
