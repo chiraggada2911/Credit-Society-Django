@@ -15,23 +15,25 @@
             {% if Accountholder.islongloantaken or Accountholder.isloanemertaken is True %}
 
             <h3>Name:{{Accountholder.name}}</h3>
-            {% if Accountholder.islongloantaken is True %}
-            <h4>Type of loan:Long loan</h4>
-            {% endif %}
-            {% if Accountholder.isloanemertaken is True %}
-            <h4>Type of loan:Emergency Loan</h4>
-            {% endif %}
+
+                {% if Accountholder.islongloantaken is True %}
+                  <h4>Type of loan:Long loan</h4>
+                {% endif %}
+                {% if Accountholder.isloanemertaken is True %}
+                  <h4>Type of loan:Emergency Loan</h4>
+                {% endif %}
             <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
             <h5>RoI:{{Accountholder.rateOfInterest}}</h5>
             <h5>Due Date:{{Accountholder.repaymentDue}}</h5>
             {% else %}
-            {% if Accountholder.teachingstaff is True %}
-            <h2>You Can apply for loan up to &#x20b9;16,00,000</h2>
-            {% endif %}
-            {% if Accountholder.nonteachingstaff is True %}
-            <h2>You Can apply for loan up to &#x20b9;12,00,000</h2>
-            {% endif %}
+                {% if Accountholder.teachingstaff is True %}
+                  <h2>You Can apply for loan up to &#x20b9;16,00,000</h2>
+                {% endif %}
+                {% if Accountholder.nonteachingstaff is True %}
+                  <h2>You Can apply for loan up to &#x20b9;12,00,000</h2>
+                {% endif %}
             <h2>You have no loans due</h2>
+            {% endif %}
 
             <h2 style="padding-top:50px">Request a loan</h2>
 
@@ -43,10 +45,9 @@
                 <input class="lw-input" name="loan_amount" id="loan_amnt" type="numeric"
                   placeholder="Enter Amount in Rs" required>
               </div>
-              <button class="lw-btn" href="{%url 'status:details'%}">Submit to admin</button>
+              <button class="lw-btn" onclick="md.showNotification('top','center','You will be chagrged 0.25% of the loan amount')" href="{%url 'status:details'%}">Submit to admin</button>
               {% csrf_token %}
             </form>
-            {% endif %}
 
           </div>
         </div>

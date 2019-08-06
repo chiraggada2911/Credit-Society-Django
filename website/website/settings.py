@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'landingPage',
     'django.contrib.humanize',
     'autotask',
+    # 'django_popup_view_field',
 ]
 
 

@@ -37,9 +37,10 @@
       </div>
     </div>
     <h1>fd</h1>
-    <form method='get'>
+    <form method='post'>
         {% csrf_token %}
         <button type='submit' name="renew_button">Renew</button>
+        <button type='submit' name="clr_button">Clear</button>
     </form>
   </div>
 </div>
