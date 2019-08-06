@@ -9,7 +9,7 @@
   <meta name="author" content="">
   <link rel="icon" href="../../../../favicon.ico">
 
-<!-- template for side navbar -->
+  <!-- template for side navbar -->
 
   <title>{%block title%}Dashboard{%endblock%}</title>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -29,13 +29,10 @@
   <script src="{%static 'status/js/script.js'%}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+  <script src="cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 </head>
 
-<body>
-  <div class="container">
-
-
+<body class="">
 
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="">
@@ -89,7 +86,6 @@
         </ul>
       </div>
     </div>
-    </div>
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
@@ -110,7 +106,6 @@
       {%block content%}{%endblock%}
 
     </div>
-  </div>
   </div>
 </body>
 </html>

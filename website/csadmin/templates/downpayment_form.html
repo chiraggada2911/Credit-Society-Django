@@ -19,14 +19,7 @@
                     <option value={{Userid}} selected>{{username}}</option>
                   </select></td>
               </tr>
-              <tr>
-                <th><label for="id_fdcapital">Fd Capital:</label></th>
-                <td><input type="number" name="fdcapital" value="userfdamt" required id="id_fdcapital"></td>
-              </tr>
-              <tr>
-                <th><label for="id_fdmaturitydate">FD Maturity Date:</label></th>
-                <td><input type="date" name="fdmaturitydate"  required id="id_fdmaturitydate"></td>
-              </tr>
+              <tr><th><label for="id_downpayment">Downpayment:</label></th><td><input type="number" name="downpayment" value="0" step="0.01" id="id_downpayment"></td></tr>
             </table>
             <div class="form-group " style="margin-top:20px">
               <div class="col-sm-offset-2 col-sm-10">
@@ -36,12 +29,6 @@
         </div>
       </div>
     </div>
-    <h1>fd</h1>
-    <form method='get'>
-        {% csrf_token %}
-        <button type='submit' name="renew_button">Renew</button>
-    </form>
   </div>
-</div>
 </div>
 {%endblock%}

@@ -229,7 +229,31 @@ class Downpayment(UpdateView):
         model=Account
         form_class = DownPaymentForm
         template_name = 'downpayment_form.html'
-        success_url=reverse_lazy('csadmin:downpayment_update')
+        success_url=reverse_lazy('csadmin:loansadmin')
+
+        def get_object(self):
+            id_=self.kwargs.get("pk")
+            UserA=Account.objects.get(pk=id_)
+            print(UserA.name)
+            residue=UserA.longloanbalance-UserA.downpayment
+            print('downpayment')
+            print(residue)
+            UserA.longloanbalance=residue
+            UserA.save()
+
+            return get_object_or_404(Account,pk=id_)
+
+        def get_context_data(self, **kwargs):
+            id_=self.kwargs.get("pk")
+            UserA=Account.objects.get(pk=id_)
+            context = super(UpdateView, self).get_context_data(**kwargs)
+            print(UserA)
+            print('downpayment')
+            context={
+                'Userid':UserA.username_id,
+                'username':UserA.name,
+            }
+            return context
 
 class FDUpdate(UpdateView):
         model=Account
