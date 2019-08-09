@@ -252,6 +252,7 @@ class Downpayment(UpdateView):
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
+                'userdownpayment':UserA.downpayment,
             }
             return context
 
@@ -343,7 +344,7 @@ class FDUpdate(UpdateView):
                     SimpleInterest=Members.fdcapital*5/100
                     fd_totalpay=Members.fdcapital+SimpleInterest
                     print(fd_totalpay)
-                    print("justin")
+                    print("fd totalpay")
                     Members.fdcapital=0
                 else:
                     SimpleInterest=Members.fdcapital*Interests.fdinterest/100

@@ -1,48 +1,69 @@
 {%extends 'base.html'%}
 {%block title%}Accounts{%endblock%}
 {%block content%}
-<h2>ADD Account Details</h2>
-<div class="container-fluid">
+<main role="main" class="col-md-9 col-lg-12 ">
+<div class="container">
   <div class="row">
-
-
-    <div class="col-sm-12 col-md-7">
-      <div class="panel panel-default">
-        <div class="panel-body">
-
+    <div class="col-md-3 col-lg-6">
+      <div class="card card-stats">
+        <div class="card-header card-header-warning card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">content_copy</i>
+          </div>
           <form action="" method="post">
             {% csrf_token %}
             <table>
               <tr>
-                <th><label for="id_username">Username:</label></th>
-                <td><select name="username" required id="id_username">
-                    <option value={{Userid}} selected>{{username}}</option>
-                  </select></td>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th><label for="id_username" class="bmd-label-floating">Username:</label></th>
+                    <td><select name="username" class="form-control" required id="id_username">
+                        <option value={{Userid}} selected>{{username}}</option>
+                      </select></td>
+                  </div>
+                </div>
               </tr>
               <tr>
-                <th><label for="id_fdcapital">Fd Capital:</label></th>
-                <td><input type="number" name="fdcapital" value="userfdamt" required id="id_fdcapital"></td>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th><label for="id_fdcapital" class="bmd-label-floating">Fd Capital:</label></th>
+                    <td><input type="number" class="form-control" name="fdcapital" value="{{userfdamt}}" required id="id_fdcapital"></td>
+                  </div>
+                </div>
               </tr>
-              <tr>
-                <th><label for="id_fdmaturitydate">FD Maturity Date:</label></th>
-                <td><input type="date" name="fdmaturitydate"  required id="id_fdmaturitydate"></td>
-              </tr>
-            </table>
-            <div class="form-group " style="margin-top:20px">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success">SAVE DETAILS</button>
-              </div>
-          </form>
+        <tr>
+          <div class="col-md-4">
+          <div class="form-group">
+            <th><label for="id_fdmaturitydate" class="bmd-label-floating">FD Maturity Date:</label></th>
+            <td><input type="date" name="fdmaturitydate" class="form-control" value="{{userfddate}}" required id="id_fdmaturitydate"></td>
+          </div>
         </div>
+      </tr>
+      </table>
+
+      <div class="form-group " style="margin-top:20px">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button class="btn btn-primary ">
+            <i class="material-icons">check</i> SAVE
+          </button>
+        </div>
+        </form>
+
       </div>
     </div>
-    <h1>fd</h1>
-    <form method='post'>
-        {% csrf_token %}
-        <button type='submit' name="renew_button">Renew</button>
-        <button type='submit' name="clr_button">Clear</button>
-    </form>
   </div>
+  <div class="card card-stats">
+    <div class="tim-typo">
+    <h3 class="title">actions to be taken on FDs </h3>
+  </div>
+  <form method='post'>
+    {% csrf_token %}
+    <button type='submit' class="btn btn-primary btn-round" name="renew_button">Renew</button>
+    <button type='submit' class="btn btn-primary btn-round" name="clr_button">Clear</button>
+  </form>
 </div>
 </div>
+</div>
+
+</main>
 {%endblock%}
