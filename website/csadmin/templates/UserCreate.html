@@ -1,18 +1,26 @@
 {%extends 'base.html'%}
 {%block title%}Accounts{%endblock%}
 {%block content%}
-<h2>ADD Account Details</h2>
 <div class="container-fluid">
-  <div class="row">
-<!-- template for user create -->
+  <div class="">
 
-  <div class="col-sm-12 col-md-7">
-           <div class="panel panel-default">
-               <div class="panel-body">
-                  <form action="" method="post">
+
+<!-- template for user create -->
+<br><br><br>
+  <div class=" col-md-7">
+      <div class="card card-stats">
+        <div class="card-header card-header-warning card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">content_copy</i>
+          </div>
+                <form action="" method="post">
                     {% csrf_token %}
                     <table>
-                    {{ form.as_table }}
+                      <tr><th><label for="id_username">Username:</label></th><td><input type="text" name="username" maxlength="150" required id="id_username"></td></tr>
+<tr><th><label for="id_password">Password:</label></th><td><input type="text" name="password" maxlength="128" required id="id_password"></td></tr>
+<tr><th><label for="id_first_name">First name:</label></th><td><input type="text" name="first_name" maxlength="30" id="id_first_name"></td></tr>
+<tr><th><label for="id_last_name">Last name:</label></th><td><input type="text" name="last_name" maxlength="150" id="id_last_name"></td></tr>
+<tr><th><label for="id_email">Email address:</label></th><td><input type="email" name="email" maxlength="254" id="id_email"></td></tr>
                     </table>
                     <div class="form-group " style="margin-top:20px">
                        <div class="col-sm-offset-2 col-sm-10">
@@ -27,6 +35,7 @@
             </div>
 
       </div>
+
 </div>
 </div>
 {%endblock%}

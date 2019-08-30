@@ -19,9 +19,9 @@ from django.dispatch import receiver
 from autotask.tasks import cron_task
 
 #for date and time
-from datetime import datetime
+from datetime import datetime,date
 from dateutil import relativedelta
-from datetime import datetime, date
+
 import datetime
 
 #send_mail
@@ -351,9 +351,9 @@ class FDUpdate(UpdateView):
                     fd_totalpay=Members.fdcapital+SimpleInterest
                     print(fd_totalpay)
                     Members.fdcapital=0
-                
+
                 # Members.fdmaturitydate=0
-                
+
                 message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Your total amount" + str(fd_totalpay)
                 subject = 'This email is from Credit Society Committee'
                 email_from = settings.EMAIL_HOST_USER
