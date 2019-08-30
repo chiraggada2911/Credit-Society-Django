@@ -15,6 +15,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+#filter
+from .filters import UserFilter
+
 #for background tasks
 from autotask.tasks import cron_task
 
@@ -30,7 +33,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,AccountSearchForm
 
 # Create your views here.
 def index(request):
@@ -40,9 +43,11 @@ def index(request):
 @login_required
 def index(request):
     Members=Account.objects.all()
+    user_filter = UserFilter(request.GET, queryset=Members)
     context={
         'dashb':"active",
         'Members':Members,
+        'filter': user_filter
     }
     return render (request,'console.html',context=context)
 
