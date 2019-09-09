@@ -15,7 +15,9 @@
             <div class="lw-field">
               <p>Are you sure you want to delete "{{ object }}"?</p>
             </div>
-            <button class="lw-btn">Submit</button>
+            <button class="btn btn-primary ">
+                <i class="material-icons">delete_outline</i> SUBMIT
+              </button>
             {% csrf_token %}
           </form>
           <div class="lw-content lw-content_md lw-mt-md"><a href="{% url 'csadmin:members' %}">No, Let it be</a></div>

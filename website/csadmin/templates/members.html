@@ -13,7 +13,12 @@
           <div class="card">
             <div class="card-header card-header-primary">
               <h4 class="card-title ">List Of Current Members</h4>
-              <a href="{% url 'csadmin:GeneratePdf'%}" class="btn btn-primary" style="background: linear-gradient(45deg, #06beb6, #48b1bf);" target="_blank ">Save</a>
+              <select class="selectpicker" data-show-subtext="true" data-live-search="true">
+              {%for i in Members%}
+              <option value={{i.id}}>{{i.name}}</option>
+              {%endfor%}
+              </select>
+              <a href="{% url 'csadmin:GeneratePdf'%}" class="btn  btn-primary" style="background: linear-gradient(45deg, #06beb6, #48b1bf);" target="_blank "><i class="material-icons">cloud_download</i>Save</a>
             </div>
             <div class="card-body">
               <div class="table-responsive">

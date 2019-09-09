@@ -15,13 +15,16 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+#filter
+from .filters import UserFilter
+
 #for background tasks
 from autotask.tasks import cron_task
 
 #for date and time
-from datetime import datetime
+from datetime import datetime,date
 from dateutil import relativedelta
-from datetime import datetime, date
+
 import datetime
 
 #send_mail
@@ -30,7 +33,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,AccountSearchForm
 
 # Create your views here.
 def index(request):
@@ -40,9 +43,11 @@ def index(request):
 @login_required
 def index(request):
     Members=Account.objects.all()
+    user_filter = UserFilter(request.GET, queryset=Members)
     context={
         'dashb':"active",
         'Members':Members,
+        'filter': user_filter
     }
     return render (request,'console.html',context=context)
 
@@ -252,6 +257,7 @@ class Downpayment(UpdateView):
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
+                'userdownpayment':UserA.downpayment,
             }
             return context
 
@@ -343,16 +349,16 @@ class FDUpdate(UpdateView):
                     SimpleInterest=Members.fdcapital*5/100
                     fd_totalpay=Members.fdcapital+SimpleInterest
                     print(fd_totalpay)
-                    print("justin")
+                    print("fd totalpay")
                     Members.fdcapital=0
                 else:
                     SimpleInterest=Members.fdcapital*Interests.fdinterest/100
                     fd_totalpay=Members.fdcapital+SimpleInterest
                     print(fd_totalpay)
                     Members.fdcapital=0
-                
+
                 # Members.fdmaturitydate=0
-                
+
                 message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Your total amount" + str(fd_totalpay)
                 subject = 'This email is from Credit Society Committee'
                 email_from = settings.EMAIL_HOST_USER

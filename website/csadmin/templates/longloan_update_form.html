@@ -1,46 +1,63 @@
 {%extends 'base.html'%}
 {%block title%}Accounts{%endblock%}
 {%block content%}
-<h2>ADD loan Details</h2>
+
 <div class="container-fluid">
   <div class="row">
-
-
     <div class="col-sm-12 col-md-7">
-      <div class="panel panel-default">
-        <div class="panel-body">
+      <div class="card card-stats">
+        <div class="card-header card-header-warning card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">content_copy</i>
+          </div>
           <form action="" method="post">
             {% csrf_token %}
             <table>
               <tr>
-                <th><label for="id_username">Username:</label></th>
-                <td><select name="username" required id="id_username">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                <th><label for="id_username" class="bmd-label-floating">Username:</label></th>
+                <td><select name="username"  class="form-control" required id="id_username">
                     <option value={{Userid}} selected>{{username}}</option>
                   </select></td>
+                </div>
+              </div>
               </tr>
               <tr>
                 <th><label for="id_islongloantaken">Is Long Loan Taken:</label></th>
                 <td><input type="checkbox" name="islongloantaken" id="id_islongloantaken"></td>
               </tr>
               <tr>
-                <th><label for="id_longloanamount">Long Loan Amount:</label></th>
-                <td><input type="number" name="longloanamount" value="0" step="0.01" id="id_longloanamount"></td>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th> <label for="id_longloanamount" class="bmd-label-floating">Long Loan Amount:</label></th>
+                    <td> <input type="number" name="longloanamount" value="{{longloanamt}}" step="1000"
+                        id="id_longloanamount" class="form-control"></td>
+                  </div>
+                </div>
               </tr>
               <tr>
-                <th><label for="id_longloanperiod">Long Loan Period(In Months):</label></th>
-                <td><input type="number" name="longloanperiod" value="0" id="id_longloanperiod"></td>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th> <label for="id_longloanperiod" class="bmd-label-floating">Long Loan Period(In Months):</label>
+                    </th>
+                    <td> <input type="number" name="longloanperiod" value="{{longloanprd}}" step="1"
+                        id="id_longloanperiod" class="form-control"></td>
+                  </div>
+                </div>
               </tr>
             </table>
             <div class="form-group " style="margin-top:20px">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success">SAVE DETAILS</button>
+                <button class="btn btn-primary ">
+                  <i class="material-icons">check</i> SAVE DETAILS
+                </button>
               </div>
           </form>
         </div>
       </div>
     </div>
-
   </div>
 </div>
-<h1>loan long update</h1>
+
 {%endblock%}

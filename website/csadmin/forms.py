@@ -7,7 +7,7 @@ from .models import interests
 class AccountForm(forms.ModelForm):
     class Meta:
         model=Account
-        fields=('accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue','Noofshares')
+        fields=('accountnumber','username','name','sapid','dateofjoining','teachingstaff','nonteachingstaff','sharevalue')
 
 class NewUserForm(forms.ModelForm):
     class Meta:
@@ -45,3 +45,10 @@ class MessengerForm(forms.Form):
 class SecretkeyForm(forms.Form):
     fchairmankey=forms.IntegerField()
     fsecretarykey=forms.IntegerField()
+
+class AccountSearchForm(forms.Form):
+    search_text =  forms.CharField(
+                    required = False,
+                    label='Search name or surname!',
+                    widget=forms.TextInput(attrs={'placeholder': 'search here!'})
+                  )
