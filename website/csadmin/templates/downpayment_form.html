@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 {%block title%}Accounts{%endblock%}
 {%block content%}
-<h2>ADD Account Details</h2>
+<h2>Downpayment Details</h2>
 <div class="container-fluid">
   <div class="row">
 
@@ -14,16 +14,26 @@
             {% csrf_token %}
             <table>
               <tr>
-                <th><label for="id_username">Username:</label></th>
-                <td><select name="username" required id="id_username">
-                    <option value={{Userid}} selected>{{username}}</option>
-                  </select></td>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th><label for="id_username" class="bmd-label-floating">Username:</label></th>
+                    <td><select name="username" class="form-control" required id="id_username">
+                        <option value={{Userid}} selected>{{username}}</option>
+                      </select></td>
+                  </div>
+                </div>
               </tr>
-              <tr><th><label for="id_downpayment">Downpayment:</label></th><td><input type="number" name="downpayment" value="0" step="0.01" id="id_downpayment"></td></tr>
+              <tr>
+                <th><label for="id_downpayment">Downpayment:</label></th>
+                <td><input type="number" name="downpayment" value="{{userdownpayment}}" step="0.01" id="id_downpayment">
+                </td>
+              </tr>
             </table>
             <div class="form-group " style="margin-top:20px">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success">SAVE DETAILS</button>
+                <button class="btn btn-primary">
+                  <i class="material-icons">check</i> SAVE
+                </button>
               </div>
           </form>
         </div>

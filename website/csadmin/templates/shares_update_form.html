@@ -1,27 +1,36 @@
 {%extends 'base.html'%}
 {%block title%}Accounts{%endblock%}
 {%block content%}
-<h2>ADD loan Details</h2>
+
 <div class="container-fluid">
   <div class="row">
-
-
     <div class="col-sm-12 col-md-7">
-      <div class="panel panel-default">
-        <div class="panel-body">
+      <div class="card card-stats">
+        <div class="card-header card-header-warning card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">content_copy</i>
+          </div>
           <form action="" method="post">
             {% csrf_token %}
             <table>
               <tr>
-                <th><label for="id_username">Username:</label></th>
-                <td><select name="username" required id="id_username">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                <th><label for="id_username" class="bmd-label-floating">Username:</label></th>
+                <td><select name="username"  class="form-control" required id="id_username">
                     <option value={{Userid}} selected>{{username}}</option>
                   </select></td>
+                </div>
+              </div>
               </tr>
               <tr>
-                <th><label for="id_sharevalue">Sharevalue:</label></th>
-                <td><input type="number" name="sharevalue" value="{{usershare}}" required id="id_sharevalue"></td>
-              </tr>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th><label for="id_sharevalue" class="bmd-label-floating">Sharevalue:</label></th>
+                    <td><input type="number"class="form-control" name="sharevalue" value="{{usershare}}" required id="id_sharevalue"></td>
+                  </div>
+                </div>
+                  </tr>
             </table>
             <div class="form-group " style="margin-top:20px">
               <div class="col-sm-offset-2 col-sm-10">
@@ -34,5 +43,4 @@
 
   </div>
 </div>
-<h1>share updates</h1>
 {%endblock%}
