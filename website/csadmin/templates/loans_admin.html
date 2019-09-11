@@ -2,16 +2,24 @@
 
 {%block title%}Loans{%endblock%}
 {%block content%}
-<main role="main" class="col-md-9 col-lg-12 px-4">
+<main role="main" class="col-md-8 col-lg-12 px-4">
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-18">
+        <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary">
-
-            <h3>Long Loan Rate of Interest = {{Interests.longloaninterest}}</h3>
-            <h3>Emergency Loan Rate of Interest = {{Interests.emerloaninterest}}</h3>
+            <h2>Loans</h2>
+            <table><thead> <th style="width:50%"> <h3> Loan Rate of Interest = {{Interests.longloaninterest}}</h3></th>
+            <th><h3>Emergency Loan Rate of Interest = {{Interests.emerloaninterest}}</h3></th>
+          </thead>
+          </table>
+            <form method="get">
+              <div class="input-group " style='width:45%'>
+              <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Name contains:" id="id_name">
+              <button type="button" class="btn btn-round btn-just-icon" name="button"><i class="material-icons">search</i></button>
+              </div>
+            </form>
 
             </div>
             <div class="card-body">
