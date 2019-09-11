@@ -44,6 +44,7 @@ class Account(models.Model):
     emerloanemi=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
 #downpayment
     downpayment=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    displaydownpayment=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     #schema for fixed Deposits
     fdcapital=models.IntegerField(default=0,null=True)
     fdmaturitydate=models.DateField(null=True)
