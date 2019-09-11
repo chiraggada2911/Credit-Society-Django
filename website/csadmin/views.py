@@ -47,7 +47,7 @@ def index(request):
     context={
         'dashb':"active",
         'Members':Members,
-        'filter': user_filter
+        'filter': user_filter,
     }
     return render (request,'console.html',context=context)
 
@@ -56,10 +56,12 @@ def index(request):
 def members(request):
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
+    user_filter = UserFilter(request.GET, queryset=Members)
     context={
         'Members':Members,
         'Interests':Interests,
-        'member':"active"
+        'member':"active",
+        'filter': user_filter,
     }
     return render (request,'members.html',context=context)
 
@@ -68,10 +70,12 @@ def members(request):
 def fixeddeposits(request):
     users=Account.objects.all
     Interests=interests.objects.all().last()
+    user_filter = UserFilter(request.GET, queryset=Members)
     context={
         'fdadmin':users,
         'Interests':Interests,
-        'Bank':"active"
+        'Bank':"active",
+        'filter': user_filter,
     }
     return render (request,'fd_admin.html',context=context)
 
@@ -80,10 +84,12 @@ def fixeddeposits(request):
 def loansadmin(request):
     Loansadmin=Account.objects.all
     Interests=interests.objects.all().last()
+    user_filter = UserFilter(request.GET, queryset=Members)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
-        'loan':"active"
+        'loan':"active",
+        'filter': user_filter,
     }
     return render (request,'loans_admin.html',context=context)
 
