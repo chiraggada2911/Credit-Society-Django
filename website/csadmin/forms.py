@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from .models import Account
 from .models import interests
 
+class InterestsForm(forms.ModelForm):
+    class Meta:
+        model=interests
+        fields=('sharedividend','cddividend','fdinterest','emerloaninterest','longloaninterest','year')
 
 class AccountForm(forms.ModelForm):
     class Meta:
