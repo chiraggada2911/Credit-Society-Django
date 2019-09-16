@@ -173,10 +173,15 @@ class AccountCreate(CreateView):
         success_url=reverse_lazy('csadmin:members')
 
         def get_context_data(self, **kwargs):
-            user=User.objects.all()
+            userU=User.objects.all()
+            userA=Account.objects.all().last()
+            acc_no=userA.accountnumber + 1
+            print(acc_no)
             context = super(CreateView, self).get_context_data(**kwargs)
             context={
-                'user':user,
+                'user':userU,
+                'acc_nu':acc_no,
+                'date_today':datetime.date.today(),
             }
             return context
 
@@ -254,7 +259,7 @@ class Downpayment(UpdateView):
                 'userdownpayment':UserA.downpayment,
             }
             return context
-        
+
         def get_success_url(self):
             id_=self.kwargs.get("pk")
             UserA=Account.objects.get(pk=id_)
@@ -264,7 +269,7 @@ class Downpayment(UpdateView):
             print('downpayment')
             print(residue)
             UserA.longloanbalance=residue
-            UserA.save()            
+            UserA.save()
             return reverse_lazy('csadmin:fixeddeposits')
 
 class FDUpdate(UpdateView):
