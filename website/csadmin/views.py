@@ -68,9 +68,9 @@ def members(request):
 
 @login_required
 def fixeddeposits(request):
-    users=Account.objects.all
+    users=Account.objects.all()
     Interests=interests.objects.all().last()
-    user_filter = UserFilter(request.GET, queryset=Members)
+    user_filter = UserFilter(request.GET, queryset=users)
     context={
         'fdadmin':users,
         'Interests':Interests,
@@ -82,9 +82,9 @@ def fixeddeposits(request):
 
 @login_required
 def loansadmin(request):
-    Loansadmin=Account.objects.all
+    Loansadmin=Account.objects.all()
     Interests=interests.objects.all().last()
-    user_filter = UserFilter(request.GET, queryset=Members)
+    user_filter = UserFilter(request.GET, queryset=Loansadmin)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
