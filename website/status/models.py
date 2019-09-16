@@ -62,4 +62,4 @@ class interests(models.Model):
     fdinterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     emerloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
-    year=models.IntegerField(default=0,null=True)
+    year=models.CharField(default=0,max_length=50,null=True)

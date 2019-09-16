@@ -33,7 +33,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,AccountSearchForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,AccountSearchForm,InterestsForm
 
 # Create your views here.
 def index(request):
@@ -188,26 +188,26 @@ class AccountCreate(CreateView):
 
 class InterestsUpdate(CreateView):
         model=interests
-        # template_name = 'InterestsUpdate.html'
-        fields=['sharedividend','cddividend','fdinterest','emerloaninterest','longloaninterest','year']
-        success_url=reverse_lazy('csadmin:members')
-        # @receiver(post_save, sender=interests)
-        # def cal(sender,**kwargs):
-        #     print("hi")
-        #     # here mail sending will come
+        form_class = InterestsForm
+        template_name = 'interests_form.html'
+        success_url=reverse_lazy('csadmin:change')
+
+        def get_context_data(self):
+            interest=interests.objects.all().last()
+            fyear=str(datetime.date.today().year) +"-"+str(datetime.date.today().year+1)
+            context={
+                'interest':interest,
+                'year':fyear,
+            }
+            return context
+
         # def get_success_url(self):
-        #     id_=self.kwargs.get("id")
-        #     Userd=User.objects.get(id=id_)
-        #     print(Userd)
-        #     print("This Interest is updated")
-        #     print(Userd.email)
-        #     message="Dear sir/ma'am your DJSCOE CS account " + str(Userd) + " is deleted by admin"
+        #     Users=User.objects.all()
+        #     message="interests rates changed"
         #     subject = 'This email is from Credit Society Committee'
         #     email_from = settings.EMAIL_HOST_USER
-        #     recievers=[Userd.email]
+        #     recievers=[Users.email]
         #     send_mail( subject, message, email_from, recievers )
-        #     print("mail sent from suc deleteing account")
-        #     # return get_object_or_404(User,id=id_)
         #     return reverse_lazy('csadmin:members')
 
 class AccountDelete(DeleteView):
