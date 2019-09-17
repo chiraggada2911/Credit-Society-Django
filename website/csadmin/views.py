@@ -16,7 +16,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 #filter
-from .filters import UserFilter
+from .filters import AccountFilter,UserFilter
 
 #for background tasks
 from autotask.tasks import cron_task
@@ -33,7 +33,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,AccountSearchForm,InterestsForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,InterestsForm
 
 # Create your views here.
 def index(request):
@@ -43,11 +43,11 @@ def index(request):
 @login_required
 def index(request):
     Members=Account.objects.all()
-    user_filter = UserFilter(request.GET, queryset=Members)
+    acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
         'dashb':"active",
         'Members':Members,
-        'filter': user_filter,
+        'filter': acc_filter,
     }
     return render (request,'console.html',context=context)
 
@@ -56,12 +56,12 @@ def index(request):
 def members(request):
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
-    user_filter = UserFilter(request.GET, queryset=Members)
+    acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
         'Members':Members,
         'Interests':Interests,
         'member':"active",
-        'filter': user_filter,
+        'filter': acc_filter,
     }
     return render (request,'members.html',context=context)
 
@@ -70,12 +70,12 @@ def members(request):
 def fixeddeposits(request):
     users=Account.objects.all()
     Interests=interests.objects.all().last()
-    user_filter = UserFilter(request.GET, queryset=users)
+    acc_filter = AccountFilter(request.GET, queryset=users)
     context={
         'fdadmin':users,
         'Interests':Interests,
         'Bank':"active",
-        'filter': user_filter,
+        'filter': acc_filter,
     }
     return render (request,'fd_admin.html',context=context)
 
@@ -84,12 +84,12 @@ def fixeddeposits(request):
 def loansadmin(request):
     Loansadmin=Account.objects.all()
     Interests=interests.objects.all().last()
-    user_filter = UserFilter(request.GET, queryset=Loansadmin)
+    acc_filter = AccountFilter(request.GET, queryset=Loansadmin)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
         'loan':"active",
-        'filter': user_filter,
+        'filter': acc_filter,
     }
     return render (request,'loans_admin.html',context=context)
 
@@ -236,8 +236,10 @@ class AccountDelete(DeleteView):
 @login_required
 def UserDelete(request):
     Users=User.objects.all()
+    user_filter = UserFilter(request.GET, queryset=Users)
     context={
         'User':Users,
+        'filter': user_filter,
     }
     return render (request,'deleteuser.html',context=context)
 

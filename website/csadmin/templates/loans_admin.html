@@ -16,7 +16,7 @@
           </table>
             <form method="get">
               <div class="input-group " style='width:45%'>
-              <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Name contains:" id="id_name">
+              <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Search" id="id_name">
               <button type="button" class="btn btn-round btn-just-icon" name="button"><i class="material-icons">search</i></button>
               </div>
             </form>
@@ -42,7 +42,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {%for i in Loansadmin%}
+                    {%for i in filter.qs%}
                     <tr>
                       <td>{{i.accountnumber}}</td>
                       <td>{{i.sapid}}</td>
