@@ -570,10 +570,10 @@ def longloan():
                 print(interestamount)
                 i.longloaninterestamount=interestamount
                 print(interestamount)
-                principle=EMI-interestamount
+                principle=i.longloanemi-interestamount
                 i.longloanprinciple=principle
                 print(principle)
-                i.longloanbalance=i.longloanamount-principle
+                i.longloanbalance=i.longloanamount-i.longloanprinciple
                 print(i.longloanbalance)
             elif(i.longloanbalance<=i.longloanemi and i.longloanbalance!=0):
                 i.longloanprinciple=i.longloanbalance
