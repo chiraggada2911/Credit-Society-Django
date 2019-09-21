@@ -12,7 +12,7 @@
           <form action="" method="post">
             {% csrf_token %}
             <table>
-              <tr><th><label for="id_accountnumber">Accountnumber:</label></th><td><input type="number" name="accountnumber" required id="id_accountnumber"></td></tr>
+              <tr><th><label for="id_accountnumber">Accountnumber:</label></th><td><input type="number" name="accountnumber" value={{acc_nu}} required id="id_accountnumber"></td></tr>
               <tr><th><label for="id_username">Username:</label></th><td>
                 <select name="username" required id="id_username">
                 {%for i in user%}
@@ -23,7 +23,7 @@
             </td></tr>
               <tr><th><label for="id_name">Name:</label></th><td><input type="text" name="name" maxlength="50" required id="id_name"></td></tr>
               <tr><th><label for="id_sapid">Sapid:</label></th><td><input type="number" name="sapid" required id="id_sapid"></td></tr>
-              <tr><th><label for="id_dateofjoining">Dateofjoining:</label></th><td><input type="date" name="dateofjoining" required id="id_dateofjoining"></td></tr>
+              <tr><th><label for="id_dateofjoining">Dateofjoining:</label></th><td><input type="date" name="dateofjoining" value={{date_today|date:"Y-m-d"}} required id="id_dateofjoining"></td></tr>
               <tr><th><label for="id_teachingstaff">Teachingstaff:</label></th><td><input type="checkbox" name="teachingstaff" id="id_teachingstaff"></td></tr>
               <tr><th><label for="id_nonteachingstaff">Nonteachingstaff:</label></th><td><input type="checkbox" name="nonteachingstaff" id="id_nonteachingstaff"></td></tr>
               <tr><th><label for="id_sharevalue">Sharevalue:</label></th><td><input type="number" name="sharevalue" value="0" required id="id_sharevalue"></td></tr>

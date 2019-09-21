@@ -62,7 +62,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'website.urls'
 
-AUTOTASK_IS_ACTIVE = False
+AUTOTASK_IS_ACTIVE = True
 
 TEMPLATES = [
     {
@@ -100,13 +100,7 @@ BROKER_URL = "django://" # tell kombu to use the Django database as the message 
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',

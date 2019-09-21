@@ -1,0 +1,33 @@
+{%extends 'base.html'%}
+{%block title%}Rates{%endblock%}
+{%block content%}
+<h2>change rates Details</h2>
+<div class="container-fluid">
+  <div class="row">
+
+
+  <div class="col-sm-12 col-md-7">
+           <div class="panel panel-default">
+               <div class="panel-body">
+                  <form action="" method="post">
+                    {% csrf_token %}
+                    <table>
+                      <tr><th><label for="id_sharedividend">Sharedividend:</label></th><td><input type="number" name="sharedividend" value={{interest.sharedividend}} step="0.1" id="id_sharedividend"></td></tr>
+  <tr><th><label for="id_cddividend">Cddividend:</label></th><td><input type="number" name="cddividend" value={{interest.cddividend}} step="0.1" id="id_cddividend"></td></tr>
+  <tr><th><label for="id_fdinterest">Fdinterest:</label></th><td><input type="number" name="fdinterest" value={{interest.fdinterest}} step="0.1" id="id_fdinterest"></td></tr>
+  <tr><th><label for="id_emerloaninterest">Emerloaninterest:</label></th><td><input type="number" name="emerloaninterest" value={{interest.emerloaninterest}} step="0.1" id="id_emerloaninterest"></td></tr>
+  <tr><th><label for="id_longloaninterest">Longloaninterest:</label></th><td><input type="number" name="longloaninterest" value={{interest.longloaninterest}} step="0.1" id="id_longloaninterest"></td></tr>
+  <tr><th><label for="id_year">Year:</label></th><td><input type="text" name="year" value={{interest.year}} required id="id_year"></td></tr>
+                    </table>
+                    <div class="form-group " style="margin-top:20px">
+                       <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" id="but-id" class="btn btn-success">SAVE Rates</button>
+                      </div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+
+      </div>
+</div>
+{%endblock%}

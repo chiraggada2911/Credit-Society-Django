@@ -5,20 +5,21 @@
 
 <!-- template for members  (display page) -->
 
-<main role="main" class="col-md-6 col-lg-12">
+<main role="main" class="col-md-8 col-lg-12 px-4">
   <div class="content">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary">
-              <h4 class="card-title ">List Of Current Members</h4>
-              <select class="selectpicker" data-show-subtext="true" data-live-search="true">
-              {%for i in Members%}
-              <option value={{i.id}}>{{i.name}}</option>
-              {%endfor%}
-              </select>
-              <a href="{% url 'csadmin:GeneratePdf'%}" class="btn  btn-primary" style="background: linear-gradient(45deg, #06beb6, #48b1bf);" target="_blank "><i class="material-icons">cloud_download</i>Save</a>
+              <h2 class="card-title ">List Of Current Members</h2>
+              <form method="get">
+                <div class="input-group " style='width:45%'>
+                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Search" id="id_name">
+                <button type="button" class="btn btn-round btn-just-icon" name="button"><i class="material-icons">search</i></button>
+                <a href="{% url 'csadmin:GeneratePdf'%}" class="btn pull-right  btn-primary" style="background: linear-gradient(45deg, #06beb6, #48b1bf);" target="_blank "><i class="material-icons">cloud_download</i>Save</a>
+                </div>
+              </form>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -41,7 +42,7 @@
                     <th>Total Amount</th>
                   </thead>
                   <tbody>
-                    {%for i in Members%}
+                    {%for i in filter.qs%}
                     <tr>
                       <td>{{i.accountnumber}}</td>
                       <td>{{i.sapid}}</td>

@@ -1,5 +1,4 @@
 {%extends 'base.html'%}
-
 {%block title%}Console{%endblock%}
 {%block content%}
 
@@ -13,13 +12,23 @@
               <h2>Console </h2>
               <form method="get">
                 <div class="input-group " style='width:45%'>
-                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Name contains:" id="id_name">
+                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Search" id="id_name">
                 <button type="button" class="btn btn-round btn-just-icon" name="button"><i class="material-icons">search</i></button>
+                </div>
               </form>
-              </div>
-              <a href="{% url 'csadmin:user_create'%}"><button type="button" class="btn btn-primary pull-right  btn-info" name="button"><i class="material-icons">person_add</i>add user</button></a>
-              <a href="{% url 'csadmin:user_delete'%}"><button type="button" class="btn btn-primary pull-right  btn-info" name="button"><i class="material-icons">delete</i>Delete user</button></a>
+
+              <a href="{% url 'csadmin:user_create'%}" ><button type="button" class="btn btn-primary pull-right  btn-info"  name="button"><i class="material-icons">person_add</i>add user</button></a>
+                <a href="{% url 'csadmin:user_delete'%}" ><button type="button" class="btn btn-primary pull-right  btn-info"  name="button"><i class="material-icons">delete</i>Delete user</button></a>
             </div>
+            {% if messages %}
+            <ul>
+               {% for message in messages %}
+                     <script type="text/javascript">
+                       md.showNotification('top','center' ,"{{message}}")
+                     </script>
+               {% endfor %}
+            </ul>
+            {% endif %}
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">
@@ -60,7 +69,7 @@
 
                       <!-- <td><a href="{% url 'csadmin:User_Delete' id=i.pk %}"><i class="fa fa-trash" aria-hidden="true" style='font-size:15px' ></i></a></td> -->
 
-                      <td><a href="{% url 'csadmin:downpayment_update' pk=i.pk %}">{{i.downpayment}}</a></td>
+                      <td><a href="{% url 'csadmin:downpayment_update' pk=i.pk %}">{{i.displaydownpayment}}</a></td>
 
                     </tr>
                     {%endfor%}

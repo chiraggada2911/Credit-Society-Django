@@ -35,7 +35,7 @@
           <div class="col-md-4">
           <div class="form-group">
             <th><label for="id_fdmaturitydate" class="bmd-label-floating">FD Maturity Date:</label></th>
-            <td><input type="date" name="fdmaturitydate" class="form-control" value="{{userfddate}}" required id="id_fdmaturitydate"></td>
+            <td><input type="date" name="fdmaturitydate" class="form-control" value={{i_date|date:"Y-m-d"}} required id="id_fdmaturitydate"></td>
           </div>
         </div>
       </tr>
@@ -52,6 +52,7 @@
       </div>
     </div>
   </div>
+    {%if userfdamt != 0%}
   <div class="card card-stats">
     <div class="tim-typo">
     <h3 class="title">actions to be taken on FDs </h3>
@@ -62,6 +63,7 @@
     <button type='submit' class="btn btn-primary btn-round" name="clr_button">Clear</button>
   </form>
 </div>
+  {%endif%}
 </div>
 </div>
 

@@ -15,8 +15,10 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from django.contrib import messages
+
 #filter
-from .filters import UserFilter
+from .filters import AccountFilter,UserFilter
 
 #for background tasks
 from autotask.tasks import cron_task
@@ -33,7 +35,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,AccountSearchForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,InterestsForm
 
 # Create your views here.
 def index(request):
@@ -43,11 +45,11 @@ def index(request):
 @login_required
 def index(request):
     Members=Account.objects.all()
-    user_filter = UserFilter(request.GET, queryset=Members)
+    acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
         'dashb':"active",
         'Members':Members,
-        'filter': user_filter
+        'filter': acc_filter,
     }
     return render (request,'console.html',context=context)
 
@@ -56,34 +58,40 @@ def index(request):
 def members(request):
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
+    acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
         'Members':Members,
         'Interests':Interests,
-        'member':"active"
+        'member':"active",
+        'filter': acc_filter,
     }
     return render (request,'members.html',context=context)
 
 
 @login_required
 def fixeddeposits(request):
-    users=Account.objects.all
+    users=Account.objects.all()
     Interests=interests.objects.all().last()
+    acc_filter = AccountFilter(request.GET, queryset=users)
     context={
         'fdadmin':users,
         'Interests':Interests,
-        'Bank':"active"
+        'Bank':"active",
+        'filter': acc_filter,
     }
     return render (request,'fd_admin.html',context=context)
 
 
 @login_required
 def loansadmin(request):
-    Loansadmin=Account.objects.all
+    Loansadmin=Account.objects.all()
     Interests=interests.objects.all().last()
+    acc_filter = AccountFilter(request.GET, queryset=Loansadmin)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
-        'loan':"active"
+        'loan':"active",
+        'filter': acc_filter,
     }
     return render (request,'loans_admin.html',context=context)
 
@@ -167,36 +175,41 @@ class AccountCreate(CreateView):
         success_url=reverse_lazy('csadmin:members')
 
         def get_context_data(self, **kwargs):
-            user=User.objects.all()
+            userU=User.objects.all()
+            userA=Account.objects.all().last()
+            acc_no=userA.accountnumber + 1
+            print(acc_no)
             context = super(CreateView, self).get_context_data(**kwargs)
             context={
-                'user':user,
+                'user':userU,
+                'acc_nu':acc_no,
+                'date_today':datetime.date.today(),
             }
             return context
 
 
 class InterestsUpdate(CreateView):
         model=interests
-        # template_name = 'InterestsUpdate.html'
-        fields=['sharedividend','cddividend','fdinterest','emerloaninterest','longloaninterest','year']
-        success_url=reverse_lazy('csadmin:members')
-        # @receiver(post_save, sender=interests)
-        # def cal(sender,**kwargs):
-        #     print("hi")
-        #     # here mail sending will come
+        form_class = InterestsForm
+        template_name = 'interests_form.html'
+        success_url=reverse_lazy('csadmin:change')
+
+        def get_context_data(self):
+            interest=interests.objects.all().last()
+            fyear=str(datetime.date.today().year) +"-"+str(datetime.date.today().year+1)
+            context={
+                'interest':interest,
+                'year':fyear,
+            }
+            return context
+
         # def get_success_url(self):
-        #     id_=self.kwargs.get("id")
-        #     Userd=User.objects.get(id=id_)
-        #     print(Userd)
-        #     print("This Interest is updated")
-        #     print(Userd.email)
-        #     message="Dear sir/ma'am your DJSCOE CS account " + str(Userd) + " is deleted by admin"
+        #     Users=User.objects.all()
+        #     message="interests rates changed"
         #     subject = 'This email is from Credit Society Committee'
         #     email_from = settings.EMAIL_HOST_USER
-        #     recievers=[Userd.email]
+        #     recievers=[Users.email]
         #     send_mail( subject, message, email_from, recievers )
-        #     print("mail sent from suc deleteing account")
-        #     # return get_object_or_404(User,id=id_)
         #     return reverse_lazy('csadmin:members')
 
 class AccountDelete(DeleteView):
@@ -225,8 +238,10 @@ class AccountDelete(DeleteView):
 @login_required
 def UserDelete(request):
     Users=User.objects.all()
+    user_filter = UserFilter(request.GET, queryset=Users)
     context={
         'User':Users,
+        'filter': user_filter,
     }
     return render (request,'deleteuser.html',context=context)
 
@@ -236,32 +251,31 @@ class Downpayment(UpdateView):
         template_name = 'downpayment_form.html'
         success_url=reverse_lazy('csadmin:loansadmin')
 
-        def get_object(self):
-            id_=self.kwargs.get("pk")
-            UserA=Account.objects.get(pk=id_)
-            print(UserA.name)
-            print(UserA.downpayment)
-            residue=UserA.longloanbalance-UserA.downpayment
-            print('downpayment')
-            print(UserA.longloanbalance)
-            print(residue)
-            print(UserA.downpayment)
-            UserA.save()
-
-            return get_object_or_404(Account,pk=id_)
-
         def get_context_data(self, **kwargs):
             id_=self.kwargs.get("pk")
             UserA=Account.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
             print(UserA)
             print('downpayment')
+            messages.success(self.request, 'Mail sent')
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
                 'userdownpayment':UserA.downpayment,
             }
             return context
+
+        def get_success_url(self):
+            id_=self.kwargs.get("pk")
+            UserA=Account.objects.get(pk=id_)
+            print(UserA.name)
+            residue=UserA.longloanbalance-UserA.downpayment
+            UserA.displaydownpayment=UserA.displaydownpayment+UserA.downpayment
+            print('downpayment')
+            print(residue)
+            UserA.longloanbalance=residue
+            UserA.save()
+            return reverse_lazy('csadmin:fixeddeposits')
 
 class FDUpdate(UpdateView):
         model=Account
@@ -279,6 +293,7 @@ class FDUpdate(UpdateView):
             id_=self.kwargs.get("pk")
             UserA=Account.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
+            Newdate = datetime.date.today()
             print(UserA)
             print('FD update ')
             context={
@@ -286,6 +301,7 @@ class FDUpdate(UpdateView):
                 'username':UserA.name,
                 'userfddate':UserA.fdmaturitydate,
                 'userfdamt':UserA.fdcapital,
+                'i_date':Newdate,
             }
             return context
 
@@ -296,6 +312,7 @@ class FDUpdate(UpdateView):
             print(UserU)
             print("FD updated Mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Fixed Deposit Capital is updated to " + str(UserA.fdcapital)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
@@ -407,6 +424,7 @@ class LongLoanUpdate(UpdateView):
             print(UserU)
             print("Long Loan Updated Mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA) + " Long Loan Amount is updated to " + str(UserA.longloanamount) + "for the period of" + str(UserA.longloanperiod)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
@@ -448,6 +466,7 @@ class EmerLoanUpdate(UpdateView):
             print(UserU)
             print("Emergency loan updated mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Emergency Loan Amount is updated to " + str(UserA.emerloanamount) + " for the period of " + str(UserA.emerloanperiod)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
@@ -488,6 +507,7 @@ class SharesUpdate(UpdateView):
             print(UserU)
             print("shares updated mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Shares is updated to " + str(UserA.sharevalue)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
@@ -561,10 +581,10 @@ def longloan():
                 print(interestamount)
                 i.longloaninterestamount=interestamount
                 print(interestamount)
-                principle=EMI-interestamount
+                principle=i.longloanemi-interestamount
                 i.longloanprinciple=principle
                 print(principle)
-                i.longloanbalance=i.longloanamount-principle
+                i.longloanbalance=i.longloanamount-i.longloanprinciple
                 print(i.longloanbalance)
             elif(i.longloanbalance<=i.longloanemi and i.longloanbalance!=0):
                 i.longloanprinciple=i.longloanbalance
