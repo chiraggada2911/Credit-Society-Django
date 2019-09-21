@@ -405,13 +405,21 @@ class LongLoanUpdate(UpdateView):
             id_=self.kwargs.get("pk")
             UserA=Account.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
+            validate=False
             print(UserA)
             print('Long loan update')
             print(type(UserA.longloanamount))
             print(type(UserA.longloanperiod))
+            print(UserA.islongloantaken)
+            if (UserA.longloanbalance<=(UserA.longloanamount*50)/100):
+                validate=True
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
+                'islongloantaken':UserA.islongloantaken,
+                'longloanadd':UserA.longloanadditional,
+                'longloanbal':UserA.longloanbalance,
+                'validate':validate,
                 'longloanamt':UserA.longloanamount,
                 'longloanprd':UserA.longloanperiod,
             }
@@ -422,6 +430,12 @@ class LongLoanUpdate(UpdateView):
             UserA=Account.objects.get(pk=id_)
             UserU=User.objects.get(pk=UserA.username_id)
             print(UserU)
+            if UserA.islongloantaken==True:
+                UserA.longloanbalance=UserA.longloanbalance+UserA.longloanadditional
+            elif UserA.islongloantaken==False:
+                UserA.islongloantaken=True
+                UserA.longloanbalance=UserA.longloanamount
+            UserA.save()
             print("Long Loan Updated Mail")
             print(UserU.email)
             messages.success(self.request, 'Mail sent')
@@ -521,7 +535,15 @@ class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
         template = get_template('tableview.html')
         accounts=Account.objects.all
+        todaydate=date.today()
+        month=["Janurary","Feburary","March","April","May","June","July","August","September","October","November","December"]
+        pmonth=(date.today().month)-2
+        prevmonth=month[pmonth]
+        year=date.today().year
         context ={
+            'year':year,
+            'todaydate':todaydate,
+            'prevmonth':prevmonth,
             'accounts':accounts,
         }
         html = template.render(context)
@@ -534,7 +556,7 @@ class GeneratePdf(View):
 def calcinvest():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
-
+    #share parameters
     for i in  Members.iterator():
         if(i.sharevalue==0 and i.shareamount==0):
             i.sharevalue=i.cdamount
@@ -574,7 +596,7 @@ def longloan():
         print(N)
         print(A)
         if(N!=0):
-            if(i.longloanbalance==0 and i.longloanprinciple==0):
+            if(i.longloanprinciple==0 and i.longloanamount==0):
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 i.longloanemi=EMI
                 interestamount=R*A
@@ -597,6 +619,7 @@ def longloan():
                 i.longloanemi=0
                 i.longloaninterestamount=0
                 i.longloanprinciple=0
+                i.displaydownpayment=0
                 i.islongloantaken=False
             else:
                 EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
@@ -646,6 +669,7 @@ def emergencyloan():
                 i.emerloanamount=0
                 i.emerloanbalance=0
                 i.emerloanperiod=0
+                i.emerloanemi=0
                 i.emerloaninterestamount=0
                 i.emerloanprinciple=0
                 i.isemerloantaken=False

@@ -62,7 +62,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'website.urls'
 
-AUTOTASK_IS_ACTIVE = True
+AUTOTASK_IS_ACTIVE = False
 
 TEMPLATES = [
     {

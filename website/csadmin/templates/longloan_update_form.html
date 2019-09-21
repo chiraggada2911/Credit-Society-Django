@@ -13,6 +13,7 @@
           <form action="" method="post">
             {% csrf_token %}
             <table>
+              {%if islongloantaken is False%}
               <tr>
                   <div class="col-md-4">
                       <div class="form-group">
@@ -23,10 +24,10 @@
                 </div>
               </div>
               </tr>
-              <tr>
+              <!-- <tr>
                 <th><label for="id_islongloantaken">Is Long Loan Taken:</label></th>
                 <td><input type="checkbox" name="islongloantaken" id="id_islongloantaken"></td>
-              </tr>
+              </tr> -->
               <tr>
                 <div class="col-md-4">
                   <div class="form-group">
@@ -46,6 +47,52 @@
                   </div>
                 </div>
               </tr>
+              {%elif islongloantaken is True and validate is True%}
+              <tr>
+                  <div class="col-md-4">
+                      <div class="form-group">
+                <th><label for="id_username" class="bmd-label-floating">Username:</label></th>
+                <td><select name="username"  class="form-control" required id="id_username">
+                    <option value={{Userid}} selected>{{username}}</option>
+                  </select></td>
+                </div>
+              </div>
+              </tr>
+              <!-- <tr>
+                <th><label for="id_islongloantaken">Is Long Loan Taken:</label></th>
+                <td><input type="checkbox" name="islongloantaken" id="id_islongloantaken"></td>
+              </tr> -->
+              <tr>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th> <label for="id_longloanadditional" class="bmd-label-floating">Long Loan Addition:</label></th>
+                    <td> <input type="number" name="longloanadditional" value="{{longloanadd}}" step="1000"
+                        id="id_longloanadditional" class="form-control"></td>
+                  </div>
+                </div>
+              </tr>
+              <tr>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th> <label for="id_longloanperiod" class="bmd-label-floating">Long Loan Period(In Months):</label>
+                    </th>
+                    <td> <input type="number" name="longloanperiod" value="{{longloanprd}}" step="1"
+                        id="id_longloanperiod" class="form-control"></td>
+                  </div>
+                </div>
+              </tr>
+              {%elif validate is False%}
+              <tr>
+                  <div class="col-md-4">
+                      <div class="form-group">
+                        <th> <label for="id_longloanperiod" class="bmd-label-floating">Long Loan Period(In Months):</label>
+                        </th>
+                        <td> <input type="number" name="longloanperiod" value="{{longloanprd}}" step="1"
+                            id="id_longloanperiod" class="form-control"></td>
+                      </div>
+                    </div>  
+              </tr>
+              {% endif %}
             </table>
             <div class="form-group " style="margin-top:20px">
               <div class="col-sm-offset-2 col-sm-10">
