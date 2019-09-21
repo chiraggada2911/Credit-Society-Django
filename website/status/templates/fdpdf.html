@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load humanize %}
+<html>
+
+<head>
+  <style>
+    @page {
+      size: letter landscape;
+      margin-top: 4cm;
+      margin-bottom: 2cm;
+      margin-left: 2cm;
+      margin-right: 2cm;
+    }
+  </style>
+</head>
+
+
+<div style="width:800px; height:600px; padding:40px; text-align:center; border: 60px solid #787878">
+  <div style="width:750px; height:800px; padding:80px; text-align:center; border: 5px solid #787878">
+    <span style="font-size:50px; font-weight:bold">Fixed Deposits</span>
+    <br><br>
+    <span style="font-size:25px"><i>This is to certify that Mr./Mrs {{Accountholder.name}} </i></span>
+    <span style="font-size:25px"><i>is/are the </i></span>
+    <span style="font-size:25px"><i>registered holder of Rs.{{Accountholder.valueoftheshares|intcomma }} of the DJS Credit Society. </i></span>
+    <br><br>
+    <span style="font-size:25px"><b>Shares Presented from : DJS Credit Society </b></span><br /><br />
+    <span style="font-size:25px"><b>FD Holders Name:{{Accountholder.name}}</b></span><br /><br />
+    <span style="font-size:25px"><i>Amount: Rs. {{Accountholder.fdcapital|intcomma }}</i></span> <br /><br />
+    <span style="font-size:25px"><i>Date of Maturity: {{Accountholder.fdmaturitydate}}</i></span><br>
+    <span style="font-size:25px"><i>Interest:{{Interests.fdinterest}} </i></span><br>
+
+  </div>
+</div>
+
+</html>

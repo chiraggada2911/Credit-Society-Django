@@ -213,3 +213,17 @@ class GeneratePdf(View):
         html = template.render(context)
         pdf = render_to_pdf('pdf.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
+
+# for pdf stuff Using WeasyPrint
+
+class FdPdf(View):
+    def get(self, request, *args, **kwargs):
+        template = get_template('fdpdf.html')
+        current_user_id=request.user.username
+        Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+        context ={
+            'Accountholder':Accountholder,
+        }
+        html = template.render(context)
+        pdf = render_to_pdf('fdpdf.html', context)
+        return HttpResponse(pdf, content_type='application/pdf')

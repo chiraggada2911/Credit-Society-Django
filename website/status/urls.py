@@ -13,5 +13,6 @@ urlpatterns = [
     path('Investment',views.Investment,name="Investment"),
     path('committee',views.committee,name="committee"),
     path('pdf',views.GeneratePdf.as_view(),name="GeneratePdf"),
+    path('fdpdf',views.FdPdf.as_view(),name="FdPdf"),
 
 ]
