@@ -17,12 +17,21 @@
               <form method="get">
                 <div class="input-group " style='width:65%'>
                 <table>
-                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Name contains:" id="id_name">
+                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Search" id="id_name">
                 <button type="button" class="btn btn-round btn-just-icon" name="button"><i class="material-icons">search</i></button>
                 </table>
               </div>
               </form>
             </div>
+            {% if messages %}
+            <ul>
+               {% for message in messages %}
+                     <script type="text/javascript">
+                       md.showNotification('top','center' ,"{{message}}")
+                     </script>
+               {% endfor %}
+            </ul>
+            {% endif %}
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">
@@ -38,7 +47,7 @@
                   </thead>
                   <tbody>
 
-              {%for i in fdadmin%}
+              {%for i in filter.qs%}
                     {%if i.fdcapital != 0%}
                 <tr>
                   <td>{{i.accountnumber}}</td>

@@ -49,10 +49,3 @@ class MessengerForm(forms.Form):
 class SecretkeyForm(forms.Form):
     fchairmankey=forms.IntegerField()
     fsecretarykey=forms.IntegerField()
-
-class AccountSearchForm(forms.Form):
-    search_text =  forms.CharField(
-                    required = False,
-                    label='Search name or surname!',
-                    widget=forms.TextInput(attrs={'placeholder': 'search here!'})
-                  )

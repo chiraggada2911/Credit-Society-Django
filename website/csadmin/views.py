@@ -15,8 +15,10 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from django.contrib import messages
+
 #filter
-from .filters import UserFilter
+from .filters import AccountFilter,UserFilter
 
 #for background tasks
 from autotask.tasks import cron_task
@@ -33,7 +35,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,AccountSearchForm,InterestsForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,InterestsForm
 
 # Create your views here.
 def index(request):
@@ -43,11 +45,11 @@ def index(request):
 @login_required
 def index(request):
     Members=Account.objects.all()
-    user_filter = UserFilter(request.GET, queryset=Members)
+    acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
         'dashb':"active",
         'Members':Members,
-        'filter': user_filter,
+        'filter': acc_filter,
     }
     return render (request,'console.html',context=context)
 
@@ -56,12 +58,12 @@ def index(request):
 def members(request):
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
-    user_filter = UserFilter(request.GET, queryset=Members)
+    acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
         'Members':Members,
         'Interests':Interests,
         'member':"active",
-        'filter': user_filter,
+        'filter': acc_filter,
     }
     return render (request,'members.html',context=context)
 
@@ -70,12 +72,12 @@ def members(request):
 def fixeddeposits(request):
     users=Account.objects.all()
     Interests=interests.objects.all().last()
-    user_filter = UserFilter(request.GET, queryset=users)
+    acc_filter = AccountFilter(request.GET, queryset=users)
     context={
         'fdadmin':users,
         'Interests':Interests,
         'Bank':"active",
-        'filter': user_filter,
+        'filter': acc_filter,
     }
     return render (request,'fd_admin.html',context=context)
 
@@ -84,12 +86,12 @@ def fixeddeposits(request):
 def loansadmin(request):
     Loansadmin=Account.objects.all()
     Interests=interests.objects.all().last()
-    user_filter = UserFilter(request.GET, queryset=Loansadmin)
+    acc_filter = AccountFilter(request.GET, queryset=Loansadmin)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
         'loan':"active",
-        'filter': user_filter,
+        'filter': acc_filter,
     }
     return render (request,'loans_admin.html',context=context)
 
@@ -236,8 +238,10 @@ class AccountDelete(DeleteView):
 @login_required
 def UserDelete(request):
     Users=User.objects.all()
+    user_filter = UserFilter(request.GET, queryset=Users)
     context={
         'User':Users,
+        'filter': user_filter,
     }
     return render (request,'deleteuser.html',context=context)
 
@@ -253,6 +257,7 @@ class Downpayment(UpdateView):
             context = super(UpdateView, self).get_context_data(**kwargs)
             print(UserA)
             print('downpayment')
+            messages.success(self.request, 'Mail sent')
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
@@ -288,6 +293,7 @@ class FDUpdate(UpdateView):
             id_=self.kwargs.get("pk")
             UserA=Account.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
+            Newdate = datetime.date.today()
             print(UserA)
             print('FD update ')
             context={
@@ -295,6 +301,7 @@ class FDUpdate(UpdateView):
                 'username':UserA.name,
                 'userfddate':UserA.fdmaturitydate,
                 'userfdamt':UserA.fdcapital,
+                'i_date':Newdate,
             }
             return context
 
@@ -305,6 +312,7 @@ class FDUpdate(UpdateView):
             print(UserU)
             print("FD updated Mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Fixed Deposit Capital is updated to " + str(UserA.fdcapital)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
@@ -430,6 +438,7 @@ class LongLoanUpdate(UpdateView):
             UserA.save()
             print("Long Loan Updated Mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA) + " Long Loan Amount is updated to " + str(UserA.longloanamount) + "for the period of" + str(UserA.longloanperiod)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
@@ -471,6 +480,7 @@ class EmerLoanUpdate(UpdateView):
             print(UserU)
             print("Emergency loan updated mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Emergency Loan Amount is updated to " + str(UserA.emerloanamount) + " for the period of " + str(UserA.emerloanperiod)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
@@ -511,6 +521,7 @@ class SharesUpdate(UpdateView):
             print(UserU)
             print("shares updated mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Shares is updated to " + str(UserA.sharevalue)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER

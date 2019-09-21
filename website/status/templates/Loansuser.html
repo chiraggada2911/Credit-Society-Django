@@ -57,13 +57,11 @@
     </div>
     {% if messages %}
     <ul>
-      {% for message in messages %}
-      <div class="alert alert-{{type}}">
-        <a class="close" href="{%url 'status:loanuser'%}">×</a>
-        <span>
-          <b> {{ message }}</span>
-      </div>
-      {% endfor %}
+       {% for message in messages %}
+             <script type="text/javascript">
+               md.showNotification('bottom','right' ,"{{message}}")
+             </script>
+       {% endfor %}
     </ul>
     {% endif %}
   </div>
@@ -209,6 +207,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
 </main>
 
