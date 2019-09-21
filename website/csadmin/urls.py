@@ -35,6 +35,6 @@ urlpatterns = [
     # path('actionUrl', views.FDUpdate.as_view(),name='fdrenew'),
 
     # pdf conversion
-    path('tableview',login_required(views.GeneratePdf.as_view()),name="GeneratePdf"),
+    path('accounts',login_required(views.GeneratePdf.as_view()),name="GeneratePdf"),
 
 ]

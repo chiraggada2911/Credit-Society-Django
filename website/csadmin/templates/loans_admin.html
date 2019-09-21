@@ -43,7 +43,7 @@
                   </thead>
                   <tbody>
                     {%for i in Loansadmin%}
-                      {%if i.longloaninterestamount != 0%}
+                      {%if i.longloaninterestamount != 0 or i.isloanemertaken != 0%}
                     <tr>
                       <td>{{i.accountnumber}}</td>
                       <td>{{i.sapid}}</td>
