@@ -20,6 +20,15 @@
               <a href="{% url 'csadmin:user_create'%}" ><button type="button" class="btn btn-primary pull-right  btn-info"  name="button"><i class="material-icons">person_add</i>add user</button></a>
                 <a href="{% url 'csadmin:user_delete'%}" ><button type="button" class="btn btn-primary pull-right  btn-info"  name="button"><i class="material-icons">delete</i>Delete user</button></a>
             </div>
+            {% if messages %}
+            <ul>
+               {% for message in messages %}
+                     <script type="text/javascript">
+                       md.showNotification('top','center' ,"{{message}}")
+                     </script>
+               {% endfor %}
+            </ul>
+            {% endif %}
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">

@@ -15,6 +15,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from django.contrib import messages
+
 #filter
 from .filters import AccountFilter,UserFilter
 
@@ -255,6 +257,7 @@ class Downpayment(UpdateView):
             context = super(UpdateView, self).get_context_data(**kwargs)
             print(UserA)
             print('downpayment')
+            messages.success(self.request, 'Mail sent')
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
@@ -290,6 +293,7 @@ class FDUpdate(UpdateView):
             id_=self.kwargs.get("pk")
             UserA=Account.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
+            Newdate = datetime.date.today()
             print(UserA)
             print('FD update ')
             context={
@@ -297,6 +301,7 @@ class FDUpdate(UpdateView):
                 'username':UserA.name,
                 'userfddate':UserA.fdmaturitydate,
                 'userfdamt':UserA.fdcapital,
+                'i_date':Newdate,
             }
             return context
 
@@ -307,6 +312,7 @@ class FDUpdate(UpdateView):
             print(UserU)
             print("FD updated Mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Fixed Deposit Capital is updated to " + str(UserA.fdcapital)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
@@ -418,6 +424,7 @@ class LongLoanUpdate(UpdateView):
             print(UserU)
             print("Long Loan Updated Mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA) + " Long Loan Amount is updated to " + str(UserA.longloanamount) + "for the period of" + str(UserA.longloanperiod)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
@@ -459,6 +466,7 @@ class EmerLoanUpdate(UpdateView):
             print(UserU)
             print("Emergency loan updated mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Emergency Loan Amount is updated to " + str(UserA.emerloanamount) + " for the period of " + str(UserA.emerloanperiod)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
@@ -499,6 +507,7 @@ class SharesUpdate(UpdateView):
             print(UserU)
             print("shares updated mail")
             print(UserU.email)
+            messages.success(self.request, 'Mail sent')
             message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Shares is updated to " + str(UserA.sharevalue)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
