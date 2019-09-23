@@ -116,42 +116,6 @@ $(window).resize(function() {
   }, 500);
 });
 
-md = {
-  misc: {
-    navbar_menu_visible: 0,
-    active_collapse: true,
-    disabled_collapse_init: 0,
-  },
-
-  checkSidebarImage: function() {
-    $sidebar = $('.sidebar');
-    image_src = $sidebar.data('image');
-
-    if (image_src !== undefined) {
-      sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>';
-      $sidebar.append(sidebar_container);
-    }
-  },
-
-  showNotification: function(from, align) {
-    type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
-
-    color = Math.floor((Math.random() * 6) + 1);
-
-    $.notify({
-      icon: "add_alert",
-      message: "Welcome to <b>Material Dashboard Pro</b> - a beautiful admin panel for every web developer."
-
-    }, {
-      type: type[color],
-      timer: 3000,
-      placement: {
-        from: from,
-        align: align
-      }
-    });
-  },
-
   initDocumentationCharts: function() {
     if ($('#dailySalesChart').length != 0 && $('#websiteViewsChart').length != 0) {
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
