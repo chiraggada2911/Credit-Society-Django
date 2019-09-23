@@ -14,16 +14,24 @@
 
             {% if Accountholder.islongloantaken or Accountholder.isloanemertaken is True %}
 
-            <h3>Name:{{Accountholder.name}}</h3>
+            <h3>Name: {{Accountholder.name}}</h3>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  {% if Accountholder.islongloantaken is True %}
+                <h4>Type of loan: Long loan</h4>
+                <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
+                {% endif %}
+              </div>
+                <div class="col">
+                  {% if Accountholder.isloanemertaken is True %}
+                  <h4>Type of loan: Emergency Loan</h4>
+                  <h5>Amount of loan taken: &#x20b9; {{Accountholder.emerloanamount|intcomma }}</h5>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
 
-            {% if Accountholder.islongloantaken is True %}
-            <h4>Type of loan:Long loan</h4>
-            <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
-            {% endif %}
-            {% if Accountholder.isloanemertaken is True %}
-            <h4>Type of loan:Emergency Loan</h4>
-            <h5>Amount of loan taken: &#x20b9; {{Accountholder.emerloanamount|intcomma }}</h5>
-            {% endif %}
             {% else %}
             {% if Accountholder.teachingstaff is True %}
             <h2>You Can apply for loan up to &#x20b9;16,00,000</h2>
@@ -76,13 +84,13 @@
               <span class="nav-tabs-title">Loans:</span>
               <ul class="nav nav-tabs" data-tabs="tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#profile" data-toggle="tab">
+                  <a class="nav-link active" href="#emergency_loan" data-toggle="tab">
                     <i class="material-icons">offline_bolt</i> Emergency Loan
                     <div class="ripple-container"></div>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#messages" data-toggle="tab">
+                  <a class="nav-link" href="#long_loan" data-toggle="tab">
                     <i class="material-icons">monetization_on</i> Long Loan
                     <div class="ripple-container"></div>
                   </a>
@@ -93,63 +101,43 @@
         </div>
         <div class="card-body">
           <div class="tab-content">
-            <div class="tab-pane active" id="profile">
+            <div class="tab-pane " id="emergency_loan">
               <table class="table">
                 {%if Accountholder.isloanemertaken is True%}
                 <tbody>
                   <tr>
                     <td></td>
-                    <td>
-                      <h2>Emergency Loan Details</h2>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h2>Emergency Loan Details</h2></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan Principle: &#8377 {{Accountholder.emerloanprinciple|intcomma}}</h4>
-                    </td>
+                    <td><h4>Emergency Loan Principle: &#8377 {{Accountholder.emerloanprinciple|intcomma}}</h4></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan Amount: &#8377 {{Accountholder.emerloanamount|intcomma}}</h4>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h4>Emergency Loan Amount: &#8377 {{Accountholder.emerloanamount|intcomma}}</h4></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan Balance: &#8377 {{Accountholder.emerloanbalance|intcomma}}</h4>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h4>Emergency Loan Balance: &#8377 {{Accountholder.emerloanbalance|intcomma}}</h4></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan Period: {{Accountholder.emerloanperiod}} month(s)</h4>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h4>Emergency Loan Period: {{Accountholder.emerloanperiod}} month(s)</h4></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan Interest Amount: &#8377 {{Accountholder.emerloaninterestamount|intcomma}}</h4>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h4>Emergency Loan Interest Amount: &#8377 {{Accountholder.emerloaninterestamount|intcomma}}</h4></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan EMI: &#8377 {{Accountholder.emerloanemi|intcomma}}</h4>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h4>Emergency Loan EMI: &#8377 {{Accountholder.emerloanemi|intcomma}}</h4></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                 </tbody>
               </table>
@@ -157,7 +145,7 @@
               <h1>not applied for emergency loan</h1>
               {%endif%}
             </div>
-            <div class="tab-pane" id="messages">
+            <div class="tab-pane active" id="long_loan">
               <table class="table">
                 {%if Accountholder.islongloantaken is True%}
                 <tbody>

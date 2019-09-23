@@ -14,7 +14,7 @@
             <h1><b>Fixed Deposits</b> </h1>
             <h3><b>FD Holder Name:</b> {{Accountholder.name}}</h3>
             <h3><b>Amount:</b>  &#x20b9; {{Accountholder.fdcapital|intcomma }}</h3>
-            <h3><b>Date of Maturity:</b>{{Accountholder.fdmaturitydate}}</h3>
+            <h3><b>Date of Maturity:</b> {{Accountholder.fdmaturitydate}}</h3>
             <h3><b>Interest:</b>{{Interests.fdinterest}} </h3>
             <a href="{% url 'status:FdPdf'%}" class="lw-btn" style="btn_color:#0b0bef" target="_blank ">Save</a>
           </div>
