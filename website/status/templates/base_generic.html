@@ -1,3 +1,4 @@
+{% load static%}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -14,7 +15,7 @@
 
   <!-- Custom styles for this template -->
   <link href="{% static 'status/css/dashboard.css'%}" rel="stylesheet">
-  <!-- <link href="{% static 'status/css/committee.css'%}" rel="stylesheet"> -->
+  <link href="{% static 'status/css/login.css'%}" rel="stylesheet">
   <link href="{% static 'status/css/pop.css'%}" rel="stylesheet">
   <!-- Scripts  -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -27,10 +28,8 @@
 </head>
 
 <body>
-  <div class="jumbotron text-center" style="background: linear-gradient(60deg, #0b0bef, #0b0bef);">
+  <div class="jumbotron text-center" >
 
-    <h1 style="color: #ffffff">DJ Sanghvi College of Engineering </br>Credit Society</h1>
-    <h3 style="color: #ffffff">Welcome</h3>
   </div>
 
   {% block cards%}

@@ -1,34 +1,3 @@
-/*!
-
- =========================================================
- * Material Dashboard - v2.1.1
- =========================================================
-
- * Product Page: https://www.creative-tim.com/product/material-dashboard
- * Copyright 2018 Creative Tim (http://www.creative-tim.com)
-
- * Designed by www.invisionapp.com Coded by www.creative-tim.com
-
- =========================================================
-
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
- */
-
-(function() {
-  isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
-
-  if (isWindows) {
-    // if we are on windows OS we activate the perfectScrollbar function
-    $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
-
-    $('html').addClass('perfect-scrollbar-on');
-  } else {
-    $('html').addClass('perfect-scrollbar-off');
-  }
-})();
-
-
 var breakCards = true;
 
 var searchVisible = 0;
@@ -51,7 +20,7 @@ var seq2 = 0,
 
 $(document).ready(function() {
 
-  $('body').bootstrapMaterialDesign();
+  // $('body').bootstrapMaterialDesign();
 
   $sidebar = $('.sidebar');
 
@@ -146,42 +115,6 @@ $(window).resize(function() {
     md.initDashboardPageCharts();
   }, 500);
 });
-
-md = {
-  misc: {
-    navbar_menu_visible: 0,
-    active_collapse: true,
-    disabled_collapse_init: 0,
-  },
-
-  checkSidebarImage: function() {
-    $sidebar = $('.sidebar');
-    image_src = $sidebar.data('image');
-
-    if (image_src !== undefined) {
-      sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>';
-      $sidebar.append(sidebar_container);
-    }
-  },
-
-  showNotification: function(from, align) {
-    type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
-
-    color = Math.floor((Math.random() * 6) + 1);
-
-    $.notify({
-      icon: "add_alert",
-      message: "Welcome to <b>Material Dashboard Pro</b> - a beautiful admin panel for every web developer."
-
-    }, {
-      type: type[color],
-      timer: 3000,
-      placement: {
-        from: from,
-        align: align
-      }
-    });
-  },
 
   initDocumentationCharts: function() {
     if ($('#dailySalesChart').length != 0 && $('#websiteViewsChart').length != 0) {

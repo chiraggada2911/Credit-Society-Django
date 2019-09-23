@@ -14,35 +14,48 @@
 
             {% if Accountholder.islongloantaken or Accountholder.isloanemertaken is True %}
 
-            <h3>Name:{{Accountholder.name}}</h3>
+            <h3>Name: {{Accountholder.name}}</h3>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  {% if Accountholder.islongloantaken is True %}
+                <h4>Type of loan: Long loan</h4>
+                <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
+                {% endif %}
+              </div>
+                <div class="col">
+                  {% if Accountholder.isloanemertaken is True %}
+                  <h4>Type of loan: Emergency Loan</h4>
+                  <h5>Amount of loan taken: &#x20b9; {{Accountholder.emerloanamount|intcomma }}</h5>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {%else%}
+            <h4>You have no loans due</h4>
+            {% endif %}
 
-            {% if Accountholder.islongloantaken is True %}
-            <h4>Type of loan:Long loan</h4>
-            {% endif %}
-            {% if Accountholder.isloanemertaken is True %}
-            <h4>Type of loan:Emergency Loan</h4>
-            {% endif %}
-            <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
-            <h5>RoI:{{Accountholder.rateOfInterest}}</h5>
-            <h5>Due Date:{{Accountholder.repaymentDue}}</h5>
-            {% else %}
             {% if Accountholder.teachingstaff is True %}
-            <h2>You Can apply for loan up to &#x20b9;16,00,000</h2>
+            <h4>You can apply for long loan up to &#x20b9;16,00,000</h4>
             {% endif %}
             {% if Accountholder.nonteachingstaff is True %}
-            <h2>You Can apply for loan up to &#x20b9;12,00,000</h2>
-            {% endif %}
-            <h2>You have no loans due</h2>
+            <h4>You can apply for long loan up to &#x20b9;12,00,000</h4>
             {% endif %}
 
-            <h2 style="padding-top:50px">Request a loan</h2>
 
-            <form class="lw-form" method="POST">
-              <input type="radio" name="loanChoice" value="normal_loan"> Normal Loan<br>
-              <input type="radio" name="loanChoice" value="emergency_loan"> Emergency Loan<br>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h1><b class="card-title">Request a loan</b></h1>
+            <h2 style="padding-top:50px"></h2>
 
+            <form class=" radio" method="POST">
+              <input type="radio" name="loanChoice" value="normal_loan"> Normal Loan
+              <input type="radio" name="loanChoice" value="emergency_loan"> Emergency Loan
+              <div class="radio">
               <div class="lw-field">
-                <input class="lw-input" name="loan_amount" id="loan_amnt" type="numeric"
+                <input class="lw-input" autocomplete="off" name="loan_amount" id="loan_amnt" type="numeric"
                   placeholder="Enter Amount in Rs" required>
               </div>
               <button class="lw-btn"
@@ -50,9 +63,8 @@
                 href="{%url 'status:details'%}">Submit to admin</button>
               {% csrf_token %}
             </form>
-
-          </div>
-        </div>
+</div>
+</div>
       </div>
     </div>
     {% if messages %}
@@ -74,14 +86,14 @@
               <span class="nav-tabs-title">Loans:</span>
               <ul class="nav nav-tabs" data-tabs="tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#profile" data-toggle="tab">
-                    <i class="material-icons">bug_report</i> Emergency Loan
+                  <a class="nav-link active" href="#emergency_loan" data-toggle="tab">
+                    <i class="material-icons">offline_bolt</i> Emergency Loan
                     <div class="ripple-container"></div>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#messages" data-toggle="tab">
-                    <i class="material-icons">code</i> Long Loan
+                  <a class="nav-link" href="#long_loan" data-toggle="tab">
+                    <i class="material-icons">monetization_on</i> Long Loan
                     <div class="ripple-container"></div>
                   </a>
                 </li>
@@ -91,69 +103,51 @@
         </div>
         <div class="card-body">
           <div class="tab-content">
-            <div class="tab-pane active" id="profile">
+            <div class="tab-pane active " id="emergency_loan">
               <table class="table">
                 {%if Accountholder.isloanemertaken is True%}
                 <tbody>
                   <tr>
                     <td></td>
-                    <td>
-                      <h2>Emergency Loan Details</h2>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h2>Emergency Loan Details</h2></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan Principle: {{Accountholder.emerloanprinciple}}</h4>
-                    </td>
+                    <td><h4>Emergency Loan Principle: &#8377 {{Accountholder.emerloanprinciple|intcomma}}</h4></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan Amount: {{Accountholder.emerloanamount}}</h4>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h4>Emergency Loan Amount: &#8377 {{Accountholder.emerloanamount|intcomma}}</h4></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan Balance: {{Accountholder.emerloanbalance}}</h4>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h4>Emergency Loan Balance: &#8377 {{Accountholder.emerloanbalance|intcomma}}</h4></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan Period: {{Accountholder.emerloanperiod}}</h4>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h4>Emergency Loan Period: {{Accountholder.emerloanperiod}} month(s)</h4></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan Interest Amount: {{Accountholder.emerloaninterestamount}}</h4>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h4>Emergency Loan Interest Amount: &#8377 {{Accountholder.emerloaninterestamount|intcomma}}</h4></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td>
-                      <h4>Emergency Loan EMI: {{Accountholder.emerloanemi}}</h4>
-                    </td>
-                    <td class="td-actions text-right">
-                    </td>
+                    <td><h4>Emergency Loan EMI: &#8377 {{Accountholder.emerloanemi|intcomma}}</h4></td>
+                    <td class="td-actions text-right"></td>
                   </tr>
                 </tbody>
               </table>
+              {%else%}
+              <h1>not applied for emergency loan</h1>
               {%endif%}
             </div>
-            <div class="tab-pane" id="messages">
+            <div class="tab-pane " id="long_loan">
               <table class="table">
                 {%if Accountholder.islongloantaken is True%}
                 <tbody>
@@ -168,39 +162,41 @@
                   <tr>
                     <td></td>
                     <td>
-                      <h4>Long Loan Principle: {{Accountholder.longloanprinciple}}</h4>
+                      <h4>Long Loan Principle: &#8377 {{Accountholder.longloanprinciple|intcomma}}</h4>
                     </td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>
-                      <h4>Long Loan Amount: {{Accountholder.longloanamount}}</h4>
+                      <h4>Long Loan Amount:&#8377 {{Accountholder.longloanamount|intcomma}}</h4>
                     </td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>
-                      <h4>Long Loan Balance: {{Accountholder.longloanbalance}}</h4>
+                      <h4>Long Loan Balance: &#8377 {{Accountholder.longloanbalance|intcomma}}</h4>
                     </td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>
-                      <h4>Long Loan EMI: {{Accountholder.longloanemi}}</h4>
+                      <h4>Long Loan EMI: &#8377 {{Accountholder.longloanemi|intcomma}}</h4>
                     </td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>
-                      <h4>Long Loan Period: {{Accountholder.longloanperiod}}</h4>
+                      <h4>Long Loan Period: {{Accountholder.longloanperiod}} month(s)</h4>
                     </td>
                   </tr>
                   <tr>
                     <td></td>
                     <td>
-                      <h4>Long Loan Interest Amount: {{Accountholder.longloaninterestamount}}</h4></td>
+                      <h4>Long Loan Interest Amount: &#8377 {{Accountholder.longloaninterestamount|intcomma}}</h4></td>
                   </tr>
                 </tbody>
+                {%else%}
+                <h1>not applied for long loan</h1>
                 {%endif%}
               </table>
             </div>

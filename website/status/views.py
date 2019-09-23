@@ -129,7 +129,7 @@ def loanuser(request):
     type="success"
     eligibility=""
 
-    if Accountholder.longloanbalance < Accountholder.longloanamount*50/100:
+    if Accountholder.longloanbalance > Accountholder.longloanamount*50/100:
         print("Not eligible for loan")
         eligibility="No"
     else:

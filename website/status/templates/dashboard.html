@@ -39,7 +39,7 @@
               <h2>Fixed Deposits </h2>
               <h4>Amount: &#x20b9; {{ Accountholder.fdcapital|intcomma }}</h4>
               <h4>Date of Maturity:{{Accountholder.fdmaturitydate}}</h4>
-              <h4>Interest:{{Interests.fdinterest}} </h4>
+              <h4>Interest: {{Interests.fdinterest}} </h4>
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@
           <div class="card">
             <div class="card-body">
               <h2>Shares</h2>
-              <h4>Noofshares:{{Accountholder.Noofshares}}</h4>
+              <h4>No of Shares: {{Accountholder.Noofshares}}</h4>
               <h4>Share Amount: &#x20b9; {{Accountholder.sharebalance|intcomma }}</h4>
               <br>
             </div>
@@ -64,7 +64,7 @@
             <div class="card-body">
               <h2>Cumulative Deposits </h2>
               <h4>Balance: &#x20b9; {{ Accountholder.cdbalance|intcomma }}</h4>
-              <h4>Interest:{{Interests.cddividend}} </h4>
+              <h4>Interest: {{Interests.cddividend}} </h4>
             </div>
           </div>
         </div>
@@ -73,8 +73,9 @@
             <div class="card-body">
               <h2>Loan</h2>
               <ul>
-                {% if Accountholder.islongloantaken and Accountholder.isloanemertaken is True %}
-                <h2>Your Loan Amount: &#x20b9; {{ Accountholder.longloanprinciple|intcomma  }}</h2>
+                {% if Accountholder.islongloantaken or Accountholder.isloanemertaken is True %}
+                <h4>Your Loan Amount: &#x20b9; {{ Accountholder.longloanprinciple|intcomma  }}</h4>
+                <h4>Your Emergency Amount: &#x20b9; {{ Accountholder.emerloanamount|intcomma  }}</h4>
                 {% else %}
                 <h4>You have no loans due</h4>
                 <h4>Request Loan
