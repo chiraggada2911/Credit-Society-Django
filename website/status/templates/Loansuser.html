@@ -31,16 +31,18 @@
                 </div>
               </div>
             </div>
+            {%else%}
+            <h4>You have no loans due</h4>
+            {% endif %}
 
-            {% else %}
             {% if Accountholder.teachingstaff is True %}
-            <h2>You Can apply for loan up to &#x20b9;16,00,000</h2>
+            <h4>You can apply for long loan up to &#x20b9;16,00,000</h4>
             {% endif %}
             {% if Accountholder.nonteachingstaff is True %}
-            <h2>You Can apply for loan up to &#x20b9;12,00,000</h2>
+            <h4>You can apply for long loan up to &#x20b9;12,00,000</h4>
             {% endif %}
-            <h2>You have no loans due</h2>
-            {% endif %}
+
+
           </div>
         </div>
         <div class="card">
@@ -48,12 +50,12 @@
             <h1><b class="card-title">Request a loan</b></h1>
             <h2 style="padding-top:50px"></h2>
 
-            <form class="lw-form" method="POST">
-              <input type="radio" name="loanChoice" value="normal_loan"> Normal Loan<br>
-              <input type="radio" name="loanChoice" value="emergency_loan"> Emergency Loan<br>
-
+            <form class=" radio" method="POST">
+              <input type="radio" name="loanChoice" value="normal_loan"> Normal Loan
+              <input type="radio" name="loanChoice" value="emergency_loan"> Emergency Loan
+              <div class="radio">
               <div class="lw-field">
-                <input class="lw-input" name="loan_amount" id="loan_amnt" type="numeric"
+                <input class="lw-input" autocomplete="off" name="loan_amount" id="loan_amnt" type="numeric"
                   placeholder="Enter Amount in Rs" required>
               </div>
               <button class="lw-btn"
@@ -101,7 +103,7 @@
         </div>
         <div class="card-body">
           <div class="tab-content">
-            <div class="tab-pane " id="emergency_loan">
+            <div class="tab-pane active " id="emergency_loan">
               <table class="table">
                 {%if Accountholder.isloanemertaken is True%}
                 <tbody>
@@ -145,7 +147,7 @@
               <h1>not applied for emergency loan</h1>
               {%endif%}
             </div>
-            <div class="tab-pane active" id="long_loan">
+            <div class="tab-pane " id="long_loan">
               <table class="table">
                 {%if Accountholder.islongloantaken is True%}
                 <tbody>
