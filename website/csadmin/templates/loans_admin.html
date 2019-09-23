@@ -9,7 +9,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary">
-            <h2>Loans</h2>
+            <h2 class="card-title ">Loans</h2>
             <table><thead> <th style="width:50%"> <h3> Loan Rate of Interest = {{Interests.longloaninterest}}</h3></th>
             <th><h3>Emergency Loan Rate of Interest = {{Interests.emerloaninterest}}</h3></th>
           </thead>
@@ -33,38 +33,36 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">
-                  <thead>
-                    <tr>
+                  <thead class="text-primary">
                       <th>A/C No.</th>
                       <th>SapId</th>
                       <th>Name</th>
                       <th>Long loan Principle</th>
-                      <th>Long loan Interest Amount</th>
-                      <th>Long loan Balance</th>
+                      <th>Long <br>loan Interest Amount</th>
                       <th>Long loan Emi</th>
+                      <th>Long loan Balance</th>
+                      <th>Emer Loan Amount</th>
                       <th>Emer loan Principle</th>
-                      <th>Emer loan Interest Amount</th>
-                      <th>Emer loan Balance</th>
+                      <th>Emer <br> loan Interest Amount</th>
                       <th>Emer loan Emi</th>
-
-                    </tr>
+                      <th>Emer loan Balance</th>        
                   </thead>
                   <tbody>
                     {%for i in Loansadmin%}
-                      {%if i.longloaninterestamount != 0 or i.isloanemertaken != 0%}
+                      {%if i.longloanbalance != 0 or i.emerloanbalance != 0 %}
                     <tr>
                       <td>{{i.accountnumber}}</td>
                       <td>{{i.sapid}}</td>
                       <td>{{i.name}}</td>
                       <td>{{i.longloanprinciple}}</td>
                       <td>{{i.longloaninterestamount}}</td>
-                      <td>{{i.longloanbalance}}</td>
                       <td>{{i.longloanemi}}</td>
+                      <td>{{i.longloanbalance}}</td>
+                      <td>{{i.emerloanamount}}</td>
                       <td>{{i.emerloanprinciple}}</td>
                       <td>{{i.emerloaninterestamount}}</td>
-                      <td>{{i.emerloanbalance}}</td>
                       <td>{{i.emerloanemi}}</td>
-
+                      <td>{{i.emerloanbalance}}</td>
                     </tr>
                       {%endif%}
                     {%endfor%}
