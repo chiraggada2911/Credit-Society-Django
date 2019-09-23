@@ -31,12 +31,12 @@ class ShareUpdateForm(forms.ModelForm):
 class LongLoanUpdateForm(forms.ModelForm):
     class Meta:
         model=Account
-        fields=('username','islongloantaken','longloanamount','longloanperiod','longloanadditional')
+        fields=('username','longloanamount','longloanperiod','longloanadditional')
 
 class EmerLoanUpdateForm(forms.ModelForm):
     class Meta:
         model=Account
-        fields=('username','isloanemertaken','emerloanamount','emerloanperiod')
+        fields=('username','emerloanamount','emerloanperiod')
 
 class DownPaymentForm(forms.ModelForm):
     class Meta:
