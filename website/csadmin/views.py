@@ -475,6 +475,7 @@ class EmerLoanUpdate(UpdateView):
                 'Userid':UserA.username_id,
                 'emerloanamt':UserA.emerloanamount,
                 'emerloanprd':UserA.emerloanperiod,
+                'isloanemertaken':UserA.isloanemertaken,
                 'username':UserA.name
             }
             return context
@@ -533,6 +534,7 @@ class SharesUpdate(UpdateView):
                 UserA.cdamount=UserA.sharevalue
             elif(UserA.cdamount==0):
                 UserA.shareamount=UserA.sharevalue
+            UserA.Noofshares=(UserA.sharevalue)/100
             UserA.save()
             print("shares updated mail")
             print(UserU.email)
@@ -586,9 +588,6 @@ def calcinvest():
             i.cdbalance=0
             i.shareamount=i.sharevalue
             i.cdamount=0
-        print("shareamount")
-        print(i.shareamount)
-        i.Noofshares=(i.sharevalue)/100
         i.save()
 
 @cron_task(crontab="* * * * *")
@@ -602,15 +601,12 @@ def longloan():
     for i in  Members.iterator():
         N=i.longloanperiod
         A=i.longloanamount
-        print(N)
-        print(A)
         if(N!=0):
-            if(i.longloanprinciple==0 and i.longloanamount==0):
+            if(i.longloanprinciple==0 and i.longloaninterestamount==0):
                 i.longloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 i.longloaninterestamount=R*A
-                i.longloanprinciple=i.longloanemi-interestamount
+                i.longloanprinciple=i.longloanemi-i.longloaninterestamount
                 i.longloanbalance=i.longloanamount-i.longloanprinciple
-                print(i.longloanbalance)
             elif(i.longloanbalance<=i.longloanemi and i.longloanbalance!=0):
                 i.longloanprinciple=i.longloanbalance
                 i.longloaninterestamount=i.longloanemi-i.longloanprinciple
@@ -629,8 +625,6 @@ def longloan():
                 i.longloaninterestamount=R*i.longloanbalance
                 i.longloanprinciple=i.longloanemi-i.longloaninterestamount
                 i.longloanbalance=i.longloanbalance-i.longloanprinciple
-                print("jd is best")
-                print(type(i.longloanbalance))
         i.save()
 
 
@@ -648,16 +642,18 @@ def emergencyloan():
     for i in  Members.iterator():
         N=i.emerloanperiod
         A=i.emerloanamount
-        print(N)
-        print(A)
-        if(N!=0):
-            if(i.emerloanbalance==0 and i.emerloanprinciple==0):
-                i.emerloanemi=(A*R*(1+R)*N)/(((1+R)*N)-1)
+        if(i.isloanemertaken==True):
+            if(i.emerloanprinciple==0 and i.emerloaninterestamount==0):
+                i.emerloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 i.emerloaninterestamount=R*A
                 i.emerloanprinciple=i.emerloanemi-i.emerloaninterestamount
                 i.emerloanbalance=i.emerloanamount-i.emerloanprinciple
-                print(i.emerloanbalance)
-
+                print("loop1")
+            elif(i.emerloanbalance<=i.emerloanemi and i.emerloanbalance!=0):
+                i.emerloanprinciple=i.emerloanbalance
+                i.emerloaninterestamount=i.emerloanemi-i.emerloanprinciple
+                i.emerloanbalance=0
+                print("loop2")
             elif(i.emerloanbalance==0):
                 i.emerloanamount=0
                 i.emerloanbalance=0
@@ -665,14 +661,15 @@ def emergencyloan():
                 i.emerloanemi=0
                 i.emerloaninterestamount=0
                 i.emerloanprinciple=0
-                i.isemerloantaken=False
-
+                i.isloanemertaken=False
+                print("loop3")
             else:
-                i.emerloanemi=(A*R*(1+R)*N)/(((1+R)*N)-1)
+                i.emerloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 i.emerloaninterestamount=R*i.emerloanbalance
                 i.emerloanprinciple=i.emerloanemi-i.emerloaninterestamount
                 i.emerloanbalance=i.emerloanbalance-i.emerloanprinciple
-        i.totalamount=i.shareamount+i.cdamount+i.longloanprinciple+i.longloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
+                print("loop4")
+        i.totalamount=i.shareamount+i.cdamount+i.emerloanprinciple+i.emerloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
         i.save()
 
 @cron_task(crontab="* * * * *")
