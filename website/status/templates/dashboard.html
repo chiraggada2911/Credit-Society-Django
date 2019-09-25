@@ -98,7 +98,7 @@
               <div class="lw-field">
                 <input class="lw-input" name="new_amount" id="new_amnt" type="numeric" placeholder="Enter Amount in Rs" required>
               </div>
-              <button class="lw-btn">Submit to admin</button>
+              <button class="lw-btn" onclick="md.showNotification('bottom','right','You have asked for a change in your monthly dedution.')">Submit to admin</button>
               {% csrf_token %}
             </form>
           </div>

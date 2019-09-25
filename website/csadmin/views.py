@@ -98,7 +98,7 @@ def loansadmin(request):
 
 @login_required
 def change(request):
-
+    user=Account.objects.all
     Interest=interests.objects.all().last()
     Interests=interests.objects.all
     if request.method=="POST":
@@ -119,6 +119,18 @@ def change(request):
                     return redirect('/csadmin/interests')
                 else:
                     print("Not Allow!!")
+    if request.method=="POST":
+        
+        for user in Account:
+            message = EmailMultiAlternatives(
+            subject = "your subject here",
+                from_email = settings.EMAIL_HOST_USER,
+                to = [user.email],
+                )
+            context = {'request':request, 'user':user, 'event':event}
+            html_template = get_template("console.html").render(context)
+            message.attach_alternative(html_template, "text/html")
+            message.send()
 
     context={
         'Interest':Interest,
