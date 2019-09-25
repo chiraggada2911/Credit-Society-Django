@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'autotask',
     'django_filters',
     #for mass 
-    'djcelery_email',
+    #'djcelery_email',
     # 'django_popup_view_field',
 ]
 
