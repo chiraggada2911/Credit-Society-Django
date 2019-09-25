@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 {%block title%}Rates{%endblock%}
 {%block content%}
-<h2>change rates Details</h2>
+<h2>Details of change in rates</h2>
 <div class="container-fluid">
   <div class="row">
 
@@ -21,9 +21,18 @@
                     </table>
                     <div class="form-group " style="margin-top:20px">
                        <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" id="but-id" class="btn btn-success">SAVE Rates</button>
+                        <button type="submit" id="but-id" class="btn btn-success" onclick="md.showNotification('bottom','right','Rates have been updated')">SAVE Rates</button>
                       </div>
                       </form>
+                      {% if messages %}
+                      <ul>
+                         {% for message in messages %}
+                               <script type="text/javascript">
+                                 md.showNotification('top','center' ,"{{message}}")
+                               </script>
+                         {% endfor %}
+                      </ul>
+                      {% endif %}
                     </div>
                 </div>
             </div>
