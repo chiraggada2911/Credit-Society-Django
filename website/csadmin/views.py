@@ -30,7 +30,7 @@ from dateutil import relativedelta
 import datetime
 
 #send_mail
-from django.core.mail import send_mail
+from django.core.mail import send_mail,send_mass_mail
 import smtplib
 
 #forms
@@ -145,7 +145,7 @@ def message(request):
             print(message)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
-            send_mail( subject, message, email_from, recievers )
+            send_mass_mail( subject, message, email_from, recievers )
             print("mail sent from messanger")
 
         else:
@@ -203,14 +203,18 @@ class InterestsUpdate(CreateView):
             }
             return context
 
-        # def get_success_url(self):
-        #     Users=User.objects.all()
-        #     message="interests rates changed"
-        #     subject = 'This email is from Credit Society Committee'
-        #     email_from = settings.EMAIL_HOST_USER
-        #     recievers=[Users.email]
-        #     send_mail( subject, message, email_from, recievers )
-        #     return reverse_lazy('csadmin:members')
+        def get_success_url(self):
+            recievers=[]
+            users = User.objects.all()
+            for i in users.iterator():
+                user_email = i.email
+                print(user_email)
+                recievers.append(i.email)
+            message="interests rates changed"
+            subject = 'This email is from Credit Society Committee'
+            email_from = settings.EMAIL_HOST_USER
+            send_mass_mail( subject, message, email_from, recievers )
+            return reverse_lazy('csadmin:members')
 
 class AccountDelete(DeleteView):
     template_name = 'Userdelete.html'
@@ -428,7 +432,7 @@ class LongLoanUpdate(UpdateView):
             UserA=Account.objects.get(pk=id_)
             UserU=User.objects.get(pk=UserA.username_id)
             print("Jd")
-            print(UserA.islongloantaken) 
+            print(UserA.islongloantaken)
             if (UserA.longloanbalance==0):
                 UserA.islongloantaken=True
                 UserA.longloanbalance=UserA.longloanamount
