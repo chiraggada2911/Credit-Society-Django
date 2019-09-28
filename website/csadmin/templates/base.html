@@ -9,19 +9,18 @@
   <meta name="author" content="">
   <link rel="icon" href="../../../../favicon.ico">
 
-  <!-- template for side navbar -->
-
   <title>{%block title%}Dashboard{%endblock%}</title>
+
+  <!-- template for side navbar -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!--bootstrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/css/bootstrap-select.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <!-- <link href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Custom styles for this template -->
   <link href="{% static 'status/css/dashboard.css'%}" rel="stylesheet">
   <!-- <link href="{% static 'status/css/committee.css'%}" rel="stylesheet"> -->
@@ -101,6 +100,13 @@
                 <i class="fa fa-paper-plane"></i>
                 Message
               </a>
+            </li>
+            <li class="nav-item {{notifications}} ">
+              <a class="nav-link" href="{%url 'csadmin:notifications'%}">
+              <i class="fa fa-bell"></i>
+              <span>Notifications</span>
+              <span class="badge badge-pill badge-warning notification">{{noofnoti}}</span>
+            </a>
             </li>
             <li class="nav-item ">
               <a class="nav-link" href="{%url 'logout' %}">

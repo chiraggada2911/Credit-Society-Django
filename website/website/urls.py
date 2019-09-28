@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from status import views
+from django.conf.urls import handler404
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +25,4 @@ urlpatterns = [
     path('csadmin/', include('csadmin.urls')),
     path('',include('landingPage.urls')),
     #path('',Home.as_view()),
-
 ]

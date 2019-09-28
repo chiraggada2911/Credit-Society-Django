@@ -14,6 +14,7 @@ urlpatterns = [
     path('loans', views.loansadmin,name="loansadmin"),
     path('change', views.change,name="change"),
     path('message', views.message,name="message"),
+    path('notifications', views.notifications,name="notifications"),
 
     # new create urls
     path('usercreate', login_required(views.UserCreate.as_view()),name='user_create'),
@@ -24,6 +25,7 @@ urlpatterns = [
 
     # delete user url
     path('<int:id>/delete/',login_required(views.AccountDelete.as_view()),name='User_Delete'),
+    url(r'^delete/(?P<part_id>[0-9]+)/$', views.notidelete,name='Notification_Delete'),
     path('userdelete', login_required(views.UserDelete),name='user_delete'),
 
     # individual details update

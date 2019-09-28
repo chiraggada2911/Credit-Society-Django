@@ -45,9 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'autotask',
     'django_filters',
-    #for mass 
-    'djcelery_email',
-    # 'django_popup_view_field',
 ]
 
 
