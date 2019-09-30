@@ -170,7 +170,7 @@ md = {
 
     $.notify({
       icon: "add_alert",
-      message: " to <b>Material Dashboard Pro</b> - a beautiful admin panel for every web developer."
+      message: "<b>Requesting...</b><br> you will be charged processing fee of 0.25% of loan amount"
 
     }, {
       type: type[color],
