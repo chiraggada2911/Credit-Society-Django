@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 # models
-from status.models import Account,interests
+from status.models import Account,interests,Notification
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -30,7 +30,7 @@ from dateutil import relativedelta
 import datetime
 
 #send_mail
-from django.core.mail import send_mail
+from django.core.mail import send_mail,send_mass_mail
 import smtplib
 
 #forms
@@ -157,7 +157,7 @@ def message(request):
             print(message)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
-            send_mail( subject, message, email_from, recievers )
+            send_mass_mail( subject, message, email_from, recievers )
             print("mail sent from messanger")
 
         else:
@@ -168,6 +168,20 @@ def message(request):
     }
     return render (request,'messanger.html',context=context)
 
+@login_required
+def notifications(request):
+    noti=Notification.objects.all()
+    context={
+        'noti':noti,
+        'notifications':"active",
+        'noofnoti': "3",
+    }
+    return render (request,'notifications_admin.html',context=context)
+
+def notidelete(request,part_id =None):
+    object = Notification.objects.get(id=part_id)
+    object.delete()
+    return redirect(reverse('notifications'))
 
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
@@ -215,14 +229,18 @@ class InterestsUpdate(CreateView):
             }
             return context
 
-        # def get_success_url(self):
-        #     Users=User.objects.all()
-        #     message="interests rates changed"
-        #     subject = 'This email is from Credit Society Committee'
-        #     email_from = settings.EMAIL_HOST_USER
-        #     recievers=[Users.email]
-        #     send_mail( subject, message, email_from, recievers )
-        #     return reverse_lazy('csadmin:members')
+        def get_success_url(self):
+            recievers=[]
+            users = User.objects.all()
+            for i in users.iterator():
+                user_email = i.email
+                print(user_email)
+                recievers.append(i.email)
+            message="interests rates changed"
+            subject = 'This email is from Credit Society Committee'
+            email_from = settings.EMAIL_HOST_USER
+            send_mass_mail( subject, message, email_from, recievers )
+            return reverse_lazy('csadmin:members')
 
 class AccountDelete(DeleteView):
     template_name = 'Userdelete.html'
@@ -286,6 +304,9 @@ class Downpayment(UpdateView):
             print('downpayment')
             print(residue)
             UserA.longloanbalance=residue
+            if (UserA.longloanbalance==0):
+                UserA.islongloantaken=False
+                UserA.displaydownpayment=0
             UserA.save()
             return reverse_lazy('csadmin:fixeddeposits')
 
@@ -418,11 +439,6 @@ class LongLoanUpdate(UpdateView):
             UserA=Account.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
             validate=False
-            print(UserA)
-            print('Long loan update')
-            print(type(UserA.longloanamount))
-            print(type(UserA.longloanperiod))
-            print(UserA.islongloantaken)
             if (UserA.longloanbalance<=(UserA.longloanamount*50)/100):
                 validate=True
             context={
@@ -441,12 +457,16 @@ class LongLoanUpdate(UpdateView):
             id_=self.kwargs.get("pk")
             UserA=Account.objects.get(pk=id_)
             UserU=User.objects.get(pk=UserA.username_id)
-            print(UserU)
-            if UserA.islongloantaken==True:
-                UserA.longloanbalance=UserA.longloanbalance+UserA.longloanadditional
-            elif UserA.islongloantaken==False:
+            print("Jd")
+            print(UserA.islongloantaken)
+            if (UserA.longloanbalance==0):
                 UserA.islongloantaken=True
                 UserA.longloanbalance=UserA.longloanamount
+            elif(UserA.longloanbalance!=0):
+                UserA.longloanbalance=UserA.longloanbalance+UserA.longloanadditional
+                UserA.longloanamount=UserA.longloanamount+UserA.longloanadditional
+                UserA.islongloantaken=True
+                print("jatin")
             UserA.save()
             print("Long Loan Updated Mail")
             print(UserU.email)
@@ -490,6 +510,10 @@ class EmerLoanUpdate(UpdateView):
             UserA=Account.objects.get(pk=id_)
             UserU=User.objects.get(pk=UserA.username_id)
             print(UserU)
+            if (UserA.emerloanbalance==0):
+                UserA.isloanemertaken=True
+                UserA.emerloanbalance=UserA.emerloanamount
+            UserA.save()
             print("Emergency loan updated mail")
             print(UserU.email)
             messages.success(self.request, 'Mail sent')
@@ -531,6 +555,11 @@ class SharesUpdate(UpdateView):
             UserA=Account.objects.get(pk=id_)
             UserU=User.objects.get(pk=UserA.username_id)
             print(UserU)
+            if(UserA.shareamount==0):
+                UserA.cdamount=UserA.sharevalue
+            elif(UserA.cdamount==0):
+                UserA.shareamount=UserA.sharevalue
+            UserA.save()
             print("shares updated mail")
             print(UserU.email)
             messages.success(self.request, 'Mail sent')
@@ -570,14 +599,8 @@ def calcinvest():
     Interests=interests.objects.all().last()
     #share parameters
     for i in  Members.iterator():
-        if(i.sharevalue==0 and i.shareamount==0):
-            i.sharevalue=i.cdamount
-        elif(i.sharevalue==0 and i.cdamount==0):
-            i.sharevalue=i.shareamount
         if(i.totalinvestment==0):
             i.totalinvestment=i.sharebalance+i.cdbalance
-
-
         i.totalinvestment=i.totalinvestment+(i.sharevalue)
         if (i.totalinvestment >= 50000):
             i.cdbalance = i.totalinvestment - 50000
@@ -609,15 +632,9 @@ def longloan():
         print(A)
         if(N!=0):
             if(i.longloanprinciple==0 and i.longloanamount==0):
-                EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.longloanemi=EMI
-                interestamount=R*A
-                print(interestamount)
-                i.longloaninterestamount=interestamount
-                print(interestamount)
-                principle=i.longloanemi-interestamount
-                i.longloanprinciple=principle
-                print(principle)
+                i.longloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.longloaninterestamount=R*A
+                i.longloanprinciple=i.longloanemi-interestamount
                 i.longloanbalance=i.longloanamount-i.longloanprinciple
                 print(i.longloanbalance)
             elif(i.longloanbalance<=i.longloanemi and i.longloanbalance!=0):
@@ -634,16 +651,10 @@ def longloan():
                 i.displaydownpayment=0
                 i.islongloantaken=False
             else:
-                EMI=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                print(EMI)
-                i.longloanemi=EMI
-                interestamount=R*i.longloanbalance
-                i.longloaninterestamount=interestamount
-                print(interestamount)
-                principle=EMI-interestamount
-                i.longloanprinciple=principle
-                print(principle)
-                i.longloanbalance=i.longloanbalance-principle
+                i.longloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.longloaninterestamount=R*i.longloanbalance
+                i.longloanprinciple=i.longloanemi-i.longloaninterestamount
+                i.longloanbalance=i.longloanbalance-i.longloanprinciple
                 print("jd is best")
                 print(type(i.longloanbalance))
         i.save()
@@ -667,14 +678,10 @@ def emergencyloan():
         print(A)
         if(N!=0):
             if(i.emerloanbalance==0 and i.emerloanprinciple==0):
-                EMI=(A*R*(1+R)*N)/(((1+R)*N)-1)
-                interestamount=R*A
-                i.emerloaninterestamount=interestamount
-                print(interestamount)
-                principle=EMI-interestamount
-                i.emerloanprinciple=principle
-                print(principle)
-                i.emerloanbalance=i.emerloanamount-principle
+                i.emerloanemi=(A*R*(1+R)*N)/(((1+R)*N)-1)
+                i.emerloaninterestamount=R*A
+                i.emerloanprinciple=i.emerloanemi-i.emerloaninterestamount
+                i.emerloanbalance=i.emerloanamount-i.emerloanprinciple
                 print(i.emerloanbalance)
 
             elif(i.emerloanbalance==0):
@@ -687,15 +694,10 @@ def emergencyloan():
                 i.isemerloantaken=False
 
             else:
-                EMI=(A*R*(1+R)*N)/(((1+R)*N)-1)
-                print(EMI)
-                interestamount=R*i.emerloanbalance
-                i.emerloaninterestamount=interestamount
-                print(interestamount)
-                principle=EMI-interestamount
-                i.emerloanprinciple=principle
-                print(principle)
-                i.emerloanbalance=i.emerloanbalance-principle
+                i.emerloanemi=(A*R*(1+R)*N)/(((1+R)*N)-1)
+                i.emerloaninterestamount=R*i.emerloanbalance
+                i.emerloanprinciple=i.emerloanemi-i.emerloaninterestamount
+                i.emerloanbalance=i.emerloanbalance-i.emerloanprinciple
         i.totalamount=i.shareamount+i.cdamount+i.longloanprinciple+i.longloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
         i.save()
 

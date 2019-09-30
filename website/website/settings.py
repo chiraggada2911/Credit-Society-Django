@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'autotask',
     'django_filters',
-    # 'django_popup_view_field',
 ]
 
 

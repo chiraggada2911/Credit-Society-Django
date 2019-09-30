@@ -15,14 +15,14 @@
             <table>
               {%if islongloantaken is False%}
               <tr>
-                  <div class="col-md-4">
-                      <div class="form-group">
-                <th><label for="id_username" class="bmd-label-floating">Username:</label></th>
-                <td><select name="username"  class="form-control" required id="id_username">
-                    <option value={{Userid}} selected>{{username}}</option>
-                  </select></td>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th><label for="id_username" class="bmd-label-floating">Username:</label></th>
+                    <td><select name="username" class="form-control" required id="id_username">
+                        <option value={{Userid}} selected>{{username}}</option>
+                      </select></td>
+                  </div>
                 </div>
-              </div>
               </tr>
               <!-- <tr>
                 <th><label for="id_islongloantaken">Is Long Loan Taken:</label></th>
@@ -32,7 +32,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <th> <label for="id_longloanamount" class="bmd-label-floating">Long Loan Amount:</label></th>
-                    <td> <input type="number" name="longloanamount" value="{{longloanamt}}" step="1000"
+                    <td> <input type="number" name="longloanamount" value="{{longloanamt}}" step="100"
                         id="id_longloanamount" class="form-control"></td>
                   </div>
                 </div>
@@ -49,14 +49,14 @@
               </tr>
               {%elif islongloantaken is True and validate is True%}
               <tr>
-                  <div class="col-md-4">
-                      <div class="form-group">
-                <th><label for="id_username" class="bmd-label-floating">Username:</label></th>
-                <td><select name="username"  class="form-control" required id="id_username">
-                    <option value={{Userid}} selected>{{username}}</option>
-                  </select></td>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th><label for="id_username" class="bmd-label-floating">Username:</label></th>
+                    <td><select name="username" class="form-control" required id="id_username">
+                        <option value={{Userid}} selected>{{username}}</option>
+                      </select></td>
+                  </div>
                 </div>
-              </div>
               </tr>
               <!-- <tr>
                 <th><label for="id_islongloantaken">Is Long Loan Taken:</label></th>
@@ -66,40 +66,39 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <th> <label for="id_longloanadditional" class="bmd-label-floating">Long Loan Addition:</label></th>
-                    <td> <input type="number" name="longloanadditional" value="{{longloanadd}}" step="1000"
+                    <td> <input type="number" name="longloanadditional" value="{{longloanadd}}" step="100"
                         id="id_longloanadditional" class="form-control"></td>
-                  </div>
-                </div>
-              </tr>
-              <tr>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <th> <label for="id_longloanperiod" class="bmd-label-floating">Long Loan Period(In Months):</label>
-                    </th>
-                    <td> <input type="number" name="longloanperiod" value="{{longloanprd}}" step="1"
-                        id="id_longloanperiod" class="form-control"></td>
                   </div>
                 </div>
               </tr>
               {%elif validate is False%}
               <tr>
-                  <div class="col-md-4">
-                      <div class="form-group">
-                        <th> <label for="id_longloanperiod" class="bmd-label-floating">Long Loan Period(In Months):</label>
-                        </th>
-                        <td> <input type="number" name="longloanperiod" value="{{longloanprd}}" step="1"
-                            id="id_longloanperiod" class="form-control"></td>
-                      </div>
-                    </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th> <label>Previous Loan has not been paid</label>
+                    </th>
+                  </div>
+                </div>
               </tr>
               {% endif %}
             </table>
+            {%if islongloantaken is False%}
             <div class="form-group " style="margin-top:20px">
               <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-primary " onclick="md.showNotification('bottom','right','Long Loan details has been updated')">
+                <button class="btn btn-primary ">
                   <i class="material-icons">check</i> SAVE DETAILS
                 </button>
               </div>
+            </div>
+            {%elif islongloantaken is True and validate is True%}
+            <div class="form-group " style="margin-top:20px">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-primary ">
+                  <i class="material-icons" onclick="md.showNotification('bottom','right','Long Loan details has been updated')">check</i> SAVE DETAILS
+                </button>
+              </div>
+            </div>
+            {% endif %}
           </form>
         </div>
       </div>
