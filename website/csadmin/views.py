@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 # models
-from status.models import Account,interests,Notification
+from status.models import Account,interests,Notification,FixedDeposits
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -18,7 +18,7 @@ from django.dispatch import receiver
 from django.contrib import messages
 
 #filter
-from .filters import AccountFilter,UserFilter
+from .filters import AccountFilter,UserFilter,FDFilter
 
 #for background tasks
 from autotask.tasks import cron_task
@@ -81,15 +81,19 @@ def members(request):
 @login_required
 def fixeddeposits(request):
     users=Account.objects.all()
+    userF=FixedDeposits.objects.all().order_by('fdmaturitydate')
     Interests=interests.objects.all().last()
     noofnoti=Notification.objects.all().count()
     acc_filter = AccountFilter(request.GET, queryset=users)
+    foo=FixedDeposits.objects.select_related('username').all().order_by('fdmaturitydate')
+    acc_filter = FDFilter(request.GET, queryset=foo)
     context={
         'fdadmin':users,
         'Interests':Interests,
         'Bank':"active",
         'filter': acc_filter,
         'noofnoti':noofnoti,
+        'bo':foo,
     }
     return render (request,'fd_admin.html',context=context)
 
@@ -317,28 +321,55 @@ class Downpayment(UpdateView):
             UserA.save()
             return reverse_lazy('csadmin:fixeddeposits')
 
+class FDCreate(CreateView):
+    model=FixedDeposits
+    form_class=FDUpdateForm
+    template_name='fixeddeposits_update_form.html'
+    success_url=reverse_lazy('csadmin:fixeddeposits')
+
+    def get_context_data(self,**kwargs):
+        id_=self.kwargs.get("pk")
+        userA=Account.objects.get(pk=id_)
+        idate=date.today()
+        print(idate)
+        context = super(CreateView, self).get_context_data(**kwargs)
+        context={
+            'username':userA.name,
+            'Userid':userA.id,
+            'i_date':idate,
+        }
+        return context
+
+        def get_success_url(self):
+            id_=self.kwargs.get("pk")
+            userA=Account.objects.get(pk=id_)
+            userF=FixedDeposits.objects.all().last()
+            print("All ok")
+            print(userF.username)
+            return reverse_lazy('csadmin:fixeddeposits')
+
+
 class FDUpdate(UpdateView):
-        model=Account
+        model=FixedDeposits
         form_class = FDUpdateForm
         template_name = 'fixeddeposits_update_form.html'
         success_url=reverse_lazy('csadmin:fixeddeposits')
 
         def get_object(self):
             id_=self.kwargs.get("pk")
-            UserA=Account.objects.get(pk=id_)
+            UserA=FixedDeposits.objects.get(pk=id_)
             print(UserA.name)
-            return get_object_or_404(Account,pk=id_)
+            return get_object_or_404(FixedDeposits,pk=id_)
 
         def get_context_data(self, **kwargs):
             id_=self.kwargs.get("pk")
-            UserA=Account.objects.get(pk=id_)
+            UserA=FixedDeposits.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
             Newdate = datetime.date.today()
             print(UserA)
             print('FD update ')
             context={
                 'Userid':UserA.username_id,
-                'username':UserA.name,
                 'userfddate':UserA.fdmaturitydate,
                 'userfdamt':UserA.fdcapital,
                 'i_date':Newdate,
