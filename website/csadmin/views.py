@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 # models
-from status.models import Account,interests
+from status.models import Account,interests,Notification
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -168,6 +168,20 @@ def message(request):
     }
     return render (request,'messanger.html',context=context)
 
+@login_required
+def notifications(request):
+    noti=Notification.objects.all()
+    context={
+        'noti':noti,
+        'notifications':"active",
+        'noofnoti': "3",
+    }
+    return render (request,'notifications_admin.html',context=context)
+
+def notidelete(request,part_id =None):
+    object = Notification.objects.get(id=part_id)
+    object.delete()
+    return redirect(reverse('notifications'))
 
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
