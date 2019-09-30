@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #models
-from status.models import Account,interests
+from status.models import Account,interests,Notification
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -24,6 +24,18 @@ import smtplib
 from status.utils import render_to_pdf
 
 from csadmin import views
+
+def error_404_view(request, exception):
+    data = {"name": "ThePythonDjango.com"}
+    return render(request,'status/error_404.html', data)
+
+def notisave(notificationmessage,senderid):
+    notification=Notification()
+
+    notification.notimessage=notificationmessage
+    notification.sender_id=senderid
+    notification.save()
+
 
 def custlogin(request):
     if request.user.is_staff:
@@ -53,6 +65,7 @@ def details(request):
     name=str(Account.name)
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
     Interests=interests.objects.all().last()
+    
 
 #for changing the monthly monthlyDeduction which shld be in the multiple of Rs. 500
     Final_new_change =0
@@ -65,9 +78,9 @@ def details(request):
             subject = 'This guy wants to change his monthly deduction'
             message = Accountholder.name +" : "+str(Final_new_change)
             email_from = settings.EMAIL_HOST_USER
-
             recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
             messages.success(request, 'Mail sent')
+            notisave(str(Final_new_change),request.user.id)
             send_mail( subject, message, email_from, recipient_list )
             print("mail sent")
 

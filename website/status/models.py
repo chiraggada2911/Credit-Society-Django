@@ -47,8 +47,11 @@ class Account(models.Model):
     downpayment=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     displaydownpayment=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     #schema for fixed Deposits
+    # FDCount=models.IntegerField(default=0,null=False)
+    #here FD will change be aware!!!!!!!!
     fdcapital=models.IntegerField(default=0,null=True)
     fdmaturitydate=models.DateField(null=True)
+
     #teaching and nonteaching staff
     teachingstaff=models.BooleanField(default=False)
     nonteachingstaff=models.BooleanField(default=False)
@@ -64,3 +67,16 @@ class interests(models.Model):
     emerloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloaninterest=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     year=models.CharField(default=0,max_length=50,null=True)
+
+class Notification(models.Model):
+    notimessage=models.CharField(default=0,max_length=50,null=True)
+    notidate=models.DateField(null=False,default=datetime.date.today())
+    seen=models.BooleanField(default=False)
+    sender=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return str(self.sender)
+
+# class FixedDeposits(models.Model):
+#     username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=True)
+    

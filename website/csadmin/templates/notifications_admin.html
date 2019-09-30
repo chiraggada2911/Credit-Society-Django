@@ -1,0 +1,51 @@
+{%extends 'base.html'%}
+
+{%block title%}Bank{%endblock%}
+{%block content%}
+
+<!-- template for csadmin:fd -->
+
+<main role="main" class="col-md-8 col-lg-12 px-4">
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header-primary">
+              <h2 class="h2">Rate of Interest</h2>
+              <!-- this will clear the all notifications -->
+              <a href="#modal"><button type="button" class="btn btn-primary pull-right"
+                  style="background: linear-gradient(45deg, #06beb6, #48b1bf);" name="button">Clear all</button></a>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Message</th>
+                      <th>Sender</th>
+                      <th>delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%for i in noti%}
+                    <tr>
+                      <td>{{i.notidate}}</td>
+                      <td>{{i.notimessage}}</td>
+                      <td>{{i.sender}}</td>
+                      <td><a href="{% url 'csadmin:Notification_Delete' i.id %}"><i class="fa fa-trash" aria-hidden="true" style='font-size:15px'></i></a></td>
+                    </tr>
+                    {%endfor%}
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{%endblock%}
