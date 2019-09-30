@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Account
-from .models import interests
+from .models import interests,FixedDeposits
 
 class InterestsForm(forms.ModelForm):
     class Meta:
@@ -20,7 +20,7 @@ class NewUserForm(forms.ModelForm):
 
 class FDUpdateForm(forms.ModelForm):
     class Meta:
-        model=Account
+        model=FixedDeposits
         fields=('username','fdcapital','fdmaturitydate')
 
 class ShareUpdateForm(forms.ModelForm):

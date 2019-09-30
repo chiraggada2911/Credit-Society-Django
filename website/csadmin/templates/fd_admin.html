@@ -17,7 +17,7 @@
               <form method="get">
                 <div class="input-group " style='width:65%'>
                 <table>
-                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Search" id="id_name">
+                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="fdcapital" placeholder="Search" id="id_fdcapital">
                 <button type="button" class="btn btn-round btn-just-icon" name="button"><i class="material-icons">search</i></button>
                 </table>
               </div>
@@ -37,8 +37,7 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>A/C No.</th>
-                      <th>SapId</th>
+
                       <th>Name</th>
                       <th>FD Capital</th>
                       <th>Maturity Date</th>
@@ -50,9 +49,7 @@
               {%for i in filter.qs%}
                     {%if i.fdcapital != 0%}
                 <tr>
-                  <td>{{i.accountnumber}}</td>
-                  <td>{{i.sapid}}</td>
-                  <td>{{i.name}}</td>
+                  <td>{{i.username}}</td>
                   <td>{{i.fdcapital}}</td>
                   <td>{{i.fdmaturitydate}}</td>
                     {%endif%}
