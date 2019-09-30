@@ -31,7 +31,6 @@ def error_404_view(request, exception):
 
 def notisave(notificationmessage,senderid):
     notification=Notification()
-
     notification.notimessage=notificationmessage
     notification.sender_id=senderid
     notification.save()
@@ -76,11 +75,11 @@ def details(request):
             Final_new_change = New_money_change.cleaned_data['new_amount']
 
             subject = 'This guy wants to change his monthly deduction'
-            message = Accountholder.name +" : "+str(Final_new_change)
+            message = "Change Monthly Deduction of " + Accountholder.name +" to Rs."+str(Final_new_change)
             email_from = settings.EMAIL_HOST_USER
             recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
             messages.success(request, 'Mail sent')
-            notisave(str(Final_new_change),request.user.id)
+            notisave(str(message),request.user.id)
             send_mail( subject, message, email_from, recipient_list )
             print("mail sent")
 
@@ -164,11 +163,12 @@ def loanuser(request):
                     Loan_Choice=loanreq.cleaned_data['loanChoice']
                     print(Loan_Choice)
                     subject = 'This guy wants a loan'
-                    message = Accountholder.name +" : "+ Loan_Choice +"  "+Loan_Amount
+                    message = Accountholder.name +" has requested for "+ Loan_Choice +" of Rs "+Loan_Amount
                     email_from = settings.EMAIL_HOST_USER
                     type="success"
                     recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
                     messages.success(request, 'Mail sent')
+                    notisave(str(message),request.user.id)
                     send_mail( subject, message, email_from, recipient_list )
                     print("mail sent")
                 elif Accountholder.nonteachingstaff==True and loan_amount <= 900000:
@@ -176,11 +176,12 @@ def loanuser(request):
                     Loan_Choice=loanreq.cleaned_data['loanChoice']
                     print(Loan_Choice)
                     subject = 'This guy wants a loan'
-                    message = Accountholder.name +" : "+ Loan_Choice +"  "+Loan_Amount
+                    message = Accountholder.name +" has requested for "+ Loan_Choice +" of Rs "+Loan_Amount
                     email_from = settings.EMAIL_HOST_USER
                     type="success"
                     recipient_list = ['jatinhdalvi@gmail.com','aashulikabra@gmail.com','champtem11@gmail.com']
                     messages.success(request, 'Mail sent')
+                    notisave(str(message),request.user.id)
                     send_mail( subject, message, email_from, recipient_list )
                     print("mail sent")
 
