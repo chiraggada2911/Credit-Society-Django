@@ -41,14 +41,22 @@ from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FD
 def index(request):
     return render (request,'index.html')
 
+# @login_required
+# def notisave(notificationmessage,senderid):
+#     notification=Notification()
+#     notification.notimessage=notificationmessage
+#     notification.sender_id=senderid
+#     notification.save()
 
 @login_required
 def index(request):
     Members=Account.objects.all()
+    noofnoti=Notification.objects.all().count()
     acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
         'dashb':"active",
         'Members':Members,
+        'noofnoti':noofnoti,
         'filter': acc_filter,
     }
     return render (request,'console.html',context=context)
@@ -58,12 +66,14 @@ def index(request):
 def members(request):
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
+    noofnoti=Notification.objects.all().count()
     acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
         'Members':Members,
         'Interests':Interests,
         'member':"active",
         'filter': acc_filter,
+        'noofnoti':noofnoti,
     }
     return render (request,'members.html',context=context)
 
@@ -72,12 +82,14 @@ def members(request):
 def fixeddeposits(request):
     users=Account.objects.all()
     Interests=interests.objects.all().last()
+    noofnoti=Notification.objects.all().count()
     acc_filter = AccountFilter(request.GET, queryset=users)
     context={
         'fdadmin':users,
         'Interests':Interests,
         'Bank':"active",
         'filter': acc_filter,
+        'noofnoti':noofnoti,
     }
     return render (request,'fd_admin.html',context=context)
 
@@ -86,12 +98,14 @@ def fixeddeposits(request):
 def loansadmin(request):
     Loansadmin=Account.objects.all()
     Interests=interests.objects.all().last()
+    noofnoti=Notification.objects.all().count()
     acc_filter = AccountFilter(request.GET, queryset=Loansadmin)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
         'loan':"active",
         'filter': acc_filter,
+        'noofnoti':noofnoti,
     }
     return render (request,'loans_admin.html',context=context)
 
@@ -100,6 +114,7 @@ def loansadmin(request):
 def change(request):
 
     Interest=interests.objects.all().last()
+    noofnoti=Notification.objects.all().count()
     Interests=interests.objects.all
     if request.method=="POST":
 
@@ -124,6 +139,7 @@ def change(request):
         'Interest':Interest,
         'Interests':Interests,
         'money':"active",
+        'noofnoti':noofnoti,
     }
 
     return render (request,'change.html',context=context)
@@ -134,6 +150,7 @@ def message(request):
     recievers = []
     user=Account.objects.all
     users = User.objects.all()
+    noofnoti=Notification.objects.all().count()
     for i in users.iterator():
         user_email = i.email
         print(user_email)
@@ -153,23 +170,25 @@ def message(request):
     context={
 
         'message':"active",
+        'noofnoti':noofnoti,
     }
     return render (request,'messanger.html',context=context)
 
 @login_required
 def notifications(request):
     noti=Notification.objects.all()
+    noofnoti=Notification.objects.all().count()
     context={
         'noti':noti,
         'notifications':"active",
-        'noofnoti': "3",
+        'noofnoti':noofnoti,
     }
     return render (request,'notifications_admin.html',context=context)
 
 def notidelete(request,part_id =None):
     object = Notification.objects.get(id=part_id)
     object.delete()
-    return redirect(reverse('notifications'))
+    return redirect('csadmin:notifications')
 
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
@@ -646,9 +665,6 @@ def longloan():
 def emergencyloan():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
-    sharebalance = 0
-    cdbalance = 0
-
     #Emergencyloan parameters
     Rate=Interests.emerloaninterest
     R=Rate/(12*100) #rate of interest for each month

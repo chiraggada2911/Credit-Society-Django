@@ -36,10 +36,10 @@
             {% endif %}
 
             {% if Accountholder.teachingstaff is True %}
-            <h4>You can apply for long loan up to &#x20b9;16,00,000</h4>
+            <h4>You can apply for long loan up to &#x20b9;12,00,000</h4>
             {% endif %}
             {% if Accountholder.nonteachingstaff is True %}
-            <h4>You can apply for long loan up to &#x20b9;12,00,000</h4>
+            <h4>You can apply for long loan up to &#x20b9;9,00,000</h4>
             {% endif %}
 
 
@@ -51,8 +51,8 @@
             <h2 style="padding-top:50px"></h2>
 
             <form class=" radio" method="POST">
-              <input type="radio" name="loanChoice" value="normal_loan"> Normal Loan
-              <input type="radio" name="loanChoice" value="emergency_loan"> Emergency Loan
+              <input type="radio" name="loanChoice" value="Normal loan"> Normal Loan
+              <input type="radio" name="loanChoice" value="Emergency loan"> Emergency Loan
               <div class="radio">
               <div class="lw-field">
                 <input class="lw-input" autocomplete="off" name="loan_amount" id="loan_amnt" type="numeric"
