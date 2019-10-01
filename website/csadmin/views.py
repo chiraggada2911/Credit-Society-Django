@@ -84,8 +84,7 @@ def fixeddeposits(request):
     userF=FixedDeposits.objects.all().order_by('fdmaturitydate')
     Interests=interests.objects.all().last()
     noofnoti=Notification.objects.all().count()
-    # acc_filter = AccountFilter(request.GET, queryset=users)
-    foo=FixedDeposits.objects.select_related().all().order_by('fdmaturitydate')
+    foo=FixedDeposits.objects.prefetch_related('username').order_by('fdmaturitydate')
     acc_filter = FDFilter(request.GET, queryset=foo)
     context={
         'fdadmin':users,

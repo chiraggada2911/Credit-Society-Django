@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #models
-from status.models import Account,interests,Notification
+from status.models import Account,interests,Notification,FixedDeposits
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -64,7 +64,7 @@ def details(request):
     name=str(Account.name)
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
     Interests=interests.objects.all().last()
-    
+
 
 #for changing the monthly monthlyDeduction which shld be in the multiple of Rs. 500
     Final_new_change =0
@@ -113,6 +113,8 @@ def shares(request):
 
     current_user_id=request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+    print("boo")
+    print(Accountholder.id)
     context={
         'Accountholder':Accountholder,
         'share':"active",
@@ -125,11 +127,15 @@ def fixedDeposits(request):
 
     current_user_id=request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+    userF=FixedDeposits.objects.filter(username_id=Accountholder.id)
+    print("foo")
+    # userF=FixedDeposits.objects.filter(id__id__icontains=Accountholder.id).get()
     Interests=interests.objects.all().last()
 
     context={
         'Accountholder':Accountholder,
         'Interests':Interests,
+        'userF':userF,
         'fixed':"active",
     }
     return render (request,'fixedDeposits.html',context=context)
