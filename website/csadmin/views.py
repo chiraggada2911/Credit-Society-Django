@@ -84,8 +84,8 @@ def fixeddeposits(request):
     userF=FixedDeposits.objects.all().order_by('fdmaturitydate')
     Interests=interests.objects.all().last()
     noofnoti=Notification.objects.all().count()
-    acc_filter = AccountFilter(request.GET, queryset=users)
-    foo=FixedDeposits.objects.select_related('username').all().order_by('fdmaturitydate')
+    # acc_filter = AccountFilter(request.GET, queryset=users)
+    foo=FixedDeposits.objects.select_related().all().order_by('fdmaturitydate')
     acc_filter = FDFilter(request.GET, queryset=foo)
     context={
         'fdadmin':users,
@@ -354,13 +354,13 @@ class FDUpdate(UpdateView):
         form_class = FDUpdateForm
         template_name = 'fixeddeposits_update_form.html'
         success_url=reverse_lazy('csadmin:fixeddeposits')
-
-        def get_object(self):
-            id_=self.kwargs.get("pk")
-            UserA=FixedDeposits.objects.get(pk=id_)
-            print(UserA.name)
-            return get_object_or_404(FixedDeposits,pk=id_)
-
+        #
+        # def get_object(self):
+        #     id_=self.kwargs.get("pk")
+        #     UserA=FixedDeposits.objects.get(pk=id_)
+        #     print(UserA.name)
+        #     return get_object_or_404(FixedDeposits,pk=id_)
+        #
         def get_context_data(self, **kwargs):
             id_=self.kwargs.get("pk")
             UserA=FixedDeposits.objects.get(pk=id_)
@@ -370,93 +370,94 @@ class FDUpdate(UpdateView):
             print('FD update ')
             context={
                 'Userid':UserA.username_id,
+                'username':UserA.username,
                 'userfddate':UserA.fdmaturitydate,
                 'userfdamt':UserA.fdcapital,
                 'i_date':Newdate,
             }
             return context
-
-        def get_success_url(self):
-            id_=self.kwargs.get("pk")
-            UserA=Account.objects.get(pk=id_)
-            UserU=User.objects.get(pk=UserA.username_id)
-            print(UserU)
-            print("FD updated Mail")
-            print(UserU.email)
-            messages.success(self.request, 'Mail sent')
-            message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Fixed Deposit Capital is updated to " + str(UserA.fdcapital)
-            subject = 'This email is from Credit Society Committee'
-            email_from = settings.EMAIL_HOST_USER
-            recievers=[UserU.email]
-            send_mail( subject, message, email_from, recievers )
-            print("mail sent from suc for update in fdcapital")
-            return reverse_lazy('csadmin:fixeddeposits')
+        #
+        # def get_success_url(self):
+        #     id_=self.kwargs.get("pk")
+        #     UserA=Account.objects.get(pk=id_)
+        #     UserU=User.objects.get(pk=UserA.username_id)
+        #     print(UserU)
+        #     print("FD updated Mail")
+        #     print(UserU.email)
+        #     messages.success(self.request, 'Mail sent')
+        #     message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Fixed Deposit Capital is updated to " + str(UserA.fdcapital)
+        #     subject = 'This email is from Credit Society Committee'
+        #     email_from = settings.EMAIL_HOST_USER
+        #     recievers=[UserU.email]
+        #     send_mail( subject, message, email_from, recievers )
+        #     print("mail sent from suc for update in fdcapital")
+        #     return reverse_lazy('csadmin:fixeddeposits')
 
         def post(self,request,**kwargs):
             id_=self.kwargs.get("pk")
-            Members=Account.objects.get(pk=id_)
+            userF=FixedDeposits.objects.get(pk=id_)
+            Members=Account.objects.get(pk=userF.username_id)
+            UserU=User.objects.get(pk=Members.username_id)
             Interests=interests.objects.all().last()
             datetoday=datetime.date.today()
-            date_diff_fd = (relativedelta.relativedelta(Members.fdmaturitydate,datetoday))
-            print("date")
-            print(date_diff_fd)
+            date_diff_fd = (relativedelta.relativedelta(userF.fdmaturitydate,datetoday))
 
-            UserU=User.objects.get(pk=Members.username_id)
-            # datetoday=datetime.date.today()
             if "renew_button" in request.POST:
-                # date_diff_fd = (relativedelta.relativedelta(Members.fdmaturitydate,datetoday))
-                print(Members.fdmaturitydate)
-                print(type(Members.fdmaturitydate))
+                date_diff_fd = (relativedelta.relativedelta(userF.fdmaturitydate,datetoday))
+                print(userF.fdmaturitydate)
+                print(type(userF.fdmaturitydate))
                 # print(Members.fdmaturitydate.year + 1 )
-                if (Members.fdmaturitydate.year%4==0 and Members.fdmaturitydate.year%100!=0 or Members.fdmaturitydate.year%400==0):
-                    Members.fdmaturitydate=Members.fdmaturitydate + datetime.timedelta(days=366)
-                    SimpleInterest=Members.fdcapital*Interests.fdinterest/100
+                if (userF.fdmaturitydate.year%4==0 and userF.fdmaturitydate.year%100!=0 or userF.fdmaturitydate.year%400==0):
+                    userF.fdmaturitydate=userF.fdmaturitydate + datetime.timedelta(days=366)
+                    SimpleInterest=userF.fdcapital*Interests.fdinterest/100
 
-                    Members.fdcapital=Members.fdcapital+SimpleInterest
-                    message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(Members.fdmaturitydate)
-                    subject = 'This email is from Credit Society Committee'
+                    userF.fdcapital=userF.fdcapital+SimpleInterest
+                    message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(userF.fdmaturitydate)
+                    subject = 'This email is from Credit Society Committee regarding your Fixed Deposit'
                     email_from = settings.EMAIL_HOST_USER
                     recievers=[UserU.email]
                     send_mail( subject, message, email_from, recievers )
-                    print("mail sent of fdcapital")
+                    print("mail sent for FD renewal")
                 else:
-                    Members.fdmaturitydate=Members.fdmaturitydate + datetime.timedelta(days=365)
-                    SimpleInterest=Members.fdcapital*Interests.fdinterest/100
-                    Members.fdcapital=Members.fdcapital+SimpleInterest
-                    Members.fdcapital=Members.fdcapital+SimpleInterest
-                    message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(Members.fdmaturitydate)
-                    subject = 'This email is from Credit Society Committee'
+                    userF.fdmaturitydate=userF.fdmaturitydate + datetime.timedelta(days=365)
+                    SimpleInterest=userF.fdcapital*Interests.fdinterest/100
+                    userF.fdcapital=userF.fdcapital+SimpleInterest
+                    # this was twice here !!!!!!!!!!!
+                    # userF.fdcapital=userF.fdcapital+SimpleInterest
+                    message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(userF.fdmaturitydate)
+                    subject = 'This email is from Credit Society Committee  regarding your Fixed Deposit'
                     email_from = settings.EMAIL_HOST_USER
                     recievers=[UserU.email]
                     send_mail( subject, message, email_from, recievers )
-                    print("mail sent of fdcapital")
+                    print("mail sent of FD renewal")
                 Members.save()
-                # print(date_diff_fd)
 
             if "clr_button" in request.POST:
                 print("clear")
                 if (date_diff_fd.months==-1 or date_diff_fd.days==-1 or date_diff_fd.years==-1):
-                    SimpleInterest=Members.fdcapital*5/100
-                    fd_totalpay=Members.fdcapital+SimpleInterest
+                    SimpleInterest=userF.fdcapital*5/100
+                    fd_totalpay=userF.fdcapital+SimpleInterest
                     print(fd_totalpay)
                     print("fd totalpay")
-                    Members.fdcapital=0
+                    userF.fdcapital=0
+                    message="Dear sir/ma'am your DJSCOE CS account " + str(Members.name) + " your FD has been cleared and Your total amount is " + str(fd_totalpay)
+                    subject = 'This email is from Credit Society Committee regarding your Fixed Deposits'
+                    email_from = settings.EMAIL_HOST_USER
+                    recievers=[UserU.email]
+                    send_mail( subject, message, email_from, recievers )
+                    print("mail sent of fdcapital")
                 else:
-                    SimpleInterest=Members.fdcapital*Interests.fdinterest/100
-                    fd_totalpay=Members.fdcapital+SimpleInterest
+                    SimpleInterest=userF.fdcapital*Interests.fdinterest/100
+                    fd_totalpay=userF.fdcapital+SimpleInterest
                     print(fd_totalpay)
-                    Members.fdcapital=0
-
-                # Members.fdmaturitydate=0
-
-                message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Your total amount" + str(fd_totalpay)
-                subject = 'This email is from Credit Society Committee'
-                email_from = settings.EMAIL_HOST_USER
-                recievers=[UserU.email]
-                send_mail( subject, message, email_from, recievers )
-                print("mail sent of fdcapital")
-
-            Members.save()
+                    userF.fdcapital=0
+                    message="Dear sir/ma'am your DJSCOE CS account " + str(Members.name) + " your FD has been cleared and Your total amount is " + str(fd_totalpay)
+                    subject = 'This email is from Credit Society Committee regarding your Fixed Deposits'
+                    email_from = settings.EMAIL_HOST_USER
+                    recievers=[UserU.email]
+                    send_mail( subject, message, email_from, recievers )
+                    print("mail sent of fdcapital")
+            userF.save()
             return super(FDUpdate, self).post(request)
 
 

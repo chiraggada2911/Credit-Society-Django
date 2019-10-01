@@ -41,17 +41,21 @@
                       <th>Name</th>
                       <th>FD Capital</th>
                       <th>Maturity Date</th>
+                      <th>renew</th>
+                      <th>clear</th>
 
                     </tr>
                   </thead>
                   <tbody>
 
-              {%for i in filter.qs%}
+              {%for i in filter.qs %}
                     {%if i.fdcapital != 0%}
                 <tr>
                   <td>{{i.username}}</td>
                   <td>{{i.fdcapital}}</td>
                   <td>{{i.fdmaturitydate}}</td>
+                  <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}"><i class="fa fa-refresh" aria-hidden="true" style='font-size:15px'></i></a></td>
+                  <td><a href="{% url 'csadmin:fd_update' pk=i.pk %}"><i class="fa fa-thumbs-up" aria-hidden="true" style='font-size:15px'></i></a></td>
                     {%endif%}
 
                 </tr>
