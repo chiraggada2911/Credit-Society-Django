@@ -1,4 +1,5 @@
 {% load static%}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +13,7 @@
   <link rel="stylesheet" href="{% static 'status/vendors/themify-icons/themify-icons.css'%}">
   <link rel="stylesheet" href="{% static 'status/vendors/owl-carousel/owl.theme.default.min.css'%}">
   <link rel="stylesheet" href="{% static 'status/vendors/owl-carousel/owl.carousel.min.css'%}">
-
+  <link rel="stylesheet" href="{% static 'status/scss/style.scss' %}">
   <link rel="stylesheet" href="{% static 'status/css/style.css'%}">
 </head>
 <body>
@@ -21,7 +22,7 @@
     <div class="container">
       <h1>DJ Sanghvi College of Engineering Credit Society</h1>
       <p class="hero-subtitle"></p>
-      <a href="{% url 'login'%}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Click Here</a
+      <a class="button button-outline" href="{% url 'login'%}">Sign in</a>
     </div>
   </section>
   <!--================ Banner Section end =================-->
@@ -43,7 +44,7 @@
 						<li><a href="mailto:info@colorlib.com">Email: info@colorlib.com</a></li>
 					</ul>
 				</div>
-				<div class="col-xl-2 col-sm-6 mb-4 mb-xl-0 single-footer-widget">
+				<!-- <div class="col-xl-2 col-sm-6 mb-4 mb-xl-0 single-footer-widget">
 					<h4>Important Link</h4>
 					<ul>
 						<li><a href="#">WHMCS-bridge</a></li>
@@ -52,12 +53,12 @@
 						<li><a href="#">Shopping Cart</a></li>
 						<li><a href="#">Our Shop</a></li>
 					</ul>
-				</div>
-				<div class="offset-xl-1 col-xl-3 col-sm-6 mb-4 mb-xl-0 single-footer-widget">
+				</div> -->
+				<!-- <div class="offset-xl-1 col-xl-3 col-sm-6 mb-4 mb-xl-0 single-footer-widget">
 					<h4>Newsletter</h4>
-          <p>Heaven fruitful doesn't over lesser in days. Appear creeping seasons deve behold bearing days open</p>
+          <p>Heaven fruitful doesn't over lesser in days. Appear creeping seasons deve behold bearing days open</p> -->
 
-          <div class="form-wrap" id="mc_embed_signup">
+          <!-- <div class="form-wrap" id="mc_embed_signup">
             <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
             method="get">
               <div class="input-group">
@@ -74,7 +75,7 @@
 
 							<div class="info"></div>
             </form>
-          </div>
+          </div> -->
 
 				</div>
 			</div>
@@ -100,7 +101,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="{%static 'status\js\perfect-scrollbar.jquery.min.js'%}"></script>
   <script src="{%static 'status\vendors\owl-carousel\owl.carousel.min.js'%}"></script>
   <script src="{%static 'status\js\jquery.ajaxchimp.min.js'%}"></script>
-  <script src="{%static 'status\js\mail-script.js'%}"></script>
   <script src="{%static 'status\js\main.js'%}"></script>
   {%block content%}{%endblock%}
 </body>

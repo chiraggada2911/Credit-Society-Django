@@ -3,7 +3,7 @@
   ============================================================================================ */
 
 .hero-banner{
-  background: url(../img/banner/hero-banner-bg.png) left center no-repeat;
+  background: url(../images/banner/hero-banner-bg.png) left center no-repeat;
   background-size: cover;
   position: relative;
   z-index: 1;
@@ -96,26 +96,26 @@
   ============================================================================================ */
   .banner-breadcrumb{
     display: inline-block;
-    
+
     .breadcrumb{
       background: transparent;
       padding: 0;
-  
+
       &-item{
         padding: .1rem;
-  
+
         a{
           text-transform: capitalize;
           color: #fff;
         }
-  
+
         &+.breadcrumb-item::before{
           color: #fff;
           padding-left: .2rem;
           padding-right: .4rem;
           // content: "-";
         }
-  
+
         &.active{
           color: #fff;
         }
