@@ -105,7 +105,9 @@
               <a class="nav-link" href="{%url 'csadmin:notifications'%}">
               <i class="fa fa-bell"></i>
               <span>Notifications</span>
+              {%if noofnoti > 0 %}
               <span class="badge badge-pill badge-warning notification">{{noofnoti}}</span>
+              {% endif %}
             </a>
             </li>
             <li class="nav-item ">

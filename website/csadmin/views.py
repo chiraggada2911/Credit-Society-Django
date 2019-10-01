@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 # models
-from status.models import Account,interests,Notification
+from status.models import Account,interests,Notification,FixedDeposits
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -18,7 +18,7 @@ from django.dispatch import receiver
 from django.contrib import messages
 
 #filter
-from .filters import AccountFilter,UserFilter
+from .filters import AccountFilter,UserFilter,FDFilter
 
 #for background tasks
 from autotask.tasks import cron_task
@@ -41,14 +41,22 @@ from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FD
 def index(request):
     return render (request,'index.html')
 
+# @login_required
+# def notisave(notificationmessage,senderid):
+#     notification=Notification()
+#     notification.notimessage=notificationmessage
+#     notification.sender_id=senderid
+#     notification.save()
 
 @login_required
 def index(request):
     Members=Account.objects.all()
+    noofnoti=Notification.objects.all().count()
     acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
         'dashb':"active",
         'Members':Members,
+        'noofnoti':noofnoti,
         'filter': acc_filter,
     }
     return render (request,'console.html',context=context)
@@ -58,12 +66,14 @@ def index(request):
 def members(request):
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
+    noofnoti=Notification.objects.all().count()
     acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
         'Members':Members,
         'Interests':Interests,
         'member':"active",
         'filter': acc_filter,
+        'noofnoti':noofnoti,
     }
     return render (request,'members.html',context=context)
 
@@ -71,13 +81,19 @@ def members(request):
 @login_required
 def fixeddeposits(request):
     users=Account.objects.all()
+    userF=FixedDeposits.objects.all().order_by('fdmaturitydate')
     Interests=interests.objects.all().last()
+    noofnoti=Notification.objects.all().count()
     acc_filter = AccountFilter(request.GET, queryset=users)
+    foo=FixedDeposits.objects.select_related('username').all().order_by('fdmaturitydate')
+    acc_filter = FDFilter(request.GET, queryset=foo)
     context={
         'fdadmin':users,
         'Interests':Interests,
         'Bank':"active",
         'filter': acc_filter,
+        'noofnoti':noofnoti,
+        'bo':foo,
     }
     return render (request,'fd_admin.html',context=context)
 
@@ -86,12 +102,14 @@ def fixeddeposits(request):
 def loansadmin(request):
     Loansadmin=Account.objects.all()
     Interests=interests.objects.all().last()
+    noofnoti=Notification.objects.all().count()
     acc_filter = AccountFilter(request.GET, queryset=Loansadmin)
     context={
         'Loansadmin':Loansadmin,
         'Interests':Interests,
         'loan':"active",
         'filter': acc_filter,
+        'noofnoti':noofnoti,
     }
     return render (request,'loans_admin.html',context=context)
 
@@ -100,6 +118,7 @@ def loansadmin(request):
 def change(request):
     user=Account.objects.all
     Interest=interests.objects.all().last()
+    noofnoti=Notification.objects.all().count()
     Interests=interests.objects.all
     if request.method=="POST":
 
@@ -136,6 +155,7 @@ def change(request):
         'Interest':Interest,
         'Interests':Interests,
         'money':"active",
+        'noofnoti':noofnoti,
     }
 
     return render (request,'change.html',context=context)
@@ -146,6 +166,7 @@ def message(request):
     recievers = []
     user=Account.objects.all
     users = User.objects.all()
+    noofnoti=Notification.objects.all().count()
     for i in users.iterator():
         user_email = i.email
         print(user_email)
@@ -165,23 +186,25 @@ def message(request):
     context={
 
         'message':"active",
+        'noofnoti':noofnoti,
     }
     return render (request,'messanger.html',context=context)
 
 @login_required
 def notifications(request):
     noti=Notification.objects.all()
+    noofnoti=Notification.objects.all().count()
     context={
         'noti':noti,
         'notifications':"active",
-        'noofnoti': "3",
+        'noofnoti':noofnoti,
     }
     return render (request,'notifications_admin.html',context=context)
 
 def notidelete(request,part_id =None):
     object = Notification.objects.get(id=part_id)
     object.delete()
-    return redirect(reverse('notifications'))
+    return redirect('csadmin:notifications')
 
 class UserCreate(CreateView):
     template_name = 'UserCreate.html'
@@ -310,28 +333,55 @@ class Downpayment(UpdateView):
             UserA.save()
             return reverse_lazy('csadmin:fixeddeposits')
 
+class FDCreate(CreateView):
+    model=FixedDeposits
+    form_class=FDUpdateForm
+    template_name='fixeddeposits_update_form.html'
+    success_url=reverse_lazy('csadmin:fixeddeposits')
+
+    def get_context_data(self,**kwargs):
+        id_=self.kwargs.get("pk")
+        userA=Account.objects.get(pk=id_)
+        idate=date.today()
+        print(idate)
+        context = super(CreateView, self).get_context_data(**kwargs)
+        context={
+            'username':userA.name,
+            'Userid':userA.id,
+            'i_date':idate,
+        }
+        return context
+
+        def get_success_url(self):
+            id_=self.kwargs.get("pk")
+            userA=Account.objects.get(pk=id_)
+            userF=FixedDeposits.objects.all().last()
+            print("All ok")
+            print(userF.username)
+            return reverse_lazy('csadmin:fixeddeposits')
+
+
 class FDUpdate(UpdateView):
-        model=Account
+        model=FixedDeposits
         form_class = FDUpdateForm
         template_name = 'fixeddeposits_update_form.html'
         success_url=reverse_lazy('csadmin:fixeddeposits')
 
         def get_object(self):
             id_=self.kwargs.get("pk")
-            UserA=Account.objects.get(pk=id_)
+            UserA=FixedDeposits.objects.get(pk=id_)
             print(UserA.name)
-            return get_object_or_404(Account,pk=id_)
+            return get_object_or_404(FixedDeposits,pk=id_)
 
         def get_context_data(self, **kwargs):
             id_=self.kwargs.get("pk")
-            UserA=Account.objects.get(pk=id_)
+            UserA=FixedDeposits.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
             Newdate = datetime.date.today()
             print(UserA)
             print('FD update ')
             context={
                 'Userid':UserA.username_id,
-                'username':UserA.name,
                 'userfddate':UserA.fdmaturitydate,
                 'userfdamt':UserA.fdcapital,
                 'i_date':Newdate,
@@ -501,6 +551,7 @@ class EmerLoanUpdate(UpdateView):
                 'Userid':UserA.username_id,
                 'emerloanamt':UserA.emerloanamount,
                 'emerloanprd':UserA.emerloanperiod,
+                'isloanemertaken':UserA.isloanemertaken,
                 'username':UserA.name
             }
             return context
@@ -559,6 +610,7 @@ class SharesUpdate(UpdateView):
                 UserA.cdamount=UserA.sharevalue
             elif(UserA.cdamount==0):
                 UserA.shareamount=UserA.sharevalue
+            UserA.Noofshares=(UserA.sharevalue)/100
             UserA.save()
             print("shares updated mail")
             print(UserU.email)
@@ -612,9 +664,6 @@ def calcinvest():
             i.cdbalance=0
             i.shareamount=i.sharevalue
             i.cdamount=0
-        print("shareamount")
-        print(i.shareamount)
-        i.Noofshares=(i.sharevalue)/100
         i.save()
 
 @cron_task(crontab="* * * * *")
@@ -628,15 +677,12 @@ def longloan():
     for i in  Members.iterator():
         N=i.longloanperiod
         A=i.longloanamount
-        print(N)
-        print(A)
         if(N!=0):
-            if(i.longloanprinciple==0 and i.longloanamount==0):
+            if(i.longloanprinciple==0 and i.longloaninterestamount==0):
                 i.longloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 i.longloaninterestamount=R*A
-                i.longloanprinciple=i.longloanemi-interestamount
+                i.longloanprinciple=i.longloanemi-i.longloaninterestamount
                 i.longloanbalance=i.longloanamount-i.longloanprinciple
-                print(i.longloanbalance)
             elif(i.longloanbalance<=i.longloanemi and i.longloanbalance!=0):
                 i.longloanprinciple=i.longloanbalance
                 i.longloaninterestamount=i.longloanemi-i.longloanprinciple
@@ -655,8 +701,6 @@ def longloan():
                 i.longloaninterestamount=R*i.longloanbalance
                 i.longloanprinciple=i.longloanemi-i.longloaninterestamount
                 i.longloanbalance=i.longloanbalance-i.longloanprinciple
-                print("jd is best")
-                print(type(i.longloanbalance))
         i.save()
 
 
@@ -664,9 +708,6 @@ def longloan():
 def emergencyloan():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
-    sharebalance = 0
-    cdbalance = 0
-
     #Emergencyloan parameters
     Rate=Interests.emerloaninterest
     R=Rate/(12*100) #rate of interest for each month
@@ -674,16 +715,18 @@ def emergencyloan():
     for i in  Members.iterator():
         N=i.emerloanperiod
         A=i.emerloanamount
-        print(N)
-        print(A)
-        if(N!=0):
-            if(i.emerloanbalance==0 and i.emerloanprinciple==0):
-                i.emerloanemi=(A*R*(1+R)*N)/(((1+R)*N)-1)
+        if(i.isloanemertaken==True):
+            if(i.emerloanprinciple==0 and i.emerloaninterestamount==0):
+                i.emerloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 i.emerloaninterestamount=R*A
                 i.emerloanprinciple=i.emerloanemi-i.emerloaninterestamount
                 i.emerloanbalance=i.emerloanamount-i.emerloanprinciple
-                print(i.emerloanbalance)
-
+                print("loop1")
+            elif(i.emerloanbalance<=i.emerloanemi and i.emerloanbalance!=0):
+                i.emerloanprinciple=i.emerloanbalance
+                i.emerloaninterestamount=i.emerloanemi-i.emerloanprinciple
+                i.emerloanbalance=0
+                print("loop2")
             elif(i.emerloanbalance==0):
                 i.emerloanamount=0
                 i.emerloanbalance=0
@@ -691,14 +734,15 @@ def emergencyloan():
                 i.emerloanemi=0
                 i.emerloaninterestamount=0
                 i.emerloanprinciple=0
-                i.isemerloantaken=False
-
+                i.isloanemertaken=False
+                print("loop3")
             else:
-                i.emerloanemi=(A*R*(1+R)*N)/(((1+R)*N)-1)
+                i.emerloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
                 i.emerloaninterestamount=R*i.emerloanbalance
                 i.emerloanprinciple=i.emerloanemi-i.emerloaninterestamount
                 i.emerloanbalance=i.emerloanbalance-i.emerloanprinciple
-        i.totalamount=i.shareamount+i.cdamount+i.longloanprinciple+i.longloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
+                print("loop4")
+        i.totalamount=i.shareamount+i.cdamount+i.emerloanprinciple+i.emerloaninterestamount+i.emerloanprinciple+i.emerloaninterestamount
         i.save()
 
 @cron_task(crontab="* * * * *")

@@ -37,6 +37,7 @@
                       <th>A/C No.</th>
                       <th>SapId</th>
                       <th>Name</th>
+                      <th>Long Loan Amount</th>
                       <th>Long loan Principle</th>
                       <th>Long <br>loan Interest Amount</th>
                       <th>Long loan Emi</th>
@@ -54,6 +55,7 @@
                       <td>{{i.accountnumber}}</td>
                       <td>{{i.sapid}}</td>
                       <td>{{i.name}}</td>
+                      <td>{{i.longloanamount}}</td>
                       <td>{{i.longloanprinciple}}</td>
                       <td>{{i.longloaninterestamount}}</td>
                       <td>{{i.longloanemi}}</td>
@@ -66,6 +68,7 @@
                     </tr>
                       {%endif%}
                     {%endfor%}
+                    
 
                   </tbody>
                 </table>
