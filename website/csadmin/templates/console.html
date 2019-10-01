@@ -52,7 +52,7 @@
                       <td>{{i.sapid}}</td>
                       <td>{{i.name}}</td>
                       <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.sharevalue}}</a></td>
-                      <td><a href="{% url 'csadmin:make_entry' pk=i.pk %}"><i class="material-icons">edit</i></a></td>
+                      <td><a href="{% url 'csadmin:fd_create' pk=i.pk %}"><i class="material-icons">edit</i></a></td>
 
 
                       {% ifequal i.islongloantaken True %}

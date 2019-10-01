@@ -10,6 +10,8 @@
           <div class="card-icon">
             <i class="material-icons">content_copy</i>
           </div>
+          <h3 class="card-title" style="text-align:left;"><b>Update Share Value</b>
+          </h3>
           <form action="" method="post">
             {% csrf_token %}
             <table>
@@ -34,7 +36,9 @@
             </table>
             <div class="form-group " style="margin-top:20px">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success">SAVE DETAILS</button>
+                <button class="btn btn-primary ">
+                  <i class="material-icons">check</i> SAVE
+                </button>
               </div>
           </form>
         </div>
