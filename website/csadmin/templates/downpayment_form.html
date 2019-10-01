@@ -1,15 +1,18 @@
 {%extends 'base.html'%}
 {%block title%}Accounts{%endblock%}
 {%block content%}
-<h2>Downpayment Details</h2>
-<div class="container-fluid">
-  <div class="row">
+<main role="main" class="col-md-9 col-lg-12 ">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-lg-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">content_copy</i>
+            </div>
 
-
-    <div class="col-sm-12 col-md-7">
-      <div class="panel panel-default">
-        <div class="panel-body">
-
+                  <h3 class="card-title" style="text-align:left;"><b>Add Downpayment</b>
+                  </h3>
           <form action="" method="post">
             {% csrf_token %}
             <table>
@@ -25,7 +28,7 @@
               </tr>
               <tr>
                 <th><label for="id_downpayment">Downpayment:</label></th>
-                <td><input type="number" name="downpayment" value="{{userdownpayment}}" step="0.01" id="id_downpayment">
+                <td><input type="number" class="form-control"name="downpayment" value="{{userdownpayment}}" step="100" id="id_downpayment">
                 </td>
               </tr>
             </table>

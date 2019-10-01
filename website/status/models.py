@@ -79,7 +79,7 @@ class Notification(models.Model):
 class FixedDeposits(models.Model):
     username=models.ForeignKey(Account,on_delete=models.CASCADE,null=True,unique=False)
     fdcapital=models.IntegerField(default=0,null=True)
-    fdmaturitydate=models.DateField(null=True)
+    fdmaturitydate=models.DateField(null=True,blank=True)
 
     def __str__(self):
         return str(self.username)

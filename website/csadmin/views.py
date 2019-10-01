@@ -86,6 +86,8 @@ def fixeddeposits(request):
     noofnoti=Notification.objects.all().count()
     foo=FixedDeposits.objects.prefetch_related('username').order_by('fdmaturitydate')
     acc_filter = FDFilter(request.GET, queryset=foo)
+    # psobjs =Account.objects.filter(username=x)
+    # queryset = FixedDeposits.objects.filter(sessionId__in=psobjs.values('sessionId'))
     context={
         'fdadmin':users,
         'Interests':Interests,
@@ -323,13 +325,13 @@ class Downpayment(UpdateView):
 class FDCreate(CreateView):
     model=FixedDeposits
     form_class=FDUpdateForm
-    template_name='fixeddeposits_update_form.html'
+    template_name='fixeddeposits_create_form.html'
     success_url=reverse_lazy('csadmin:fixeddeposits')
 
     def get_context_data(self,**kwargs):
         id_=self.kwargs.get("pk")
         userA=Account.objects.get(pk=id_)
-        idate=date.today()
+        idate=date.today()+datetime.timedelta(days=366)
         print(idate)
         context = super(CreateView, self).get_context_data(**kwargs)
         context={
@@ -364,7 +366,6 @@ class FDUpdate(UpdateView):
             id_=self.kwargs.get("pk")
             UserA=FixedDeposits.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
-            Newdate = datetime.date.today()
             print(UserA)
             print('FD update ')
             context={
@@ -372,7 +373,6 @@ class FDUpdate(UpdateView):
                 'username':UserA.username,
                 'userfddate':UserA.fdmaturitydate,
                 'userfdamt':UserA.fdcapital,
-                'i_date':Newdate,
             }
             return context
         #
@@ -439,6 +439,7 @@ class FDUpdate(UpdateView):
                     print(fd_totalpay)
                     print("fd totalpay")
                     userF.fdcapital=0
+                    userF.fdmaturitydate=None
                     message="Dear sir/ma'am your DJSCOE CS account " + str(Members.name) + " your FD has been cleared and Your total amount is " + str(fd_totalpay)
                     subject = 'This email is from Credit Society Committee regarding your Fixed Deposits'
                     email_from = settings.EMAIL_HOST_USER
@@ -450,6 +451,7 @@ class FDUpdate(UpdateView):
                     fd_totalpay=userF.fdcapital+SimpleInterest
                     print(fd_totalpay)
                     userF.fdcapital=0
+                    userF.fdmaturitydate=None
                     message="Dear sir/ma'am your DJSCOE CS account " + str(Members.name) + " your FD has been cleared and Your total amount is " + str(fd_totalpay)
                     subject = 'This email is from Credit Society Committee regarding your Fixed Deposits'
                     email_from = settings.EMAIL_HOST_USER
