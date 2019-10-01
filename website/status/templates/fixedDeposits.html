@@ -10,12 +10,42 @@
     <div class="row">
       <div class="col">
         <div class="card">
+          <div class="card-header card-header-warning">
+            <h2 class="card-title">Fixed Deposits</h2>
+          </div>
           <div class="card-body">
-            <h1><b>Fixed Deposits</b> </h1>
             <h3><b>FD Holder Name:</b> {{Accountholder.name}}</h3>
-            <h3><b>Amount:</b>  &#x20b9; {{Accountholder.fdcapital|intcomma }}</h3>
-            <h3><b>Date of Maturity:</b> {{Accountholder.fdmaturitydate}}</h3>
+          <h3><b>Amount:</b> {{Accountholder.FDCount }}</h3>
             <h3><b>Interest:</b>{{Interests.fdinterest}} </h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Fixed Deposit details</h4>
+            <p class="card-category">Your all FDs will appear here</p>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>FD Capital</th>
+                  <th>Maturity Date</th>
+              </tr>
+              </thead>
+              <tbody>
+
+            {%for i in userF %}
+                {%if i.fdcapital != 0%}
+            <tr>
+              <td>{{i.fdcapital}}</td>
+              <td>{{i.fdmaturitydate}}</td>
+                {%endif%}
+            </tr>
+            {%endfor%}
+            </tbody>
+            </table>
           </div>
         </div>
       </div>
