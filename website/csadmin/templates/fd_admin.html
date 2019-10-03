@@ -16,20 +16,22 @@
               <h3>FD Rate of Interest = {{Interests.fdinterest}}</h3>
               <form method="get">
                 <div class="input-group " style='width:65%'>
-                <table>
-                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="fdcapital" placeholder="Search" id="id_fdcapital">
-                <button type="button" class="btn btn-round btn-just-icon" name="button"><i class="material-icons">search</i></button>
-                </table>
-              </div>
+                  <table>
+                    <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="fdcapital"
+                      placeholder="Search" id="id_fdcapital">
+                    <button type="button" class="btn btn-round btn-just-icon" name="button"><i
+                        class="material-icons">search</i></button>
+                  </table>
+                </div>
               </form>
             </div>
             {% if messages %}
             <ul>
-               {% for message in messages %}
-                     <script type="text/javascript">
-                       md.showNotification('top','center' ,"{{message}}")
-                     </script>
-               {% endfor %}
+              {% for message in messages %}
+              <script type="text/javascript">
+                md.showNotification('top', 'center', "{{message}}")
+              </script>
+              {% endfor %}
             </ul>
             {% endif %}
             <div class="card-body">
@@ -40,8 +42,7 @@
                       <th>Name</th>
                       <th>FD Capital</th>
                       <th>Maturity Date</th>
-                      <th>renew</th>
-                      <th>clear</th>
+                      <th>Actions</th>
 
                     </tr>
                   </thead>
@@ -64,7 +65,7 @@
             </div>
           </div>
         </div>
-  </div>
-  </div>
+      </div>
+    </div>
 </main>
 {%endblock%}

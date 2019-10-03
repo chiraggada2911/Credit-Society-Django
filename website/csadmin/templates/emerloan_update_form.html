@@ -1,7 +1,6 @@
 {%extends 'base.html'%}
 {%block title%}Accounts{%endblock%}
 {%block content%}
-<h2>ADD loan Details</h2>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12 col-md-7">
@@ -10,6 +9,8 @@
           <div class="card-icon">
             <i class="material-icons">content_copy</i>
           </div>
+          <h3 class="card-title" style="text-align:left;"><b>Add a Emergency Loan</b>
+          </h3>
           <form action="" method="post">
             {% csrf_token %}
             <table>
