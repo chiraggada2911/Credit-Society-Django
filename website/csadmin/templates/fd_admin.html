@@ -17,8 +17,8 @@
               <form method="get">
                 <div class="input-group " style='width:65%'>
                   <table>
-                    <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="fdcapital"
-                      placeholder="Search" id="id_fdcapital">
+                    <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="username__name"
+                      placeholder="Search" id="id_username__name">
                     <button type="button" class="btn btn-round btn-just-icon" name="button"><i
                         class="material-icons">search</i></button>
                   </table>
@@ -48,7 +48,7 @@
                   </thead>
                   <tbody>
 
-              {%for i in bo %}
+              {%for i in filter.qs %}
                     {%if i.fdcapital != 0%}
                 <tr>
                   <td>{{i.username.name}}</td>

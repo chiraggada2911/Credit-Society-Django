@@ -8,14 +8,14 @@ class AccountFilter(django_filters.FilterSet):
         model = Account
         fields = ['name']
 
-class FDFilter(django_filters.FilterSet):
-    fdcapital = django_filters.CharFilter(lookup_expr='icontains')
+class UserFilter(django_filters.FilterSet):
+    username__name = django_filters.CharFilter(lookup_expr='icontains')
     class Meta:
         model = FixedDeposits
-        fields = ['fdcapital']
+        fields = ['username__name']
 
-class UserFilter(django_filters.FilterSet):
+class UsersFilter(django_filters.FilterSet):
     username = django_filters.CharFilter(lookup_expr='icontains')
     class Meta:
-        model = interests
+        model = User
         fields = ['username']
