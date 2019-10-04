@@ -1,4 +1,4 @@
-Search{%extends 'base.html'%}
+{%extends 'base.html'%}
 {%block content%}
 
 
@@ -12,7 +12,7 @@ Search{%extends 'base.html'%}
               <h2>Console </h2>
               <form method="get">
                 <div class="input-group " style='width:45%'>
-                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Search" id="id_name">
+                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="username" placeholder="Search" id="id_username">
                 <button type="button" class="btn btn-round btn-just-icon" name="button"><i class="material-icons">search</i></button>
                 </div>
               </form>
@@ -29,7 +29,7 @@ Search{%extends 'base.html'%}
                   {%for i in filter.qs%}
                   <tbody>
                     <tr>
-          <td><a href="{% url 'csadmin:shares _update' pk=i.pk %}">{{i.username}}</a></td>
+          <td>{{i.username}}</td>
           <td><a href="{% url 'csadmin:User_Delete' id=i.pk %}"><i class="fa fa-trash" aria-hidden="true" style='font-size:15px'></i></a></td>
 
         </tr>
@@ -39,7 +39,5 @@ Search{%extends 'base.html'%}
     </table>
   </div>
 </div>
-<h1>delete user</h1>
-
 
 {%endblock%}

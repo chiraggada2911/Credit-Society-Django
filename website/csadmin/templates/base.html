@@ -21,6 +21,7 @@
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>href="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"</script>
   <!-- Custom styles for this template -->
   <link href="{% static 'status/css/dashboard.css'%}" rel="stylesheet">
   <!-- <link href="{% static 'status/css/committee.css'%}" rel="stylesheet"> -->
@@ -29,7 +30,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="{%static 'status\js\bootstrap-notify.js'%}"></script>
   <script src="{%static 'status\js\script.js'%}"></script>
-
+  <script type="text/javascript">
+    $(document).ready(function(){
+  $('#id_downpayment').mask('00/00/0000');
+});
+    </script>
 
   <script>
   md = {
