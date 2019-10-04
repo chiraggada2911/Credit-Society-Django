@@ -22,6 +22,7 @@
                 <table class="table">
                   <thead>
                     <tr>
+                      <th>Sr No.</th>
                       <th>Date</th>
                       <th>Message</th>
                       <th>Sender</th>
@@ -31,6 +32,7 @@
                   <tbody>
                     {%for i in noti reversed%}
                     <tr>
+                      <td>{{forloop.revcounter}}</td>
                       <td>{{i.notidate}}</td>
                       <td>{{i.notimessage}}</td>
                       <td>{{i.sender}}</td>
