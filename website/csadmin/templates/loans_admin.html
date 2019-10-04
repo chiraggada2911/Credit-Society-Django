@@ -49,7 +49,7 @@
                       <th>Emer loan Balance</th>        
                   </thead>
                   <tbody>
-                    {%for i in Loansadmin%}
+                    {%for i in filter.qs%}
                       {%if i.longloanbalance != 0 or i.emerloanbalance != 0 %}
                     <tr>
                       <td>{{i.accountnumber}}</td>
