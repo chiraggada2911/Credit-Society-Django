@@ -18,8 +18,7 @@ from django.dispatch import receiver
 from django.contrib import messages
 
 #filter
-from .filters import AccountFilter,UserFilter,FDFilter
-
+from .filters import AccountFilter,UserFilter,UsersFilter
 #for background tasks
 from autotask.tasks import cron_task
 
@@ -85,9 +84,7 @@ def fixeddeposits(request):
     Interests=interests.objects.all().last()
     noofnoti=Notification.objects.all().count()
     foo=FixedDeposits.objects.prefetch_related('username').order_by('fdmaturitydate')
-    acc_filter = FDFilter(request.GET, queryset=foo)
-    # psobjs =Account.objects.filter(username=x)
-    # queryset = FixedDeposits.objects.filter(sessionId__in=psobjs.values('sessionId'))
+    acc_filter = UserFilter(request.GET, queryset=foo)
     context={
         'fdadmin':users,
         'Interests':Interests,
@@ -101,12 +98,12 @@ def fixeddeposits(request):
 
 @login_required
 def loansadmin(request):
-    Loansadmin=Account.objects.all()
+    Members=Account.objects.all()
     Interests=interests.objects.all().last()
     noofnoti=Notification.objects.all().count()
-    acc_filter = AccountFilter(request.GET, queryset=Loansadmin)
+    acc_filter = AccountFilter(request.GET, queryset=Members)
     context={
-        'Loansadmin':Loansadmin,
+        'Loansadmin':Members,
         'Interests':Interests,
         'loan':"active",
         'filter': acc_filter,
@@ -263,7 +260,7 @@ class InterestsUpdate(CreateView):
             message="interests rates changed"
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
-            send_mass_mail( subject, message, email_from, recievers )
+            send_mail( subject, message, email_from, recievers )
             return reverse_lazy('csadmin:members')
 
 class AccountDelete(DeleteView):
@@ -292,7 +289,7 @@ class AccountDelete(DeleteView):
 @login_required
 def UserDelete(request):
     Users=User.objects.all()
-    user_filter = UserFilter(request.GET, queryset=Users)
+    user_filter = UsersFilter(request.GET, queryset=Users)
     context={
         'User':Users,
         'filter': user_filter,

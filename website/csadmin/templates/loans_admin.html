@@ -16,8 +16,8 @@
           </table>
             <form method="get">
               <div class="input-group " style='width:45%'>
-              <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Search" id="id_name">
-              <button type="button" class="btn btn-round btn-just-icon" name="button"><i class="material-icons">search</i></button>
+                <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="name" placeholder="Search" id="id_name">
+                <button type="button" class="btn btn-round btn-just-icon" name="button"><i class="material-icons">search</i></button>
               </div>
             </form>
             {% if messages %}
@@ -49,7 +49,7 @@
                       <th>Emer loan Balance</th>        
                   </thead>
                   <tbody>
-                    {%for i in Loansadmin%}
+                    {%for i in filter.qs%}
                       {%if i.longloanbalance != 0 or i.emerloanbalance != 0 %}
                     <tr>
                       <td>{{i.accountnumber}}</td>
