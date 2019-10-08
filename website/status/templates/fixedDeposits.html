@@ -30,8 +30,10 @@
             <table class="table table-hover">
               <thead>
                 <tr>
+                  <th>Sr.</th>
                   <th>FD Capital</th>
                   <th>Maturity Date</th>
+                  <th>Reciept</th>
               </tr>
               </thead>
               <tbody>
@@ -39,8 +41,10 @@
             {%for i in userF %}
                 {%if i.fdcapital != 0%}
             <tr>
+              <td>{{forloop.counter}}</td>
               <td>{{i.fdcapital}}</td>
               <td>{{i.fdmaturitydate}}</td>
+              <td></td>
                 {%endif%}
             </tr>
             {%endfor%}
