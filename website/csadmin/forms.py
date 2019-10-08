@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Account
-from .models import interests,FixedDeposits
+from status.models import Account,interests,Notification,FixedDeposits,HistorylongLoan,HistoryemerLoan,HistoryFd
 
 class InterestsForm(forms.ModelForm):
     class Meta:
@@ -31,12 +30,12 @@ class ShareUpdateForm(forms.ModelForm):
 class LongLoanUpdateForm(forms.ModelForm):
     class Meta:
         model=Account
-        fields=('username','longloanamount','longloanperiod','longloanadditional')
+        fields=('username','longloanamount','longloanperiod','longloanadditional','longloandate')
 
 class EmerLoanUpdateForm(forms.ModelForm):
     class Meta:
         model=Account
-        fields=('username','emerloanamount','emerloanperiod')
+        fields=('username','emerloanamount','emerloanperiod','emerloandate')
 
 class DownPaymentForm(forms.ModelForm):
     class Meta:

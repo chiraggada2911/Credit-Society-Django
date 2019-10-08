@@ -19,10 +19,10 @@
               <div class="row">
                 <div class="col">
                   {% if Accountholder.islongloantaken is True %}
-                <h4>Type of loan: Long loan</h4>
-                <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
-                {% endif %}
-              </div>
+                  <h4>Type of loan: Long loan</h4>
+                  <h5>Amount of loan taken: &#x20b9; {{Accountholder.longloanamount|intcomma }}</h5>
+                  {% endif %}
+                </div>
                 <div class="col">
                   {% if Accountholder.isloanemertaken is True %}
                   <h4>Type of loan: Emergency Loan</h4>
@@ -54,26 +54,26 @@
               <input type="radio" name="loanChoice" value="Normal loan"> Normal Loan
               <input type="radio" name="loanChoice" value="Emergency loan"> Emergency Loan
               <div class="radio">
-              <div class="lw-field">
-                <input class="lw-input" autocomplete="off" name="loan_amount" id="loan_amnt" type="numeric"
-                  placeholder="Enter Amount in Rs" required>
-              </div>
-              <button class="lw-btn"
-                onclick="md.showNotification('top','center','You will be chagrged 0.25% of the loan amount')"
-                href="{%url 'status:details'%}">Submit to admin</button>
-              {% csrf_token %}
+                <div class="lw-field">
+                  <input class="lw-input" autocomplete="off" name="loan_amount" id="loan_amnt" type="numeric"
+                    placeholder="Enter Amount in Rs" required>
+                </div>
+                <button class="lw-btn"
+                  onclick="md.showNotification('top','center','You will be chagrged 0.25% of the loan amount')"
+                  href="{%url 'status:details'%}">Submit to admin</button>
+                {% csrf_token %}
             </form>
-</div>
-</div>
+          </div>
+        </div>
       </div>
     </div>
     {% if messages %}
     <ul>
-       {% for message in messages %}
-             <script type="text/javascript">
-               md.showNotification('bottom','right' ,"{{message}}")
-             </script>
-       {% endfor %}
+      {% for message in messages %}
+      <script type="text/javascript">
+        md.showNotification('bottom', 'right', "{{message}}")
+      </script>
+      {% endfor %}
     </ul>
     {% endif %}
   </div>
@@ -109,56 +109,70 @@
                 <tbody>
                   <tr>
                     <td></td>
-                    <td><h2>Emergency Loan Details</h2></td>
+                    <td>
+                      <h2>Emergency Loan Details</h2>
+                    </td>
                     <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td><h4>Emergency Loan Principle: &#8377 {{Accountholder.emerloanprinciple|intcomma}}</h4></td>
+                    <td>
+                      <h4>Emergency Loan Principle: &#8377 {{Accountholder.emerloanprinciple|intcomma}}</h4>
+                    </td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td><h4>Emergency Loan Amount: &#8377 {{Accountholder.emerloanamount|intcomma}}</h4></td>
+                    <td>
+                      <h4>Emergency Loan Amount: &#8377 {{Accountholder.emerloanamount|intcomma}}</h4>
+                    </td>
                     <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td><h4>Emergency Loan Balance: &#8377 {{Accountholder.emerloanbalance|intcomma}}</h4></td>
+                    <td>
+                      <h4>Emergency Loan Balance: &#8377 {{Accountholder.emerloanbalance|intcomma}}</h4>
+                    </td>
                     <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td><h4>Emergency Loan Period: {{Accountholder.emerloanperiod}} month(s)</h4></td>
+                    <td>
+                      <h4>Emergency Loan Period: {{Accountholder.emerloanperiod}} month(s)</h4>
+                    </td>
                     <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td><h4>Emergency Loan Interest Amount: &#8377 {{Accountholder.emerloaninterestamount|intcomma}}</h4></td>
+                    <td>
+                      <h4>Emergency Loan Interest Amount: &#8377 {{Accountholder.emerloaninterestamount|intcomma}}</h4>
+                    </td>
                     <td class="td-actions text-right"></td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td><h4>Emergency Loan EMI: &#8377 {{Accountholder.emerloanemi|intcomma}}</h4></td>
+                    <td>
+                      <h4>Emergency Loan EMI: &#8377 {{Accountholder.emerloanemi|intcomma}}</h4>
+                    </td>
                     <td class="td-actions text-right"></td>
                   </tr>
                 </tbody>
                 {%else%}
-              <h1>Not applied for emergency loan</h1>
-              {%endif%}
+                <h1>Not applied for emergency loan</h1>
+                {%endif%}
               </table>
             </div>
             <div class="tab-pane " id="long_loan">
               <table class="table">
                 {%if Accountholder.islongloantaken is True%}
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td>
-                          <h2>Long Loan Details</h2>
-                        </td>
-                        <td class="td-actions text-right">
-                        </td>
-                      </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h2>Long Loan Details</h2>
+                    </td>
+                    <td class="td-actions text-right">
+                    </td>
+                  </tr>
                   <tr>
                     <td></td>
                     <td>
@@ -192,7 +206,8 @@
                   <tr>
                     <td></td>
                     <td>
-                      <h4>Long Loan Interest Amount: &#8377 {{Accountholder.longloaninterestamount|intcomma}}</h4></td>
+                      <h4>Long Loan Interest Amount: &#8377 {{Accountholder.longloaninterestamount|intcomma}}</h4>
+                    </td>
                   </tr>
                 </tbody>
                 {%else%}
@@ -204,7 +219,84 @@
         </div>
       </div>
     </div>
+
+
+    <div class="col-lg-6 col-md-12">
+      <div class="card">
+        <div class="card-header card-header-tabs card-header-primary">
+          <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+              <span class="nav-tabs-title">Previous Loans:</span>
+              <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#history_emergency_loan" data-toggle="tab">
+                    <i class="material-icons">offline_bolt</i> Emergency Loan
+                    <div class="ripple-container"></div>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#history_long_loan" data-toggle="tab">
+                    <i class="material-icons">monetization_on</i> Long Loan
+                    <div class="ripple-container"></div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <div class="tab-pane active " id="history_emergency_loan">
+              <table class="table">
+                <tbody>
+                    <thead>
+                      {%if countemerloans != 0%}
+                        <tr>
+                          <th>Emergency loan date</th>
+                          <th>Emergency loan amount</th>
+                          <th>Emergency loan period</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          {%for i in Emerloans%}
+                        <tr>
+                          <td>{{i.emerloandate}}</td>
+                          <td>{{i.emerloanamount}}</td>
+                          <td>{{i.emerloanperiod}}</td>
+                        </tr>
+                        {%endfor%}
+                        {%endif%}
+                      </tbody>
+              </table>
+            </div>
+            <div class="tab-pane " id="history_long_loan">
+              <table class="table">
+                <tbody>
+                  {%if countlongloans != 0%}
+                    <thead>
+                        <tr>
+                          <th>long loan date</th>
+                          <th>long loan amount</th>
+                          <th>long loan period</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          {%for i in Longloans%}
+                        <tr>
+                          <td>{{i.longloandate}}</td>
+                          <td>{{i.longloanamount}}</td>
+                          <td>{{i.longloanperiod}}</td>
+                        </tr>
+                        {%endfor%}
+                        {%endif%}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </main>
 
 {%endblock%}

@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 # models
-from status.models import Account,interests,Notification,FixedDeposits
+from status.models import Account,interests,Notification,FixedDeposits,HistorylongLoan,HistoryemerLoan,HistoryFd
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -46,6 +46,24 @@ def index(request):
 #     notification.notimessage=notificationmessage
 #     notification.sender_id=senderid
 #     notification.save()
+
+#for history of loans
+def longloanhistory(longloanamount,longloandate,longloanperiod,userid):
+    Loan=HistorylongLoan()
+    Loan.longloanamount=longloanamount
+    Loan.longloandate=longloandate
+    Loan.longloanperiod=longloanperiod
+    Loan.username=userid
+    Loan.save()
+
+def emerloanhistory(emerloanamount,emerloandate,emerloanperiod,userid):
+    EmerLoan=HistoryemerLoan()
+    EmerLoan.emerloanamount=emerloanamount
+    EmerLoan.emerloandate=emerloandate
+    EmerLoan.emerloanperiod=emerloanperiod
+    EmerLoan.username=userid
+    EmerLoan.save()
+
 
 @login_required
 def index(request):
@@ -475,6 +493,7 @@ class LongLoanUpdate(UpdateView):
             id_=self.kwargs.get("pk")
             UserA=Account.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
+            longloandate=date.today()
             validate=False
             if (UserA.longloanbalance<=(UserA.longloanamount*50)/100):
                 validate=True
@@ -483,6 +502,7 @@ class LongLoanUpdate(UpdateView):
                 'username':UserA.name,
                 'islongloantaken':UserA.islongloantaken,
                 'longloanadd':UserA.longloanadditional,
+                'longloandt':longloandate,
                 'longloanbal':UserA.longloanbalance,
                 'validate':validate,
                 'longloanamt':UserA.longloanamount,
@@ -499,6 +519,7 @@ class LongLoanUpdate(UpdateView):
             if (UserA.longloanbalance==0):
                 UserA.islongloantaken=True
                 UserA.longloanbalance=UserA.longloanamount
+                longloanhistory(UserA.longloanamount,UserA.longloandate,UserA.longloanperiod,UserA.username)
             elif(UserA.longloanbalance!=0):
                 UserA.longloanbalance=UserA.longloanbalance+UserA.longloanadditional
                 UserA.longloanamount=UserA.longloanamount+UserA.longloanadditional
@@ -532,6 +553,7 @@ class EmerLoanUpdate(UpdateView):
             id_=self.kwargs.get("pk")
             UserA=Account.objects.get(pk=id_)
             context = super(UpdateView, self).get_context_data(**kwargs)
+            emerloandate=date.today()
             print(UserA)
             print('Emergency Loan Upate')
             context={
@@ -539,6 +561,7 @@ class EmerLoanUpdate(UpdateView):
                 'emerloanamt':UserA.emerloanamount,
                 'emerloanprd':UserA.emerloanperiod,
                 'isloanemertaken':UserA.isloanemertaken,
+                'emerloandt':emerloandate,
                 'username':UserA.name
             }
             return context
@@ -551,6 +574,7 @@ class EmerLoanUpdate(UpdateView):
             if (UserA.emerloanbalance==0):
                 UserA.isloanemertaken=True
                 UserA.emerloanbalance=UserA.emerloanamount
+                emerloanhistory(UserA.emerloanamount,UserA.emerloandate,UserA.emerloanperiod,UserA.username)
             UserA.save()
             print("Emergency loan updated mail")
             print(UserU.email)
