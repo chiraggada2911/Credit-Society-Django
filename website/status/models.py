@@ -27,6 +27,7 @@ class Account(models.Model):
     isloanemertaken=models.BooleanField(default=False)
 
 # main amount , the loan taken
+    longloandate=models.DateField(null=True,blank=True)
     longloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloanprinciple=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloanperiod=models.IntegerField(blank=True,null=True,default=0)
@@ -35,7 +36,9 @@ class Account(models.Model):
     longloanadditional=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
 #emi=interest + principle
     longloanemi=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    
     #emergency loan
+    emerloandate=models.DateField(null=True,blank=True)
     emerloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     emerloanprinciple=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     emerloanperiod=models.IntegerField(blank=True,null=True,default=0)
@@ -79,7 +82,30 @@ class Notification(models.Model):
 class FixedDeposits(models.Model):
     username=models.ForeignKey(Account,on_delete=models.CASCADE,null=True,unique=False)
     fdcapital=models.IntegerField(default=0,null=True)
+    fddate=models.DateField(null=True,blank=True)
     fdmaturitydate=models.DateField(null=True,blank=True)
+    fdnumber=models.CharField(default=0,max_length=50,null=True)
 
     def __str__(self):
         return str(self.username)
+
+class HistoryLoan(models.Model):
+    username=models.ForeignKey(Account,on_delete=models.CASCADE,null=True,unique=False)
+    longloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    longloandate=models.DateField(null=True,blank=True)
+    longloanperiod=models.IntegerField(blank=True,null=True,default=0)
+#emi=interest + principle
+    #emergency loan
+    emerloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
+    emerloanperiod=models.IntegerField(blank=True,null=True,default=0)
+    emerloandate=models.DateField(null=True,blank=True)
+
+    def __str__(self):
+        return str(self.username)
+
+class HistoryFd(models.Model):
+    username=models.ForeignKey(Account,on_delete=models.CASCADE,null=True,unique=False)
+    fdcapital=models.IntegerField(default=0,null=True)
+    fddate=models.DateField(null=True,blank=True)
+    fdmaturitydate=models.DateField(null=True,blank=True)
+    fdnumber=models.CharField(default=0,max_length=50,null=True)
