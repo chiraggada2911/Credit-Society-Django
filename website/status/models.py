@@ -89,13 +89,19 @@ class FixedDeposits(models.Model):
     def __str__(self):
         return str(self.username)
 
-class HistoryLoan(models.Model):
-    username=models.ForeignKey(Account,on_delete=models.CASCADE,null=True,unique=False)
+class HistorylongLoan(models.Model):
+    username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
     longloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloandate=models.DateField(null=True,blank=True)
     longloanperiod=models.IntegerField(blank=True,null=True,default=0)
 #emi=interest + principle
     #emergency loan
+
+    def __str__(self):
+        return str(self.username)
+
+class HistoryemerLoan(models.Model):
+    username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
     emerloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     emerloanperiod=models.IntegerField(blank=True,null=True,default=0)
     emerloandate=models.DateField(null=True,blank=True)

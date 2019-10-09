@@ -49,6 +49,16 @@
                   </div>
                 </div>
               </tr>
+              <tr>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <th> <label for="id_longloandate" class="bmd-label-floating">Long Loan Date:</label>
+                    </th>
+                    <td> <input type="date" name="longloandate" value={{longloandt|date:"Y-m-d"}}
+                        id="id_longloandate" class="form-control"></td>
+                  </div>
+                </div>
+              </tr>
               {%elif islongloantaken is True and validate is True%}
               <tr>
                 <div class="col-md-4">

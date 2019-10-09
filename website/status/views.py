@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #models
-from status.models import Account,interests,Notification,FixedDeposits
+from status.models import Account,interests,Notification,FixedDeposits,HistorylongLoan,HistoryemerLoan,HistoryFd
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -143,7 +143,16 @@ def fixedDeposits(request):
 @login_required
 def loanuser(request):
     current_user_id = request.user.username
+    currentuserid=request.user.id
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+    Longloans=HistorylongLoan.objects.filter(username=currentuserid)
+    countlongloans=Longloans.count()
+    Emerloans=HistoryemerLoan.objects.filter(username=currentuserid)
+    countemerloans=Emerloans.count()
+    print(countlongloans)
+    print(countemerloans)
+    print("just")
+    print(current_user_id)
     type="success"
     eligibility=""
 
@@ -202,6 +211,10 @@ def loanuser(request):
 
     context={
         'Accountholder':Accountholder,
+        'Emerloans':Emerloans,
+        'Longloans':Longloans,
+        'countlongloans':countlongloans,
+        'countemerloans':countemerloans,
         'loan':"active",
         'type':type,
         'eligibility':eligibility,
