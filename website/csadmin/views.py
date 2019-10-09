@@ -47,6 +47,7 @@ def index(request):
 #     notification.sender_id=senderid
 #     notification.save()
 
+#for history of loans
 def longloanhistory(longloanamount,longloandate,longloanperiod,userid):
     Loan=HistorylongLoan()
     Loan.longloanamount=longloanamount
