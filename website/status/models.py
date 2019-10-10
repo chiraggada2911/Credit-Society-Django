@@ -51,8 +51,7 @@ class Account(models.Model):
     displaydownpayment=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     #schema for fixed Deposits
     FDCount=models.IntegerField(default=0,null=False)
-    #here FD will change be aware!!!!!!!!
-    #i have removed from here on dt 29/09
+
 
     #teaching and nonteaching staff
     teachingstaff=models.BooleanField(default=False)
