@@ -36,7 +36,7 @@ class Account(models.Model):
     longloanadditional=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
 #emi=interest + principle
     longloanemi=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
-    
+
     #emergency loan
     emerloandate=models.DateField(null=True,blank=True)
     emerloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
@@ -110,7 +110,7 @@ class HistoryemerLoan(models.Model):
         return str(self.username)
 
 class HistoryFd(models.Model):
-    username=models.ForeignKey(Account,on_delete=models.CASCADE,null=True,unique=False)
+    username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
     fdcapital=models.IntegerField(default=0,null=True)
     fddate=models.DateField(null=True,blank=True)
     fdmaturitydate=models.DateField(null=True,blank=True)

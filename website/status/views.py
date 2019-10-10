@@ -63,6 +63,7 @@ def details(request):
     current_user_id=request.user.username
     name=str(Account.name)
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
+    fdcount=FixedDeposits.objects.filter(username_id=Accountholder.id).count()
     Interests=interests.objects.all().last()
 
 
@@ -93,6 +94,7 @@ def details(request):
     context={
     'name':name,
     'Accountholder':Accountholder,
+    'fdcount':fdcount,
     'date':date,
     'Interests':Interests,
     'dashboard':"active",
@@ -128,13 +130,16 @@ def fixedDeposits(request):
     current_user_id=request.user.username
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
     userF=FixedDeposits.objects.filter(username_id=Accountholder.id)
-    print("foo")
+    fdcount=FixedDeposits.objects.filter(username_id=Accountholder.id).count()
+    print(fdcount)
+    print("Upar")
     # userF=FixedDeposits.objects.filter(id__id__icontains=Accountholder.id).get()
     Interests=interests.objects.all().last()
 
     context={
         'Accountholder':Accountholder,
         'Interests':Interests,
+        'fdcount':fdcount,
         'userF':userF,
         'fixed':"active",
     }
