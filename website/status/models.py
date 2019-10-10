@@ -36,7 +36,7 @@ class Account(models.Model):
     longloanadditional=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
 #emi=interest + principle
     longloanemi=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
-    
+
     #emergency loan
     emerloandate=models.DateField(null=True,blank=True)
     emerloanamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
