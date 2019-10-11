@@ -282,29 +282,29 @@ class AccountDelete(DeleteView):
 
     def get_object(self):
         id_=self.kwargs.get("id")
-        UserU=User.objects.get(id=id_)
-        print(str(UserU) + " User is deleted")
-        return get_object_or_404(User,id=id_)
+        UserA=Account.objects.get(id=id_)
+        print(str(UserA) + " User is deleted")
+        return get_object_or_404(Account,id=id_)
 
     def get_success_url(self):
         id_=self.kwargs.get("id")
-        UserU=User.objects.get(id=id_)
-        print(UserU.email)
-        message="Dear sir/ma'am your DJSCOE CS account " + str(UserU) + " is deleted by admin"
-        subject = 'This email is from Credit Society Committee'
-        email_from = settings.EMAIL_HOST_USER
-        recievers=[UserU.email]
-        send_mail( subject, message, email_from, recievers )
+        UserA=Account.objects.get(id=id_)
+        # print(UserU.email)
+        # message="Dear sir/ma'am your DJSCOE CS account " + str(UserU) + " is deleted by admin"
+        # subject = 'This email is from Credit Society Committee'
+        # email_from = settings.EMAIL_HOST_USER
+        # recievers=[UserU.email]
+        # send_mail( subject, message, email_from, recievers )
         print("mail sent for deleteing account")
         return reverse_lazy('csadmin:members')
 
 
 @login_required
 def UserDelete(request):
-    Users=User.objects.all()
-    user_filter = UsersFilter(request.GET, queryset=Users)
+    UserA=Account.objects.all()
+    user_filter = AccountFilter(request.GET, queryset=UserA)
     context={
-        'User':Users,
+        'User':UserA,
         'filter': user_filter,
     }
     return render (request,'deleteuser.html',context=context)
@@ -378,13 +378,7 @@ class FDUpdate(UpdateView):
         form_class = FDUpdateForm
         template_name = 'fixeddeposits_update_form.html'
         success_url=reverse_lazy('csadmin:fixeddeposits')
-        #
-        # def get_object(self):
-        #     id_=self.kwargs.get("pk")
-        #     UserA=FixedDeposits.objects.get(pk=id_)
-        #     print(UserA.name)
-        #     return get_object_or_404(FixedDeposits,pk=id_)
-        #
+
         def get_context_data(self, **kwargs):
             id_=self.kwargs.get("pk")
             UserA=FixedDeposits.objects.get(pk=id_)
@@ -397,23 +391,6 @@ class FDUpdate(UpdateView):
                 'userfddate':UserA.fdmaturitydate,
                 'userfdamt':UserA.fdcapital,
             }
-            return context
-        #
-        # def get_success_url(self):
-        #     id_=self.kwargs.get("pk")
-        #     UserA=Account.objects.get(pk=id_)
-        #     UserU=User.objects.get(pk=UserA.username_id)
-        #     print(UserU)
-        #     print("FD updated Mail")
-        #     print(UserU.email)
-        #     messages.success(self.request, 'Mail sent')
-        #     message="Dear sir/ma'am your DJSCOE CS account " + str(UserA.name) + " Fixed Deposit Capital is updated to " + str(UserA.fdcapital)
-        #     subject = 'This email is from Credit Society Committee'
-        #     email_from = settings.EMAIL_HOST_USER
-        #     recievers=[UserU.email]
-        #     send_mail( subject, message, email_from, recievers )
-        #     print("mail sent from suc for update in fdcapital")
-        #     return reverse_lazy('csadmin:fixeddeposits')
 
         def post(self,request,**kwargs):
             id_=self.kwargs.get("pk")

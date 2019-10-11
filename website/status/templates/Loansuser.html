@@ -271,13 +271,12 @@
             </div>
             <div class="tab-pane " id="history_long_loan">
               <table class="table">
-                <tbody>
-                  {%if countlongloans != 0%}
-                    <thead>
+                  <thead>
+                      {%if countlongloans != 0%}
                         <tr>
-                          <th>long loan date</th>
-                          <th>long loan amount</th>
-                          <th>long loan period</th>
+                          <th>Emergency loan date</th>
+                          <th>Emergency loan amount</th>
+                          <th>Emergency loan period</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -289,7 +288,7 @@
                         </tr>
                         {%endfor%}
                         {%endif%}
-                </tbody>
+                      </tbody>
               </table>
             </div>
           </div>
