@@ -289,12 +289,15 @@ class AccountDelete(DeleteView):
     def get_success_url(self):
         id_=self.kwargs.get("id")
         UserA=Account.objects.get(id=id_)
-        # print(UserU.email)
-        # message="Dear sir/ma'am your DJSCOE CS account " + str(UserU) + " is deleted by admin"
-        # subject = 'This email is from Credit Society Committee'
-        # email_from = settings.EMAIL_HOST_USER
-        # recievers=[UserU.email]
-        # send_mail( subject, message, email_from, recievers )
+        UserU=User.objects.get(pk=UserA.username_id)
+        UserU.is_active=False
+        UserU.save()
+        print(UserU.email)
+        message="Dear sir/ma'am your DJSCOE CS account " + str(UserU) + " is deleted by admin"
+        subject = 'This email is from Credit Society Committee'
+        email_from = settings.EMAIL_HOST_USER
+        recievers=[UserU.email]
+        send_mail( subject, message, email_from, recievers )
         print("mail sent for deleteing account")
         return reverse_lazy('csadmin:members')
 
@@ -353,12 +356,13 @@ class FDCreate(CreateView):
     def get_context_data(self,**kwargs):
         id_=self.kwargs.get("pk")
         userA=Account.objects.get(pk=id_)
+        userU=User.objects.get(pk=userA.username_id)
         idate=date.today()+datetime.timedelta(days=366)
         print(idate)
         context = super(CreateView, self).get_context_data(**kwargs)
         context={
             'username':userA.name,
-            'Userid':userA.id,
+            'Userid':userU.id,
             'i_date':idate,
         }
         return context
@@ -395,8 +399,10 @@ class FDUpdate(UpdateView):
         def post(self,request,**kwargs):
             id_=self.kwargs.get("pk")
             userF=FixedDeposits.objects.get(pk=id_)
-            Members=Account.objects.get(pk=userF.username_id)
-            UserU=User.objects.get(pk=Members.username_id)
+            UserU=User.objects.get(pk=userF.username_id)
+            print("HOOT")
+            print(UserU.id)
+            Members=Account.objects.get(username_id=UserU.id)
             Interests=interests.objects.all().last()
             datetoday=datetime.date.today()
             date_diff_fd = (relativedelta.relativedelta(userF.fdmaturitydate,datetoday))
@@ -430,7 +436,7 @@ class FDUpdate(UpdateView):
                     send_mail(subject,message,email_from,recievers)
                     print("mail sent of FD renewal")
                 fdhistory(userF.fdcapital,date.today(),userF.fdmaturitydate,userF.username_id)
-                Members.save()
+                # Members.save()
 
             if "clr_button" in request.POST:
                 print("clear")

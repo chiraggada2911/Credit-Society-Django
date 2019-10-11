@@ -52,7 +52,6 @@ class Account(models.Model):
     #schema for fixed Deposits
     FDCount=models.IntegerField(default=0,null=False)
 
-
     #teaching and nonteaching staff
     teachingstaff=models.BooleanField(default=False)
     nonteachingstaff=models.BooleanField(default=False)
@@ -79,7 +78,7 @@ class Notification(models.Model):
         return str(self.sender)
 
 class FixedDeposits(models.Model):
-    username=models.ForeignKey(Account,on_delete=models.CASCADE,null=True,unique=False)
+    username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
     fdcapital=models.IntegerField(default=0,null=True)
     fddate=models.DateField(null=True,blank=True)
     fdmaturitydate=models.DateField(null=True,blank=True)
@@ -109,7 +108,7 @@ class HistoryemerLoan(models.Model):
         return str(self.username)
 
 class HistoryFd(models.Model):
-    username=models.ForeignKey(Account,on_delete=models.CASCADE,null=True,unique=False)
+    username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
     fdcapital=models.IntegerField(default=0,null=True)
     fddate=models.DateField(null=True,blank=True)
     fdmaturitydate=models.DateField(null=True,blank=True)

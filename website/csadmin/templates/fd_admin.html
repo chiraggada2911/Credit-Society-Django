@@ -17,8 +17,8 @@
               <form method="get">
                 <div class="input-group " style='width:65%'>
                   <table>
-                    <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="username__name"
-                      placeholder="Search" id="id_username__name">
+                    <input type="text" style="color:#fff" class="form-control" autocomplete="off" name="username__first_name"
+                      placeholder="Search" id="id_username__first_name">
                     <button type="button" class="btn btn-round btn-just-icon" name="button"><i
                         class="material-icons">search</i></button>
                   </table>
@@ -49,9 +49,9 @@
                   <tbody>
 
               {%for i in filter.qs %}
-                    {%if i.fdcapital != 0%}
+                    {%if i.fdcapital != 0 and i.username.is_active == True%}
                 <tr>
-                  <td>{{i.username.name}}</td>
+                  <td>{{i.username.first_name}} {{i.username.last_name}}</td>
                   <td>{{i.fdcapital}}</td>
                   <td>{{i.fdmaturitydate}}</td>
                   <td style="text-align: center" ><a href="{% url 'csadmin:fd_update' pk=i.pk %}"><i class="fa fa-cog" aria-hidden="true" style='font-size:15px'></i></a></td>
