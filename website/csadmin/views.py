@@ -64,6 +64,13 @@ def emerloanhistory(emerloanamount,emerloandate,emerloanperiod,userid):
     EmerLoan.username=userid
     EmerLoan.save()
 
+def fdhistory(fdcapital,fddate,fdmaturitydate,userid):
+    Fd=HistoryFd()
+    Fd.fdcapital=fdcapital
+    Fd.fddate=fddate
+    Fd.fdmaturitydate=fdmaturitydate
+    Fd.username_id=userid
+    Fd.save()
 
 @login_required
 def index(request):
@@ -357,7 +364,13 @@ class FDCreate(CreateView):
         return context
 
     def get_success_url(self):
-            return reverse_lazy('csadmin:fixeddeposits')
+        id_=self.kwargs.get("pk")
+        userA=Account.objects.get(pk=id_)
+        userF=FixedDeposits.objects.all().last()
+        fdhistory(userF.fdcapital,userF.fddate,userF.fdmaturitydate,userF.username_id)
+        print("All ok")
+        print(userF.username)
+        return reverse_lazy('csadmin:fixeddeposits')
 
 
 class FDUpdate(UpdateView):
@@ -402,7 +415,7 @@ class FDUpdate(UpdateView):
                     subject = 'This email is from Credit Society Committee regarding your Fixed Deposit'
                     email_from = settings.EMAIL_HOST_USER
                     recievers=[UserU.email]
-                    send_mail( subject, message, email_from, recievers )
+                    send_mail(subject,message,email_from,recievers)
                     print("mail sent for FD renewal")
                 else:
                     userF.fdmaturitydate=userF.fdmaturitydate + datetime.timedelta(days=365)
@@ -414,8 +427,9 @@ class FDUpdate(UpdateView):
                     subject = 'This email is from Credit Society Committee  regarding your Fixed Deposit'
                     email_from = settings.EMAIL_HOST_USER
                     recievers=[UserU.email]
-                    send_mail( subject, message, email_from, recievers )
+                    send_mail(subject,message,email_from,recievers)
                     print("mail sent of FD renewal")
+                fdhistory(userF.fdcapital,date.today(),userF.fdmaturitydate,userF.username_id)
                 Members.save()
 
             if "clr_button" in request.POST:
@@ -495,6 +509,7 @@ class LongLoanUpdate(UpdateView):
             elif(UserA.longloanbalance!=0):
                 UserA.longloanbalance=UserA.longloanbalance+UserA.longloanadditional
                 UserA.longloanamount=UserA.longloanamount+UserA.longloanadditional
+                longloanhistory(UserA.longloanadditional,date.today(),0,UserA.username)
                 UserA.islongloantaken=True
                 print("jatin")
             UserA.save()
