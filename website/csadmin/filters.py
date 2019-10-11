@@ -9,10 +9,10 @@ class AccountFilter(django_filters.FilterSet):
         fields = ['name']
 
 class UserFilter(django_filters.FilterSet):
-    username__name = django_filters.CharFilter(lookup_expr='icontains')
+    username__first_name = django_filters.CharFilter(lookup_expr='icontains')
     class Meta:
         model = FixedDeposits
-        fields = ['username__name']
+        fields = ['username__first_name']
 
 class UsersFilter(django_filters.FilterSet):
     username = django_filters.CharFilter(lookup_expr='icontains')
