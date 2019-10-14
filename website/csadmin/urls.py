@@ -15,6 +15,7 @@ urlpatterns = [
     path('change', views.change,name="change"),
     path('message', views.message,name="message"),
     path('notifications', views.notifications,name="notifications"),
+    path('history',views.history,name='history'),
 
     # new create urls
     path('usercreate', login_required(views.UserCreate.as_view()),name='user_create'),
