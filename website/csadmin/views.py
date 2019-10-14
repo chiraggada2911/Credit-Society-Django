@@ -400,8 +400,6 @@ class FDUpdate(UpdateView):
             id_=self.kwargs.get("pk")
             userF=FixedDeposits.objects.get(pk=id_)
             UserU=User.objects.get(pk=userF.username_id)
-            print("HOOT")
-            print(UserU.id)
             Members=Account.objects.get(username_id=UserU.id)
             Interests=interests.objects.all().last()
             datetoday=datetime.date.today()
@@ -411,11 +409,10 @@ class FDUpdate(UpdateView):
                 date_diff_fd = (relativedelta.relativedelta(userF.fdmaturitydate,datetoday))
                 print(userF.fdmaturitydate)
                 print(type(userF.fdmaturitydate))
-                # print(Members.fdmaturitydate.year + 1 )
+
                 if (userF.fdmaturitydate.year%4==0 and userF.fdmaturitydate.year%100!=0 or userF.fdmaturitydate.year%400==0):
                     userF.fdmaturitydate=userF.fdmaturitydate + datetime.timedelta(days=366)
                     SimpleInterest=userF.fdcapital*Interests.fdinterest/100
-
                     userF.fdcapital=userF.fdcapital+SimpleInterest
                     message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(userF.fdmaturitydate)
                     subject = 'This email is from Credit Society Committee regarding your Fixed Deposit'
@@ -427,8 +424,6 @@ class FDUpdate(UpdateView):
                     userF.fdmaturitydate=userF.fdmaturitydate + datetime.timedelta(days=365)
                     SimpleInterest=userF.fdcapital*Interests.fdinterest/100
                     userF.fdcapital=userF.fdcapital+SimpleInterest
-                    # this was twice here !!!!!!!!!!!
-                    # userF.fdcapital=userF.fdcapital+SimpleInterest
                     message="Dear sir/ma'am your DJSCOE CS account" + str(Members.name) + "Fd is renew and New maturity date is" + str(userF.fdmaturitydate)
                     subject = 'This email is from Credit Society Committee  regarding your Fixed Deposit'
                     email_from = settings.EMAIL_HOST_USER
@@ -436,6 +431,7 @@ class FDUpdate(UpdateView):
                     send_mail(subject,message,email_from,recievers)
                     print("mail sent of FD renewal")
                 fdhistory(userF.fdcapital,date.today(),userF.fdmaturitydate,userF.username_id)
+                userF.save()
                 # Members.save()
 
             if "clr_button" in request.POST:
@@ -465,7 +461,7 @@ class FDUpdate(UpdateView):
                     recievers=[UserU.email]
                     send_mail( subject, message, email_from, recievers )
                     print("mail sent of fdcapital")
-            userF.save()
+                userF.delete()
             return super(FDUpdate, self).post(request)
 
 
