@@ -113,3 +113,25 @@ class HistoryFd(models.Model):
     fddate=models.DateField(null=True,blank=True)
     fdmaturitydate=models.DateField(null=True,blank=True)
     fdnumber=models.CharField(default=0,max_length=50,null=True)
+
+    def __str__(self):
+        return str(self.username)
+
+class sharemonth(models.Model):
+    username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
+    jan=models.IntegerField(blank=True,null=True,default=0)
+    feb=models.IntegerField(blank=True,null=True,default=0)
+    mar=models.IntegerField(blank=True,null=True,default=0)
+    apr=models.IntegerField(blank=True,null=True,default=0)
+    may=models.IntegerField(blank=True,null=True,default=0)
+    jun=models.IntegerField(blank=True,null=True,default=0)
+    jul=models.IntegerField(blank=True,null=True,default=0)
+    aug=models.IntegerField(blank=True,null=True,default=0)
+    sept=models.IntegerField(blank=True,null=True,default=0)
+    oct=models.IntegerField(blank=True,null=True,default=0)
+    nov=models.IntegerField(blank=True,null=True,default=0)
+    dec=models.IntegerField(blank=True,null=True,default=0)
+    encode=models.IntegerField(blank=True,null=True,default=0)
+
+    def __str__(self):
+        return str(self.username)

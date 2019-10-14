@@ -212,6 +212,19 @@ def notifications(request):
     }
     return render (request,'notifications_admin.html',context=context)
 
+@login_required
+def history(request):
+    longloan=HistorylongLoan.objects.all()
+    emerloan=HistoryemerLoan.objects.all()
+    fd=HistoryFd.objects.all()
+    context={
+        'longloan':longloan,
+        'emerloan':emerloan,
+        'fd':fd,
+        'history':"active",
+    }
+    return render (request,'history_admin.html',context=context)
+
 def notidelete(request,part_id =None):
     object = Notification.objects.get(id=part_id)
     object.delete()
@@ -465,6 +478,7 @@ class FDUpdate(UpdateView):
                     recievers=[UserU.email]
                     send_mail( subject, message, email_from, recievers )
                     print("mail sent of fdcapital")
+
             userF.save()
             return super(FDUpdate, self).post(request)
 
