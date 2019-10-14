@@ -16760,7 +16760,7 @@ label {
 .card.bg-primary,
 .card.card-rotate.bg-primary .front,
 .card.card-rotate.bg-primary .back {
-  background: linear-gradient(60deg, #0b0bef, #8e24aa);
+  background:#2b6bef;
 }
 
 .card .card-header-info .card-icon,
@@ -16787,7 +16787,7 @@ label {
 .card.bg-warning,
 .card.card-rotate.bg-warning .front,
 .card.card-rotate.bg-warning .back {
-  background: linear-gradient(60deg, #ffa726, #fb8c00);
+  background:#2b6bef;
 }
 
 .card .card-header-danger .card-icon,
