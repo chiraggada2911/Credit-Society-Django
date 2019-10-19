@@ -127,11 +127,36 @@ class sharemonth(models.Model):
     jun=models.IntegerField(blank=True,null=True,default=0)
     jul=models.IntegerField(blank=True,null=True,default=0)
     aug=models.IntegerField(blank=True,null=True,default=0)
-    sept=models.IntegerField(blank=True,null=True,default=0)
+    sep=models.IntegerField(blank=True,null=True,default=0)
     oct=models.IntegerField(blank=True,null=True,default=0)
     nov=models.IntegerField(blank=True,null=True,default=0)
     dec=models.IntegerField(blank=True,null=True,default=0)
-    encode=models.IntegerField(blank=True,null=True,default=0)
+    encode=models.CharField(max_length=20,blank=True,null=True,default=0)
 
     def __str__(self):
         return str(self.username)
+
+class cdmonth(models.Model):
+    username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
+    jan=models.IntegerField(blank=True,null=True,default=0)
+    feb=models.IntegerField(blank=True,null=True,default=0)
+    mar=models.IntegerField(blank=True,null=True,default=0)
+    apr=models.IntegerField(blank=True,null=True,default=0)
+    may=models.IntegerField(blank=True,null=True,default=0)
+    jun=models.IntegerField(blank=True,null=True,default=0)
+    jul=models.IntegerField(blank=True,null=True,default=0)
+    aug=models.IntegerField(blank=True,null=True,default=0)
+    sep=models.IntegerField(blank=True,null=True,default=0)
+    oct=models.IntegerField(blank=True,null=True,default=0)
+    nov=models.IntegerField(blank=True,null=True,default=0)
+    dec=models.IntegerField(blank=True,null=True,default=0)
+    encode=models.CharField(max_length=20,blank=True,null=True,default=0)
+
+    def __str__(self):
+        return str(self.username)
+
+class year(models.Model):
+    username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
+    s_encode=models.CharField(max_length=20,blank=True,null=True,default=0)
+    cd_encode=models.CharField(max_length=20,blank=True,null=True,default=0)
+    year=models.CharField(max_length=20,blank=True,null=True,default=0)
