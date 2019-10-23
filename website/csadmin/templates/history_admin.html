@@ -2,52 +2,117 @@
 {%block title%}History{%endblock%}
 {%block content%}
 <main role="main" class="col-md-9 col-lg-12 px-4">
-    <div class="container">
-      <div class="row">
-        <div class="col">
+    <div class="container"><br><br><br>
+        <div class="">
           <div class="card">
-            <div class="card-header card-header-warning">
-              <h2 class="card-title">Fixed Deposits</h2>
+            <div class="card-header card-header-tabs card-header-primary">
+              <div class="nav-tabs-navigation">
+                <div class="nav-tabs-wrapper">
+                  <span class="nav-tabs-title">Previous Loans:</span>
+                  <ul class="nav nav-tabs" data-tabs="tabs">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#history_long_loan" data-toggle="tab">
+                        <i class="material-icons">monetization_on</i> Long Loan
+                        <div class="ripple-container"></div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="#history_emergency_loan" data-toggle="tab">
+                        <i class="material-icons">offline_bolt</i> Emergency Loan
+                        <div class="ripple-container"></div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#history_fd" data-toggle="tab">
+                        <i class="material-icons">monetization_on</i> Fixed Deposits
+                        <div class="ripple-container"></div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="card-body">
-              <h3><b>FD Holder Name:</b> {{Accountholder.name}}</h3>
-            <h3><b>No of FD(s):</b>{{fdcount}}</h3>
-              <h3><b>Interest:</b>{{Interests.fdinterest}} </h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-12">
-          <div class="card">
-            <div class="card-header card-header-warning">
-              <h4 class="card-title">Fixed Deposit details</h4>
-              <p class="card-category">Your all FDs will appear here</p>
-            </div>
-            <div class="card-body table-responsive">
-              <table class="table table-hover">
-                <thead>
+              <div class="tab-content">
+                <div class="tab-pane active " id="history_long_loan">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Sr.</th>
+                        <th>User name</th>
+                        <th>Loan Amount</th>
+                        <th>Loan Date</th>
+                        <th>Period (In months)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                  {%for i in longloan %}
                   <tr>
-                    <th>Sr.</th>
-                    <th>FD Capital</th>
-                    <th>Maturity Date</th>
-                    <th>Reciept</th>
-                </tr>
-                </thead>
-                <tbody>
-  
-              {%for i in userF %}
-                  {%if i.fdcapital != 0%}
-              <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{i.fdcapital}}</td>
-                <td>{{i.fdmaturitydate}}</td>
-                <td></td>
-                  {%endif%}
-              </tr>
-              {%endfor%}
-              </tbody>
-              </table>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.username}}</td>
+                    <td>{{i.longloanamount}}</td>
+                    <td>{{i.longloandate}}</td>
+                    <td>{{i.longloanperiod}}</td>
+                  </tr>
+                  {%endfor%}
+                  </tbody>
+                  </table>
+                </div>
+                <div class="tab-pane " id="history_emergency_loan">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Sr.</th>
+                        <th>User name</th>
+                        <th>Loan Amount</th>
+                        <th>Loan Date</th>
+                        <th>Period (In months)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                  {%for i in emerloan %}
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.username}}</td>
+                    <td>{{i.emerloanamount}}</td>
+                    <td>{{i.emerloandate}}</td>
+                    <td>{{i.emerloanperiod}}</td>
+                  </tr>
+                  {%endfor%}
+                  </tbody>
+                  </table>
+                </div>
+                <div class="tab-pane " id="history_fd">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Sr.</th>
+                        <th>User name</th>
+                        <th>FD Capital</th>
+                        <th>FD Date</th>
+                        <th>Maturity Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                  {%for i in fd %}
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.username}}</td>
+                    <td>{{i.fdcapital}}</td>
+                    <td>{{i.fddate}}</td>
+                    <td>{{i.fdmaturitydate}}</td>
+                  </tr>
+                  {%endfor%}
+                  </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
   </main>
   {%endblock%}
