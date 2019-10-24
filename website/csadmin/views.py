@@ -672,7 +672,8 @@ def calcinvest():
     for i in  Members.iterator():
         month=["Janurary","Feburary","March","April","May","June","July","August","September","October","November","December"]
         x=date.today().month-1
-        imonth="November"
+        imonth=month[x]
+        print("foo")
         print(imonth)
         if(i.totalinvestment==0):
             i.totalinvestment=i.sharebalance+i.cdbalance
@@ -687,43 +688,10 @@ def calcinvest():
             i.cdbalance=0
             i.shareamount=i.sharevalue
             i.cdamount=0
-        if(imonth=='Janurary'):
-            cdmonth.objects.update_or_create(Janurary=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(Janurary=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='Feburary'):
-            cdmonth.objects.update_or_create(Feburary=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(Feburary=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='March'):
-            cdmonth.objects.update_or_create(March=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(March=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='April'):
-            cdmonth.objects.update_or_create(April=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(April=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='May'):
-            cdmonth.objects.update_or_create(May=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(May=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='June'):
-            cdmonth.objects.update_or_create(June=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(June=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='July'):
-            cdmonth.objects.update_or_create(July=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(July=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='August'):
-            cdmonth.objects.update_or_create(August=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(August=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='September'):
-            cdmonth.objects.update_or_create(September=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(September=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='October'):
-            cdmonth.objects.update_or_create(October=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(October=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='November'):
-            cdmonth.objects.update_or_create(November=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(November=i.sharebalance,username_id=i.username_id)
-        elif(imonth=='December'):
-            cdmonth.objects.update_or_create(December=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(December=i.sharebalance,username_id=i.username_id)          
-#remove if else of arguments and add variable argument      
+        # if(imonth=='Janurary'):
+            cdmonth.objects.update_or_create(imonth=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(imonth=i.sharebalance,username_id=i.username_id)
+#remove if else of arguments and add variable argument
         i.save()
 
 @cron_task(crontab="* * * * *")
