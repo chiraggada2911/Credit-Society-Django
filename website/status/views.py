@@ -128,10 +128,12 @@ def shares(request):
 def fixedDeposits(request):
 
     current_user_id=request.user.username
+    currentuserid=request.user.id
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
-    userF=FixedDeposits.objects.filter(username_id=Accountholder.id)
-    fdcount=FixedDeposits.objects.filter(username_id=Accountholder.id).count()
+    userF=FixedDeposits.objects.filter(username_id=currentuserid)
+    fdcount=FixedDeposits.objects.filter(username_id=currentuserid).count()
     print(fdcount)
+    print(userF)
     print("Upar")
     # userF=FixedDeposits.objects.filter(id__id__icontains=Accountholder.id).get()
     Interests=interests.objects.all().last()
