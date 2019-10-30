@@ -61,9 +61,10 @@ def details(request):
     '''this view return the details of the logged in user '''
 
     current_user_id=request.user.username
+    currentuserid=request.user.id
     name=str(Account.name)
     Accountholder=Account.objects.filter(username__username__icontains=current_user_id).get()
-    fdcount=FixedDeposits.objects.filter(username_id=Accountholder.id).count()
+    fdcount=FixedDeposits.objects.filter(username_id=currentuserid).count()
     Interests=interests.objects.all().last()
 
 

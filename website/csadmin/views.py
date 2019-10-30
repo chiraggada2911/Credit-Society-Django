@@ -522,6 +522,10 @@ class LongLoanUpdate(UpdateView):
             validate=False
             if (UserA.longloanbalance<=(UserA.longloanamount*50)/100):
                 validate=True
+            if (UserA.teachingstaff==True):
+                maxloan=1200000
+            if (UserA.nonteachingstaff==True):
+                maxloan=900000
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
@@ -530,6 +534,7 @@ class LongLoanUpdate(UpdateView):
                 'longloandt':longloandate,
                 'longloanbal':UserA.longloanbalance,
                 'validate':validate,
+                'maxloan':maxloan,
                 'longloanamt':UserA.longloanamount,
                 'longloanprd':UserA.longloanperiod,
             }
