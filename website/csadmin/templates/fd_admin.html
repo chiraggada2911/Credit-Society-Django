@@ -40,7 +40,6 @@
                   <thead>
                     <tr>
                       <th>Name</th>
-                      <th>FD Number</th>
                       <th>FD Capital</th>
                       <th>Maturity Date</th>
                       <th style="text-align: center">Actions</th>
@@ -53,7 +52,6 @@
                     {%if i.fdcapital != 0 and i.username.is_active == True%}
                 <tr>
                   <td>{{i.username.first_name}} {{i.username.last_name}}</td>
-                  <td>{{i.fdnumber}}</td>
                   <td>{{i.fdcapital}}</td>
                   <td>{{i.fdmaturitydate}}</td>
                   <td style="text-align: center" ><a href="{% url 'csadmin:fd_update' pk=i.pk %}"><i class="fa fa-cog" aria-hidden="true" style='font-size:15px'></i></a></td>

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #models
-from status.models import Account,interests,Notification,FixedDeposits,HistorylongLoan,HistoryemerLoan,HistoryFd,year
+from status.models import Account,interests,Notification,FixedDeposits,HistorylongLoan,HistoryemerLoan,HistoryFd
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404

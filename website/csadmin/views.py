@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 # models
-from status.models import Account,interests,Notification,FixedDeposits,HistorylongLoan,HistoryemerLoan,HistoryFd,sharemonth,cdmonth
+from status.models import Account,interests,Notification,FixedDeposits,HistorylongLoan,HistoryemerLoan,HistoryFd,sharemonth,cdmonth,year
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import generic
@@ -250,10 +250,7 @@ class AccountCreate(CreateView):
         def get_context_data(self, **kwargs):
             userU=User.objects.all()
             userA=Account.objects.all().last()
-            try:
-                acc_no=userA.accountnumber + 1
-            except AttributeError:
-                acc_no=1
+            acc_no=userA.accountnumber + 1
             print(acc_no)
             context = super(CreateView, self).get_context_data(**kwargs)
             context={
@@ -410,7 +407,6 @@ class FDUpdate(UpdateView):
                 'username':UserA.username,
                 'userfddate':UserA.fdmaturitydate,
                 'userfdamt':UserA.fdcapital,
-                'userfdnum':UserA.fdnumber,
             }
 
         def post(self,request,**kwargs):
@@ -512,7 +508,6 @@ class LongLoanUpdate(UpdateView):
                 'validate':validate,
                 'longloanamt':UserA.longloanamount,
                 'longloanprd':UserA.longloanperiod,
-                'longloannum':UserA.longloannumber,
             }
             return context
 
@@ -569,8 +564,7 @@ class EmerLoanUpdate(UpdateView):
                 'emerloanprd':UserA.emerloanperiod,
                 'isloanemertaken':UserA.isloanemertaken,
                 'emerloandt':emerloandate,
-                'username':UserA.name,
-                'emerloannum':UserA.emerloannumber
+                'username':UserA.name
             }
             return context
 

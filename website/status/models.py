@@ -34,7 +34,6 @@ class Account(models.Model):
     longloaninterestamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloanbalance=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     longloanadditional=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
-    longloannumber=models.CharField(default=0,max_length=50,null=True)
 #emi=interest + principle
     longloanemi=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
 
@@ -45,7 +44,6 @@ class Account(models.Model):
     emerloanperiod=models.IntegerField(blank=True,null=True,default=0)
     emerloaninterestamount=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
     emerloanbalance=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
-    emerloannumber=models.CharField(default=0,max_length=50,null=True)
 #emi=interest + principle
     emerloanemi=models.DecimalField(blank=True,null=True,default=0,max_digits=10,decimal_places=2)
 #downpayment

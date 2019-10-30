@@ -20,7 +20,7 @@ class NewUserForm(forms.ModelForm):
 class FDUpdateForm(forms.ModelForm):
     class Meta:
         model=FixedDeposits
-        fields=('username','fdcapital','fdmaturitydate','fdnumber')
+        fields=('username','fdcapital','fdmaturitydate')
 
 class ShareUpdateForm(forms.ModelForm):
     class Meta:
