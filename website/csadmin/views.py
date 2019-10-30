@@ -34,7 +34,7 @@ import smtplib
 
 #forms
 from django.forms import ModelForm
-from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,InterestsForm
+from csadmin.forms import AccountForm,NewUserForm,MessengerForm,SecretkeyForm,FDUpdateForm,ShareUpdateForm,LongLoanUpdateForm,EmerLoanUpdateForm,DownPaymentForm,InterestsForm,dateRangeForm
 
 # Create your views here.
 def index(request):
@@ -189,7 +189,7 @@ def message(request):
             print(message)
             subject = 'This email is from Credit Society Committee'
             email_from = settings.EMAIL_HOST_USER
-            send_mass_mail( subject, message, email_from, recievers )
+            send_mail( subject, message, email_from, recievers )
             print("mail sent from messanger")
 
         else:
@@ -224,6 +224,30 @@ def history(request):
         'history':"active",
     }
     return render (request,'history_admin.html',context=context)
+
+@login_required
+def report(request):
+    userA=Account.objects.all()
+    userU=User.objects.all()
+    fd=FixedDeposits.objects.all()
+    interest=interests.objects.all()
+    sharemont=sharemonth.objects.all()
+    cdmont=cdmonth.objects.all()
+    if request.method=="POST":
+        tdate=dateRangeForm(request.POST)
+        if tdate.is_valid():
+            idate=tdate.cleaned_data['startdate']
+            fdate=tdate.cleaned_data['enddate']
+            
+
+    context={
+        'userA':userA,
+        'userU':userU,
+        'fd':fd,
+        'sharemonth':sharemont,
+        'cdmonth':cdmont,
+    }
+    return render (request,'reportlist_admin.html',context=context)
 
 def notidelete(request,part_id =None):
     object = Notification.objects.get(id=part_id)
@@ -659,6 +683,9 @@ class GeneratePdf(View):
 
 # cron tak(scheduled tasks)
 @cron_task(crontab="* * * * *")
+# def store_record_lap(runner, lap_time):
+    # record_lap, created = RecordLap.objects.update_or_create(runner=runner, defaults={'lap_time': lap_time})
+
 def calcinvest():
     Members=Account.objects.all()
     Interests=interests.objects.all().last()
@@ -666,7 +693,7 @@ def calcinvest():
     for i in  Members.iterator():
         month=["Janurary","Feburary","March","April","May","June","July","August","September","October","November","December"]
         x=date.today().month-1
-        imonth=month[x]
+        imonth=str(month[x])
         print("foo")
         print(imonth)
         if(i.totalinvestment==0):
@@ -682,10 +709,16 @@ def calcinvest():
             i.cdbalance=0
             i.shareamount=i.sharevalue
             i.cdamount=0
-        # if(imonth=='Janurary'):
-            cdmonth.objects.update_or_create(imonth=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(imonth=i.sharebalance,username_id=i.username_id)
-#remove if else of arguments and add variable argument
+        usershare, sharecreated = sharemonth.objects.update_or_create(username_id=i.username_id,defaults={'username_id':i.username_id})
+        usercd, cdcreated = cdmonth.objects.update_or_create(username_id=i.username_id,defaults={'username_id':i.username_id})
+        if not sharecreated:
+            foo = sharemonth.objects.get(username_id=i.username_id)
+            setattr(foo,imonth,i.sharebalance)
+            foo.save()
+        if not cdcreated:
+            foo = cdmonth.objects.get(username_id=i.username_id)
+            setattr(foo,imonth,i.cdbalance)
+            foo.save()
         i.save()
 
 @cron_task(crontab="* * * * *")
@@ -772,6 +805,7 @@ def fdemail():
     Members=Account.objects.all()
     datetoday=datetime.date.today()
     for i in  Members.iterator():
+        #use try catch here !!!!
         print("start")
         date_diff_fd = (relativedelta.relativedelta(i.fdmaturitydate,datetoday))
         print(date_diff_fd)
