@@ -666,8 +666,7 @@ def calcinvest():
     for i in  Members.iterator():
         month=["Janurary","Feburary","March","April","May","June","July","August","September","October","November","December"]
         x=date.today().month-1
-        imonth=month[x]
-        print("foo")
+        imonth="November"
         print(imonth)
         if(i.totalinvestment==0):
             i.totalinvestment=i.sharebalance+i.cdbalance
@@ -682,10 +681,43 @@ def calcinvest():
             i.cdbalance=0
             i.shareamount=i.sharevalue
             i.cdamount=0
-        # if(imonth=='Janurary'):
-            cdmonth.objects.update_or_create(imonth=i.cdbalance,username_id=i.username_id)
-            sharemonth.objects.update_or_create(imonth=i.sharebalance,username_id=i.username_id)
-#remove if else of arguments and add variable argument
+        if(imonth=='Janurary'):
+            cdmonth.objects.update_or_create(Janurary=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(Janurary=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='Feburary'):
+            cdmonth.objects.update_or_create(Feburary=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(Feburary=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='March'):
+            cdmonth.objects.update_or_create(March=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(March=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='April'):
+            cdmonth.objects.update_or_create(April=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(April=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='May'):
+            cdmonth.objects.update_or_create(May=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(May=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='June'):
+            cdmonth.objects.update_or_create(June=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(June=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='July'):
+            cdmonth.objects.update_or_create(July=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(July=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='August'):
+            cdmonth.objects.update_or_create(August=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(August=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='September'):
+            cdmonth.objects.update_or_create(September=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(September=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='October'):
+            cdmonth.objects.update_or_create(October=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(October=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='November'):
+            cdmonth.objects.update_or_create(November=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(November=i.sharebalance,username_id=i.username_id)
+        elif(imonth=='December'):
+            cdmonth.objects.update_or_create(December=i.cdbalance,username_id=i.username_id)
+            sharemonth.objects.update_or_create(December=i.sharebalance,username_id=i.username_id)          
+#remove if else of arguments and add variable argument      
         i.save()
 
 @cron_task(crontab="* * * * *")
@@ -701,8 +733,10 @@ def longloan():
         A=i.longloanamount
         if(N!=0):
             if(i.longloanprinciple==0 and i.longloaninterestamount==0):
-                i.longloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.longloaninterestamount=R*A
+                emi=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.longloanemi=round(emi)
+                interestamount=R*A
+                i.longloaninterestamount=round(interestamount)
                 i.longloanprinciple=i.longloanemi-i.longloaninterestamount
                 i.longloanbalance=i.longloanamount-i.longloanprinciple
             elif(i.longloanbalance<=i.longloanemi and i.longloanbalance!=0):
@@ -719,8 +753,10 @@ def longloan():
                 i.displaydownpayment=0
                 i.islongloantaken=False
             else:
-                i.longloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.longloaninterestamount=R*i.longloanbalance
+                emi=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.longloanemi=round(emi)
+                interestamount=R*i.longloanbalance
+                i.longloaninterestamount=round(interestamount)
                 i.longloanprinciple=i.longloanemi-i.longloaninterestamount
                 i.longloanbalance=i.longloanbalance-i.longloanprinciple
         i.save()
@@ -738,18 +774,20 @@ def emergencyloan():
         N=i.emerloanperiod
         A=i.emerloanamount
         if(i.isloanemertaken==True):
-            if(i.emerloanprinciple==0 and i.emerloaninterestamount==0):
-                i.emerloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.emerloaninterestamount=R*A
+            if(i.emerloanprinciple==0 and i.emerloaninterestamount==0):#1st calculation
+                emi=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.emerloanemi=round(emi)
+                interestamount=R*A
+                i.emerloaninterestamount=round(interestamount)
                 i.emerloanprinciple=i.emerloanemi-i.emerloaninterestamount
                 i.emerloanbalance=i.emerloanamount-i.emerloanprinciple
                 print("loop1")
-            elif(i.emerloanbalance<=i.emerloanemi and i.emerloanbalance!=0):
+            elif(i.emerloanbalance<=i.emerloanemi and i.emerloanbalance!=0): #2nd last calculation
                 i.emerloanprinciple=i.emerloanbalance
                 i.emerloaninterestamount=i.emerloanemi-i.emerloanprinciple
                 i.emerloanbalance=0
                 print("loop2")
-            elif(i.emerloanbalance==0):
+            elif(i.emerloanbalance==0):#last calculation
                 i.emerloanamount=0
                 i.emerloanbalance=0
                 i.emerloanperiod=0
@@ -758,9 +796,11 @@ def emergencyloan():
                 i.emerloanprinciple=0
                 i.isloanemertaken=False
                 print("loop3")
-            else:
-                i.emerloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.emerloaninterestamount=R*i.emerloanbalance
+            else:#after 1st calculation
+                emi=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.emerloanemi=round(emi)
+                interestamount=R*i.emerloanbalance
+                i.emerloaninterestamount=round(interestamount)
                 i.emerloanprinciple=i.emerloanemi-i.emerloaninterestamount
                 i.emerloanbalance=i.emerloanbalance-i.emerloanprinciple
                 print("loop4")
@@ -769,7 +809,7 @@ def emergencyloan():
 
 @cron_task(crontab="* * * * *")
 def fdemail():
-    Members=Account.objects.all()
+    Members=FixedDeposits.objects.all()
     datetoday=datetime.date.today()
     for i in  Members.iterator():
         print("start")
