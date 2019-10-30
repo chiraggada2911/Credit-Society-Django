@@ -15,7 +15,7 @@
               <tr><th><label for="id_accountnumber">Accountnumber:</label></th><td><input type="number" name="accountnumber" value={{acc_nu}} required id="id_accountnumber"></td></tr>
               <tr><th><label for="id_username">Username:</label></th><td>
                 <select name="username" required id="id_username">
-                {%for i in user%}
+                {%for i in user reversed%}
                 <option value={{i.id}}>{{i.username}}</option>
                 {%endfor%}
 

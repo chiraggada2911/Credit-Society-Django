@@ -2,6 +2,10 @@ from django import forms
 from django.contrib.auth.models import User
 from status.models import Account,interests,Notification,FixedDeposits,HistorylongLoan,HistoryemerLoan,HistoryFd
 
+class dateRangeForm(forms.Form):
+    startdate= forms.DateField()
+    enddate=forms.DateField()
+
 class InterestsForm(forms.ModelForm):
     class Meta:
         model=interests

@@ -1,0 +1,58 @@
+{%extends 'base.html'%}
+
+{%block title%}Bank{%endblock%}
+{%block content%}
+
+<!-- template for csadmin:fd -->
+
+<main role="main" class="col-md-8 col-lg-12 px-4">
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-primary">
+              <h2 class="h2">List Of Current Fixed Deposits Holders</h2>
+              <h3>FD Rate of Interest = {{Interests.fdinterest}}</h3>
+            </div>
+            <form class="" method="POST">
+              <tr><th><label for="id_startdate">Startdate:</label></th><td><input type="date" name="startdate" required id="id_startdate"></td></tr>
+              <tr><th><label for="id_enddate">Enddate:</label></th><td><input type="date" name="enddate" required id="id_enddate"></td></tr>
+              <button type="submit" name="button">hello </button>
+                {% csrf_token %}
+            </form>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>FD Capital</th>
+                      <th>Maturity Date</th>
+                      <th style="text-align: center">Actions</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+
+              {%for i in filter.qs %}
+                    {%if i.fdcapital != 0 and i.username.is_active == True%}
+                <tr>
+                  <td>{{i.username.first_name}} {{i.username.last_name}}</td>
+                  <td>{{i.fdcapital}}</td>
+                  <td>{{i.fdmaturitydate}}</td>
+                  <td style="text-align: center" ><a href="{% url 'csadmin:fd_update' pk=i.pk %}"><i class="fa fa-cog" aria-hidden="true" style='font-size:15px'></i></a></td>
+                    {%endif%}
+                </tr>
+              {%endfor%}
+              </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>
+{%endblock%}
