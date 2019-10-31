@@ -238,7 +238,7 @@ def report(request):
         if tdate.is_valid():
             idate=tdate.cleaned_data['startdate']
             fdate=tdate.cleaned_data['enddate']
-            
+
 
     context={
         'userA':userA,
@@ -522,6 +522,10 @@ class LongLoanUpdate(UpdateView):
             validate=False
             if (UserA.longloanbalance<=(UserA.longloanamount*50)/100):
                 validate=True
+            if (UserA.teachingstaff==True):
+                maxloan=1200000
+            if (UserA.nonteachingstaff==True):
+                maxloan=900000
             context={
                 'Userid':UserA.username_id,
                 'username':UserA.name,
@@ -530,6 +534,7 @@ class LongLoanUpdate(UpdateView):
                 'longloandt':longloandate,
                 'longloanbal':UserA.longloanbalance,
                 'validate':validate,
+                'maxloan':maxloan,
                 'longloanamt':UserA.longloanamount,
                 'longloanprd':UserA.longloanperiod,
             }
@@ -734,8 +739,10 @@ def longloan():
         A=i.longloanamount
         if(N!=0):
             if(i.longloanprinciple==0 and i.longloaninterestamount==0):
-                i.longloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.longloaninterestamount=R*A
+                emi=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.longloanemi=round(emi)
+                interestamount=R*A
+                i.longloaninterestamount=round(interestamount)
                 i.longloanprinciple=i.longloanemi-i.longloaninterestamount
                 i.longloanbalance=i.longloanamount-i.longloanprinciple
             elif(i.longloanbalance<=i.longloanemi and i.longloanbalance!=0):
@@ -752,8 +759,10 @@ def longloan():
                 i.displaydownpayment=0
                 i.islongloantaken=False
             else:
-                i.longloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.longloaninterestamount=R*i.longloanbalance
+                emi=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.longloanemi=round(emi)
+                interestamount=R*i.longloanbalance
+                i.longloaninterestamount=round(interestamount)
                 i.longloanprinciple=i.longloanemi-i.longloaninterestamount
                 i.longloanbalance=i.longloanbalance-i.longloanprinciple
         i.save()
@@ -771,18 +780,20 @@ def emergencyloan():
         N=i.emerloanperiod
         A=i.emerloanamount
         if(i.isloanemertaken==True):
-            if(i.emerloanprinciple==0 and i.emerloaninterestamount==0):
-                i.emerloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.emerloaninterestamount=R*A
+            if(i.emerloanprinciple==0 and i.emerloaninterestamount==0):#1st calculation
+                emi=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.emerloanemi=round(emi)
+                interestamount=R*A
+                i.emerloaninterestamount=round(interestamount)
                 i.emerloanprinciple=i.emerloanemi-i.emerloaninterestamount
                 i.emerloanbalance=i.emerloanamount-i.emerloanprinciple
                 print("loop1")
-            elif(i.emerloanbalance<=i.emerloanemi and i.emerloanbalance!=0):
+            elif(i.emerloanbalance<=i.emerloanemi and i.emerloanbalance!=0): #2nd last calculation
                 i.emerloanprinciple=i.emerloanbalance
                 i.emerloaninterestamount=i.emerloanemi-i.emerloanprinciple
                 i.emerloanbalance=0
                 print("loop2")
-            elif(i.emerloanbalance==0):
+            elif(i.emerloanbalance==0):#last calculation
                 i.emerloanamount=0
                 i.emerloanbalance=0
                 i.emerloanperiod=0
@@ -791,9 +802,11 @@ def emergencyloan():
                 i.emerloanprinciple=0
                 i.isloanemertaken=False
                 print("loop3")
-            else:
-                i.emerloanemi=(A*R*(1+R)**N)/(((1+R)**N)-1)
-                i.emerloaninterestamount=R*i.emerloanbalance
+            else:#after 1st calculation
+                emi=(A*R*(1+R)**N)/(((1+R)**N)-1)
+                i.emerloanemi=round(emi)
+                interestamount=R*i.emerloanbalance
+                i.emerloaninterestamount=round(interestamount)
                 i.emerloanprinciple=i.emerloanemi-i.emerloaninterestamount
                 i.emerloanbalance=i.emerloanbalance-i.emerloanprinciple
                 print("loop4")
@@ -802,7 +815,7 @@ def emergencyloan():
 
 @cron_task(crontab="* * * * *")
 def fdemail():
-    Members=Account.objects.all()
+    Members=FixedDeposits.objects.all()
     datetoday=datetime.date.today()
     for i in  Members.iterator():
         #use try catch here !!!!
