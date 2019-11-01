@@ -2,9 +2,17 @@ from django import forms
 from django.contrib.auth.models import User
 from status.models import Account,interests,Notification,FixedDeposits,HistorylongLoan,HistoryemerLoan,HistoryFd
 
+Loan_choice=[
+    ('long_loan','Long_Loan'),
+    ('emergency_loan', 'Emergency_Loan'),
+    ('cd', 'CD'),
+    ('share', 'Share'),
+]
 class dateRangeForm(forms.Form):
     startdate= forms.DateField()
     enddate=forms.DateField()
+    userA=forms.CharField()
+    Choice = forms.CharField(widget=forms.RadioSelect(choices=Loan_choice))
 
 class InterestsForm(forms.ModelForm):
     class Meta:
