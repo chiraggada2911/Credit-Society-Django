@@ -238,14 +238,10 @@ def report(request):
         if tdate.is_valid():
             idate=tdate.cleaned_data['startdate']
             fdate=tdate.cleaned_data['enddate']
-<<<<<<< HEAD
             useru=tdate.cleaned_data['userA']
             choice=tdate.cleaned_data['Choice']
             UserA=Account.objects.get(id=useru)
             # s=UserA.objects.filter(date__range=[startdate, enddate])
-=======
-
->>>>>>> cf3ced5f4c058cb10a35c5fe463d67dfecfb51cc
 
     context={
         'userA':userA,
