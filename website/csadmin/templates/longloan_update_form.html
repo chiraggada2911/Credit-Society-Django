@@ -35,7 +35,7 @@
                   <div class="form-group">
                     <th> <label for="id_longloanamount" class="bmd-label-floating">Long Loan Amount:</label></th>
                     <td> <input type="number" name="longloanamount" value="{{longloanamt}}" step="100"
-                        id="id_longloanamount" class="form-control"></td>
+                        id="id_longloanamount" class="form-control" min="0" max="{{maxloan}}"></td>
                   </div>
                 </div>
               </tr>
