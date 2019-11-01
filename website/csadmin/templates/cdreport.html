@@ -1,0 +1,68 @@
+<head>
+  <style>
+    @page {
+      size: letter landscape;
+      margin-top: 4cm;
+      margin-bottom: 2cm;
+      margin-left: 2cm;
+      margin-right: 2cm;
+    }
+    table, th, td {
+  border: 0.5px solid black;
+}
+th, td {
+  padding: 2px;
+}
+table {
+  border-spacing: 5px;
+}
+
+  </style>
+</head>
+
+<h1 class="h2" align="center">D.J. Sanghvi College of Engg. Employee Co-op Cr. Soc.</h1>
+<h2 align="center">Salary Deduction for Month {{prevmonth}} {{year}}</h2>
+<div class="table-responsive">
+  <table class="table table-bordered" bprder="2">
+    <thead>
+      <tr>
+        <th>A/C No.</th>
+        <th>Sap Id</th>
+        <th>Name</th>
+        <th>Share Amount</th>
+        <th>Share Balance</th>
+        <th>CD Amount</th>
+        <th>CD Balance</th>
+        <th>Long Loan Principle</th>
+        <th>Long Loan Amount</th>
+        <th>Long Loan Balance</th>
+        <th>Emer Loan Principle</th>
+        <th>Emer Loan Amount</th>
+        <th>Emer Loan Balance</th>
+        <th>Total Amount</th>
+
+      </tr>
+    </thead>
+    <tbody>
+  {%for i in accounts%}
+  <tr>
+    <td>{{i.accountnumber}}</td>
+    <td align="center">{{i.sapid}}</td>
+    <td>{{i.name}}</td>
+    <td>{{i.shareamount}}</td>
+    <td>{{i.sharebalance}}</td>
+    <td>{{i.cdamount}}</td>
+    <td>{{i.cdbalance}}</td>
+    <td>{{i.longloanprinciple}}</td>
+    <td>{{i.longloaninterestamount}}</td>
+    <td>{{i.longloanbalance}}</td>
+    <td>{{i.emerloanprinciple}}</td>
+    <td>{{i.emerloaninterestamount}}</td>
+    <td>{{i.emerloanbalance}}</td>
+    <td>{{i.totalamount}}</td>
+
+  </tr>
+  {%endfor%}
+
+  </tbody>
+</table>

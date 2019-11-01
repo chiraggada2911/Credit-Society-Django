@@ -41,5 +41,6 @@ urlpatterns = [
 
     # pdf conversion
     path('accounts',login_required(views.GeneratePdf.as_view()),name="GeneratePdf"),
+    path('cd',login_required(views.GenerateReport.as_view()),name="GenerateReport"),
 
 ]

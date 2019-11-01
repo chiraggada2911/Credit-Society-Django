@@ -238,7 +238,14 @@ def report(request):
         if tdate.is_valid():
             idate=tdate.cleaned_data['startdate']
             fdate=tdate.cleaned_data['enddate']
+<<<<<<< HEAD
+            useru=tdate.cleaned_data['userA']
+            choice=tdate.cleaned_data['Choice']
+            UserA=Account.objects.get(id=useru)
+            # s=UserA.objects.filter(date__range=[startdate, enddate])
+=======
 
+>>>>>>> cf3ced5f4c058cb10a35c5fe463d67dfecfb51cc
 
     context={
         'userA':userA,
@@ -248,6 +255,26 @@ def report(request):
         'cdmonth':cdmont,
     }
     return render (request,'reportlist_admin.html',context=context)
+
+class GenerateReport(View):
+    def get(self, request, *args, **kwargs):
+        template = get_template('cdreport.html')
+        userA=Account.objects.all()
+        userU=User.objects.all()
+        fd=FixedDeposits.objects.all()
+        interest=interests.objects.all()
+        sharemont=sharemonth.objects.all()
+        cdmont=cdmonth.objects.all()
+        context={
+            'userA':userA,
+            'userU':userU,
+            'fd':fd,
+            'sharemonth':sharemont,
+            'cdmonth':cdmont,
+        }
+        html = template.render(context)
+        pdf = render_to_pdf('cdreport.html', context)
+        return HttpResponse(pdf, content_type='application/pdf')
 
 def notidelete(request,part_id =None):
     object = Notification.objects.get(id=part_id)
