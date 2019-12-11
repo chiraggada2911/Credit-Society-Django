@@ -256,15 +256,15 @@ class GenerateReport(View):
     def get(self, request, *args, **kwargs):
         template = get_template('cdreport.html')
         userA=Account.objects.all()
+        foo=cdmonth.objects.select_related('username').all()
         userU=User.objects.all()
-        fd=FixedDeposits.objects.all()
+        boo=Account.objects.prefetch_related('username')
         interest=interests.objects.all()
         sharemont=sharemonth.objects.all()
         cdmont=cdmonth.objects.all()
         context={
-            'userA':userA,
-            'userU':userU,
-            'fd':fd,
+            'userA':foo,
+            'userU':boo,
             'sharemonth':sharemont,
             'cdmonth':cdmont,
         }

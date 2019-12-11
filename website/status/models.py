@@ -120,7 +120,7 @@ class HistoryFd(models.Model):
 class sharemonth(models.Model):
     username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
     Janurary=models.IntegerField(blank=True,null=True,default=0)
-    February=models.IntegerField(blank=True,null=True,default=0)
+    february=models.IntegerField(blank=True,null=True,default=0)
     March=models.IntegerField(blank=True,null=True,default=0)
     April=models.IntegerField(blank=True,null=True,default=0)
     May=models.IntegerField(blank=True,null=True,default=0)
@@ -131,7 +131,10 @@ class sharemonth(models.Model):
     October=models.IntegerField(blank=True,null=True,default=0)
     November=models.IntegerField(blank=True,null=True,default=0)
     December=models.IntegerField(blank=True,null=True,default=0)
-    encode=models.CharField(max_length=20,blank=True,null=True,default=0)
+    year=models.IntegerField(blank=True,null=True,default=datetime.date.today().year)
+
+    class Meta:
+        unique_together = ('username', 'year',)
 
     def __str__(self):
         return str(self.username)
@@ -139,7 +142,7 @@ class sharemonth(models.Model):
 class cdmonth(models.Model):
     username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
     Janurary=models.IntegerField(blank=True,null=True,default=0)
-    February=models.IntegerField(blank=True,null=True,default=0)
+    february=models.IntegerField(blank=True,null=True,default=0)
     March=models.IntegerField(blank=True,null=True,default=0)
     April=models.IntegerField(blank=True,null=True,default=0)
     May=models.IntegerField(blank=True,null=True,default=0)
@@ -150,7 +153,10 @@ class cdmonth(models.Model):
     October=models.IntegerField(blank=True,null=True,default=0)
     November=models.IntegerField(blank=True,null=True,default=0)
     December=models.IntegerField(blank=True,null=True,default=0)
-    encode=models.CharField(max_length=20,blank=True,null=True,default=0)
+    year=models.IntegerField(blank=True,null=True,default=datetime.date.today().year)
+
+    class Meta:
+        unique_together = ('username', 'year',)
 
     def __str__(self):
         return str(self.username)

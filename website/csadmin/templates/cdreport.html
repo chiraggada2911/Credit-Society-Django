@@ -3,9 +3,9 @@
     @page {
       size: letter landscape;
       margin-top: 4cm;
-      margin-bottom: 2cm;
-      margin-left: 2cm;
-      margin-right: 2cm;
+      margin-bottom: 1cm;
+      margin-left: 1cm;
+      margin-right: 1cm;
     }
     table, th, td {
   border: 0.5px solid black;
@@ -26,41 +26,48 @@ table {
   <table class="table table-bordered" bprder="2">
     <thead>
       <tr>
+        <th>Sr.No</th>
         <th>A/C No.</th>
         <th>Sap Id</th>
         <th>Name</th>
-        <th>Share Amount</th>
-        <th>Share Balance</th>
-        <th>CD Amount</th>
-        <th>CD Balance</th>
-        <th>Long Loan Principle</th>
-        <th>Long Loan Amount</th>
-        <th>Long Loan Balance</th>
-        <th>Emer Loan Principle</th>
-        <th>Emer Loan Amount</th>
-        <th>Emer Loan Balance</th>
-        <th>Total Amount</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10</th>
+        <th>11</th>
+        <th>12</th>
+        <th>Total</th>
+        <th>Dividend</th>
 
       </tr>
     </thead>
     <tbody>
-  {%for i in accounts%}
+  {%for i in userA%}
   <tr>
-    <td>{{i.accountnumber}}</td>
-    <td align="center">{{i.sapid}}</td>
-    <td>{{i.name}}</td>
-    <td>{{i.shareamount}}</td>
-    <td>{{i.sharebalance}}</td>
-    <td>{{i.cdamount}}</td>
-    <td>{{i.cdbalance}}</td>
-    <td>{{i.longloanprinciple}}</td>
-    <td>{{i.longloaninterestamount}}</td>
-    <td>{{i.longloanbalance}}</td>
-    <td>{{i.emerloanprinciple}}</td>
-    <td>{{i.emerloaninterestamount}}</td>
-    <td>{{i.emerloanbalance}}</td>
+    <td>{{forloop.counter}}</td>
+    <td>{{i.username.id}}</td>
+    <td>{{i.username.sapid}}</td>
+    <td>{{i.username.first_name}}</td>
+    <td>{{i.Janurary}}</td>
+    <td>{{i.february}}</td>
+    <td>{{i.March}}</td>
+    <td>{{i.April}}</td>
+    <td>{{i.May}}</td>
+    <td>{{i.June}}</td>
+    <td>{{i.July}}</td>
+    <td>{{i.August}}</td>
+    <td>{{i.September}}</td>
+    <td>{{i.October}}</td>
+    <td>{{i.November}}</td>
+    <td>{{i.December}}</td>
     <td>{{i.totalamount}}</td>
-
+    <td>{{i.dividend}}</td>
   </tr>
   {%endfor%}
 
