@@ -131,8 +131,9 @@ class sharemonth(models.Model):
     October=models.IntegerField(blank=True,null=True,default=0)
     November=models.IntegerField(blank=True,null=True,default=0)
     December=models.IntegerField(blank=True,null=True,default=0)
-    encode=models.CharField(max_length=20,blank=True,null=True,default=0)
-
+    year=models.IntegerField(blank=True,null=True,default=0)
+    sum=models.IntegerField(blank=True,null=True,default=0)
+    dividend=models.FloatField(blank=True,null=True,default=0)
     def __str__(self):
         return str(self.username)
 
@@ -150,7 +151,9 @@ class cdmonth(models.Model):
     October=models.IntegerField(blank=True,null=True,default=0)
     November=models.IntegerField(blank=True,null=True,default=0)
     December=models.IntegerField(blank=True,null=True,default=0)
-    encode=models.CharField(max_length=20,blank=True,null=True,default=0)
+    year=models.IntegerField(blank=True,null=True,default=0)
+    sum=models.IntegerField(blank=True,null=True,default=0)
+    dividend=models.FloatField(blank=True,null=True,default=0)
 
     def __str__(self):
         return str(self.username)

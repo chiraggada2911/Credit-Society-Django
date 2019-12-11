@@ -296,14 +296,19 @@ class AccountCreate(CreateView):
 
         def get_context_data(self, **kwargs):
             userU=User.objects.all()
+            userL=User.objects.all().last()
             userA=Account.objects.all().last()
             acc_no=userA.accountnumber + 1
+            name=userL.first_name
+            last=userL.last_name
+            fullname=str(name) + " " +str(last)
             print(acc_no)
             context = super(CreateView, self).get_context_data(**kwargs)
             context={
                 'user':userU,
                 'acc_nu':acc_no,
                 'date_today':datetime.date.today(),
+                'fullname':fullname,
             }
             return context
 
@@ -719,7 +724,7 @@ def calcinvest():
     Interests=interests.objects.all().last()
     #share parameters
     for i in  Members.iterator():
-        month=["Janurary","Feburary","March","April","May","June","July","August","September","October","November","December"]
+        month=["Janurary","February","March","April","May","June","July","August","September","October","November","December"]
         x=date.today().month-1
         imonth=str(month[x])
         print("foo")
@@ -747,7 +752,16 @@ def calcinvest():
             foo = cdmonth.objects.get(username_id=i.username_id)
             setattr(foo,imonth,i.cdbalance)
             foo.save()
+        x= sharemonth.objects.get(username_id=i.username_id)
+        y= cdmonth.objects.get(username_id=i.username_id)
+        x.sum=x.Janurary+x.February+x.March+x.April+x.May+x.June+x.July+x.August+x.September+x.October+x.November+x.December
+        y.sum=y.Janurary+y.February+y.March+y.April+y.May+y.June+y.July+y.August+y.September+y.October+y.November+y.December
+        x.dividend=x.sum*(Interests.sharedividend)/(12*100)
+        y.dividend=y.sum*(Interests.cddividend)/(12*100)
+        x.save()
+        y.save()
         i.save()
+
 
 @cron_task(crontab="* * * * *")
 def longloan():
