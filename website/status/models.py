@@ -120,7 +120,7 @@ class HistoryFd(models.Model):
 class sharemonth(models.Model):
     username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
     Janurary=models.IntegerField(blank=True,null=True,default=0)
-    February=models.IntegerField(blank=True,null=True,default=0)
+    february=models.IntegerField(blank=True,null=True,default=0)
     March=models.IntegerField(blank=True,null=True,default=0)
     April=models.IntegerField(blank=True,null=True,default=0)
     May=models.IntegerField(blank=True,null=True,default=0)
@@ -140,7 +140,7 @@ class sharemonth(models.Model):
 class cdmonth(models.Model):
     username=models.ForeignKey(User,on_delete=models.CASCADE,null=True,unique=False)
     Janurary=models.IntegerField(blank=True,null=True,default=0)
-    February=models.IntegerField(blank=True,null=True,default=0)
+    february=models.IntegerField(blank=True,null=True,default=0)
     March=models.IntegerField(blank=True,null=True,default=0)
     April=models.IntegerField(blank=True,null=True,default=0)
     May=models.IntegerField(blank=True,null=True,default=0)

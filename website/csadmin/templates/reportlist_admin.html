@@ -31,8 +31,10 @@
               <button type="submit" name="button">hello </button>
                 {% csrf_token %}
             </form>
-            <a href="{% url 'csadmin:GenerateReport'%}" ><button type="button" class="btn btn-primary pull-right  btn-info"  name="button"><i class="material-icons">assignment</i>Report</button></a>
-
+            <div class="row">
+            <a href="{% url 'csadmin:GenerateReport'%}" ><button type="button" class="btn btn-primary pull-right  btn-info"  name="button"><i class="material-icons">assignment</i>CD Report</button></a>
+            <a href="{% url 'csadmin:GenerateReport'%}" ><button type="button" class="btn btn-primary pull-right  btn-info"  name="button"><i class="material-icons">assignment</i>SHARE Report</button></a>
+            </div>
             </div>
           </div>
         </div>
